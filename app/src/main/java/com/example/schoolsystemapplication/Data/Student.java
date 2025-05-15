@@ -7,14 +7,18 @@ public class Student {
     private String name;
     private String email;
     private int gradeLevel;
+    private int parentNum;
+    private String BirthCertificate;
     private List<ScheduleEntry> schedule;
 
 
-    public Student(int id, String name, String email, int gradeLevel, List<ScheduleEntry> schedule) {
+    public Student(int id, String name, String email, int gradeLevel,int parentNum,String BirthCer, List<ScheduleEntry> schedule) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.gradeLevel = gradeLevel;
+        this.parentNum=parentNum;
+        this.BirthCertificate=BirthCer;
         this.schedule = schedule;
     }
 
@@ -46,6 +50,8 @@ public class Student {
         return gradeLevel;
     }
 
+    public void setGradeLevel(int gradeLevel) {this.gradeLevel = gradeLevel;}
+
     public void setDepartment(int  gradeLevel) {
         this.gradeLevel = gradeLevel;
     }
@@ -57,4 +63,12 @@ public class Student {
     public void setSchedule(List<ScheduleEntry> schedule) {
         this.schedule = schedule;
     }
+
+    public int getParentNum() {return parentNum;}
+
+    public void setParentNum(int parentNum) {this.parentNum = parentNum;}
+
+    public String getBirthCertificate() {return BirthCertificate;}
+
+    public void setBirthCertificate(String birthCertificate) {BirthCertificate = birthCertificate;}
 }

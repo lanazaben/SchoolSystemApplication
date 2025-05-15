@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ViewStudent">
+
+    <!-- Toolbar at the top -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="@color/blue"
+        android:theme="?attr/actionBarTheme"
+        app:navigationIcon="@drawable/baseline_arrow_back_24"
+        app:title="Grade Level Students"
+        app:titleTextColor="@color/white" />
+
+    <!-- SearchView below the Toolbar -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/edittext"
+        android:padding="7dp"
+        app:queryHint="Search Here ..." />
+
+    <!-- RecyclerView below SearchView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/transparent"
+        android:backgroundTint="@color/beige"
+        android:dividerHeight="10.0sp"
+        android:scrollbars="vertical"
+        android:contentDescription="@string/allstudents"
+        tools:listitem="@layout/listitem"/>
+
+</LinearLayout>

@@ -1,3 +1,41 @@
 <resources>
     <string name="app_name">SchoolSystemApplication</string>
+
+    <string name="class_1"> Grade 1</string>
+    <string name="class_2"> Grade 2</string>
+    <string name="class_3"> Grade 3</string>
+    <string name="class_4"> Grade 4</string>
+    <string name="class_5"> Grade 5</string>
+    <string name="class_6"> Grade 6</string>
+    <string name="class_7"> Grade 7</string>
+    <string name="class_8"> Grade 8</string>
+    <string name="class_9"> Grade 9</string>
+    <string name="class_10"> Grade 01</string>
+    <string name="class_11"> Grade 11</string>
+    <string name="class_12"> Grade 12</string>
+
+    <string name="lana"> Lana Zaben</string>
+    <string name="yara"> Yara Hamad</string>
+    <string name="hiba"> Hiba Awwad</string>
+    <string name="doaa"> Doa\'a Assi</string>
+    <string name="student_name">Student Name</string>
+    <string name="grade_level">Grade Level</string>
+    <string name="list_of_students_ingrade">list_of_students_ingrade</string>
+    <string name="full_name">Full Name</string>
+    <string name="enter_full_name">Enter full name</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="select_date_of_birth">Select date of birth</string>
+    <string name="id_number">ID Number</string>
+    <string name="enter_id_number">Enter ID number</string>
+    <string name="enter_email">Enter email</string>
+    <string name="grade_levelAdd">Grade Level</string>
+    <string name="enter_grade_level">Enter grade level</string>
+    <string name="add">Add</string>
+    <string name="add_student" />
+    <string name="enter_parent_phone_number">Enter Parent Phone Number</string>
+    <string name="parent_phone_number">Parent Phone Number</string>
+    <string name="birth_certificte">Birth Certificte</string>
+    <string name="chosen_files">Chosen Files:</string>
+    <string name="browse">Browse</string>
+    <string name="allstudents">allStudents</string>
 </resources>
