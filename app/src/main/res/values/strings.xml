@@ -38,4 +38,20 @@
     <string name="chosen_files">Chosen Files:</string>
     <string name="browse">Browse</string>
     <string name="allstudents">allStudents</string>
+    <string name="addSubject">Add Subject</string>
+    <string name="editSubject">Edit Schedule</string>
+    <string name="viewStudent">View Student</string>
+    <string name="addStudent">Add Student</string>
+    <string name="subject_name">Subject Name</string>
+    <string name="teacher_name">Teacher Name</string>
+    <string name="Lecture_time">Lecture Time</string>
+    <string name="day_time">Day/Time</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+
+
+
 </resources>
