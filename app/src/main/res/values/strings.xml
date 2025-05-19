@@ -51,7 +51,8 @@
     <string name="tuesday">Tuesday</string>
     <string name="wednesday">Wednesday</string>
     <string name="thursday">Thursday</string>
-
+    <string name="email">Email</string>
+    <string name="selection_of_hours_and_days">Selection of hours and days</string>
 
 
 </resources>
