@@ -10,14 +10,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.schoolsystemapp.R;
 
-
-public class ViewStudent extends AppCompatActivity {
+public class ViewClassSchedule extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_view_student);
+        setContentView(R.layout.activity_view_class_schedule);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

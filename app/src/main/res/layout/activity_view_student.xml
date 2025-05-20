@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ViewStudent">
+    tools:context="com.example.schoolsystemapplication.ViewStudent">
 
     <!-- Toolbar at the top -->
     <androidx.appcompat.widget.Toolbar
