@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.schoolsystemapplication"
-    xmlns:tools="http://schemas.android.com/tools">
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.schoolsystemapplication">
 
     <application
         android:allowBackup="true"
@@ -16,25 +14,31 @@
         android:theme="@style/Theme.SchoolSystemApplication"
         tools:targetApi="31">
         <activity
-            android:name="com.example.schoolsystemapplication.ScheduleSelector"
+            android:name=".teacherSchedule"
             android:exported="false" />
         <activity
-            android:name="com.example.schoolsystemapplication.AddSubject"
+            android:name=".teacher_list"
             android:exported="false" />
         <activity
-            android:name="com.example.schoolsystemapplication.AddStudent"
+            android:name=".ScheduleSelector"
             android:exported="false" />
         <activity
-            android:name="com.example.schoolsystemapplication.ViewClassSchedule"
+            android:name=".AddSubject"
             android:exported="false" />
         <activity
-            android:name="com.example.schoolsystemapplication.StudentClass_list"
+            android:name=".AddStudent"
             android:exported="false" />
         <activity
-            android:name="com.example.schoolsystemapplication.ViewStudent"
+            android:name=".ViewClassSchedule"
             android:exported="false" />
         <activity
-            android:name="com.example.schoolsystemapplication.MainActivity"
+            android:name=".StudentClass_list"
+            android:exported="false" />
+        <activity
+            android:name=".ViewStudent"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
