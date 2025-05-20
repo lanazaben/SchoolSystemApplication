@@ -3,7 +3,9 @@ plugins {
 }
 
 android {
-    namespace = "com.example.schoolsystemapp"
+    namespace = "com.example.schoolsystemapplication"
+
+
     compileSdk = 35
 
     defaultConfig {

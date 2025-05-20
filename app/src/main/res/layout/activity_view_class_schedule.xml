@@ -49,13 +49,13 @@
                         android:padding="8dp"
                         android:text="@string/day_time"
                         android:gravity="center" />
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="8:00" />
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="8:50" />
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="9:35" />
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="10:25" />
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="11:35" />
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="12:20" />
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="1:05" />
+                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_8_00" />
+                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_8_50" />
+                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_9_35" />
+                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_10_25" />
+                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_11_35" />
+                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_12_20" />
+                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_1_05" />
                 </TableRow>
 
                 <TableRow>
