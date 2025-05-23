@@ -8,30 +8,16 @@
     android:background="@color/beige"
     tools:context=".teacherSchedule">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
+        style="@style/CustomToolbar"
+        app:title="Teacher Name"
+        app:navigationIcon="@drawable/profile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/blue"
-        android:backgroundTint="@color/blue"
-        android:title="Teacher List"
-        android:titleTextColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/profile">
-
-        <TextView
-            android:id="@+id/toolbarText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Teacher Name"
-            android:textColor="@color/beige"
-            android:layout_gravity="center"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-    </com.google.android.material.appbar.MaterialToolbar>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
