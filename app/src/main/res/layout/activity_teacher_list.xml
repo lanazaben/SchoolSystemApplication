@@ -10,13 +10,10 @@
     android:background="@color/beige">
 
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/blue"
-        android:title="Teacher List"
-        android:titleTextColor="@android:color/white"
+        style="@style/CustomToolbar"
+        app:title="Add Student Details"
         app:navigationIcon="@drawable/profile" />
 
     <androidx.appcompat.widget.SearchView
