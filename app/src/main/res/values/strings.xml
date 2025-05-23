@@ -1,23 +1,5 @@
 <resources>
     <string name="app_name">SchoolSystemApplication</string>
-
-    <string name="class_1"> Grade 1</string>
-    <string name="class_2"> Grade 2</string>
-    <string name="class_3"> Grade 3</string>
-    <string name="class_4"> Grade 4</string>
-    <string name="class_5"> Grade 5</string>
-    <string name="class_6"> Grade 6</string>
-    <string name="class_7"> Grade 7</string>
-    <string name="class_8"> Grade 8</string>
-    <string name="class_9"> Grade 9</string>
-    <string name="class_10"> Grade 01</string>
-    <string name="class_11"> Grade 11</string>
-    <string name="class_12"> Grade 12</string>
-
-    <string name="lana"> Lana Zaben</string>
-    <string name="yara"> Yara Hamad</string>
-    <string name="hiba"> Hiba Awwad</string>
-    <string name="doaa"> Doa\'a Assi</string>
     <string name="student_name">Student Name</string>
     <string name="grade_level">Grade Level</string>
     <string name="list_of_students_ingrade">list_of_students_ingrade</string>
@@ -60,6 +42,11 @@
     <string name="_11_35">11:35</string>
     <string name="_12_20">12:20</string>
     <string name="_1_05">1:05</string>
-
-
+    <string name="exam">Exam</string>
+    <string name="type">Type</string>
+    <string name="max">Max</string>
+    <string name="min">Min</string>
+    <string name="grade">Grade</string>
+    <string name="date">Date</string>
+    <string name="back">Back</string>
 </resources>
