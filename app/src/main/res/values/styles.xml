@@ -80,6 +80,14 @@
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:textSize">16sp</item>
     </style>
-
+    <style name="MarkToolbar">
+        <item name="android:background">@color/blue</item>
+        <item name="titleTextColor">@android:color/white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="navigationIcon">@drawable/baseline_arrow_back_24</item>
+        <item name="theme">?attr/actionBarTheme</item>
+        <item name="title">Add Mark</item>
+    </style>
 
 </resources>
