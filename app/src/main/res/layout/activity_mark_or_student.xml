@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/beige" >
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/CustomToolbar"
+        app:navigationIcon="@drawable/profile" />
+
+    <!-- back button -->
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_arrow_back_24"
+        android:layout_gravity="start"
+        android:layout_margin="24dp"
+        android:layout_marginBottom="50dp"
+        android:onClick="btn_OnClick_back"
+        android:background="@color/beige" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="416dp"
+        android:gravity="center"
+        android:orientation="vertical"
+
+        android:padding="24dp">
+
+        <!-- add mark Button -->
+        <Button
+            android:id="@+id/button_addMark"
+            style="@style/PrimaryButton"
+            android:layout_marginTop="30dp"
+            android:onClick="btn_OnClick_addMark"
+            android:text="@string/add_mark" />
+
+        <!-- list student Button -->
+        <Button
+            android:id="@+id/button_listStudent"
+            style="@style/PrimaryButton"
+            android:layout_marginTop="30dp"
+            android:onClick="btn_OnClick_listStudent"
+            android:text="@string/list_Student" />
+    </LinearLayout>
+</LinearLayout>

@@ -49,4 +49,11 @@
     <string name="grade">Grade</string>
     <string name="date">Date</string>
     <string name="back">Back</string>
+    <string name="full_mark">Full Mark</string>
+    <string name="type_exam">Type Exam</string>
+    <string name="next">NEXT</string>
+    <string name="enter_type_exam">Enter type exam</string>
+    <string name="enter_full_mark">Enter Full Mark</string>
+    <string name="add_mark">Add new mark</string>
+    <string name="list_Student">View Student</string>
 </resources>
