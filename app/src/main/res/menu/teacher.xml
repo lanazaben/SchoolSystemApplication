@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_Schadual"
+        android:title="Schadual"/>
+
+    <item
+        android:id="@+id/nav_Assignment"
+        android:title="Assignment" />
+
+    <item
+        android:id="@+id/nav_Marks"
+        android:title="Marks" />
+
+</menu>
