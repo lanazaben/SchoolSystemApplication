@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/beige"
+    tools:context="com.example.schoolsystemapplication.AddStudent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/AssignmentDetailsToolbar"
+        app:title="Assignment Details" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center_horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edittext">
+
+                <TextView
+                    style="@style/LabelText"
+                    android:text="ID" />
+                <EditText
+                    android:id="@+id/editTextId"
+                    style="@style/FormEditText"
+                    android:hint="Enter ID"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edittext">
+
+                <TextView
+                    style="@style/LabelText"
+                    android:text="Subject" />
+                <EditText
+                    android:id="@+id/editTextSubject"
+                    style="@style/FormEditText"
+                    android:hint="Enter Subject" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edittext">
+
+                <TextView
+                    style="@style/LabelText"
+                    android:text="Teacher" />
+                <EditText
+                    android:id="@+id/editTextTeacher"
+                    style="@style/FormEditText"
+                    android:hint="Enter Teacher Name" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edittext">
+
+                <TextView
+                    style="@style/LabelText"
+                    android:text="Title" />
+                <EditText
+                    android:id="@+id/editTextTitle"
+                    style="@style/FormEditText"
+                    android:hint="Enter Title" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edittext">
+
+                <TextView
+                    style="@style/LabelText"
+                    android:text="Description" />
+                <EditText
+                    android:id="@+id/editTextDescription"
+                    style="@style/FormEditText"
+                    android:hint="Enter Description"
+                    android:minLines="3"
+                    android:gravity="top"
+                    android:inputType="textMultiLine" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edittext">
+
+                <TextView
+                    style="@style/LabelText"
+                    android:text="Due Date" />
+                <TextView
+                    android:id="@+id/textViewDueDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="Select Due Date"
+                    android:padding="10dp"
+                    android:background="@drawable/edittext"
+                    android:drawablePadding="8dp"
+                    android:focusable="true"
+                    android:clickable="true" />
+            </LinearLayout>
+
+            <Button
+                style="@style/PrimaryButton"
+                android:id="@+id/buttonSubmit"
+                android:text="Submit"
+                android:layout_marginTop="30dp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

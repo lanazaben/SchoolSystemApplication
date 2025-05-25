@@ -4,11 +4,12 @@
     android:layout_height="180dp"
     android:orientation="vertical"
     android:padding="16dp"
+    android:background="@color/blue"
     android:gravity="bottom">
 
     <ImageView
-        android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@drawable/person"
         android:contentDescription="User Image"
         android:layout_gravity="center_horizontal"/>
@@ -17,7 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome"
-        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:textSize="30dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"/>
 </LinearLayout>

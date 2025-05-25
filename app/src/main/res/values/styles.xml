@@ -19,6 +19,25 @@
         <item name="title">Add Student Details</item>
     </style>
 
+    <style name="AssignmentDetailsToolbar">
+        <item name="android:background">@color/blue</item>
+        <item name="titleTextColor">@android:color/white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="theme">?attr/actionBarTheme</item>
+        <item name="title">Add Student Details</item>
+    </style>
+
+    <!-- Assignment Toolbar Style -->
+    <style name="AssignmentToolbar">
+        <item name="android:background">@color/blue</item>
+        <item name="titleTextColor">@android:color/white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="theme">?attr/actionBarTheme</item>
+        <item name="title">ALL Assignment</item>
+    </style>
+
 
     <!-- Card Style -->
     <style name="CardStyle">

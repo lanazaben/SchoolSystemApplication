@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/beige"
     tools:context=".Splash">
 
 
@@ -23,8 +24,8 @@
 
     <ImageView
         android:id="@+id/img"
-        android:layout_width="241dp"
-        android:layout_height="238dp"
+        android:layout_width="408dp"
+        android:layout_height="485dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

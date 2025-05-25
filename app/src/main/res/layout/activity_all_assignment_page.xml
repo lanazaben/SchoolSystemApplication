@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/beige"
+    tools:context=".allAssignmentPage">
+
+
+<!-- Toolbar at the top -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/AssignmentToolbar"
+        app:title="ALL Assignment"
+        />
+    <!-- SearchView below the Toolbar -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        style="@style/StyledSearchView"
+        />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- RecyclerView below SearchView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listview"
+            style="@style/StudentListRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:contentDescription="@string/ALLAssignment"
+            tools:listitem="@layout/asslist" />
+    </ScrollView>
+</LinearLayout>
+
+
+
+
+

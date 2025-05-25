@@ -1,4 +1,4 @@
-package com.example.school;
+package com.example.schoolsystemapplication;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,7 +37,7 @@ public class LogIn extends AppCompatActivity {
 
     }
 
-    private void checkPrefs() {   //بتكتب الي مسيف
+    private void checkPrefs() {
         flag = prefs.getBoolean(FLAG, false);
 
         if (flag) {
@@ -60,7 +60,7 @@ public class LogIn extends AppCompatActivity {
         chk = findViewById(R.id.chk);
     }
 
-    public void btnLoginOnClick(View view) {  //الشير في بتسيف
+    public void btnLoginOnClick(View view) {
         String name = edtName.getText().toString();
         String password = edtPassword.getText().toString();
 
