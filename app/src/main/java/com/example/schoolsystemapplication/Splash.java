@@ -1,4 +1,4 @@
-package com.example.school;
+package com.example.schoolsystemapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,11 +24,13 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.splash);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         top = AnimationUtils.loadAnimation(this, R.anim.top_animation);
         bottom = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
 
@@ -38,20 +40,11 @@ public class Splash extends AppCompatActivity {
         txt.setAnimation(bottom);
         img.setAnimation(top);
 
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(Splash.this, LogIn.class);
-                startActivity(intent);
-                finish();
-            }
+        // ⏳ بعد 5 ثوانٍ، انتقل إلى شاشة تسجيل الدخول
+        new Handler().postDelayed(() -> {
+            Intent intent = new Intent(Splash.this, LogIn.class);
+            startActivity(intent);
+            finish();
         }, 5000);
     }
 }
