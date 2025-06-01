@@ -1,17 +1,23 @@
 package com.example.schoolsystemapplication;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class StudentClass_list extends AppCompatActivity {
+Drawable arrowBack;
+RecyclerView classList,student;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        classList=findViewById(R.id.parentRecyclerView);
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_student_class_list);

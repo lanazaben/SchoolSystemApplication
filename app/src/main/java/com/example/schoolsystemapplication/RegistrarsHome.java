@@ -1,5 +1,6 @@
 package com.example.schoolsystemapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -44,6 +45,8 @@ public class RegistrarsHome extends AppCompatActivity {
                 Toast.makeText(RegistrarsHome.this, "Teacher selected", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.nav_student) {
                 // Handle Student item click
+                Intent intent = new Intent(RegistrarsHome.this, StudentClass_list.class);
+                startActivity(intent);
                 Toast.makeText(RegistrarsHome.this, "Student selected", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.nav_subject) {
                 // Handle Subject item click
