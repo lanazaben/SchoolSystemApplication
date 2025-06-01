@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.schoolsystemapplication">
+    package="com.example.schoolsystemapplication" >
 
     <application
         android:allowBackup="true"
@@ -12,37 +12,91 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SchoolSystemApplication"
-        tools:targetApi="31">
-
-        <activity android:name=".Splash" android:exported="true" />
-        <activity android:name=".viewMark_andEdit_activity" android:exported="false" />
-        <activity android:name=".markOrStudent_activity" android:exported="false" />
-        <activity android:name=".AddExamActivity" android:exported="false" />
-        <activity android:name=".activity_insertMark" android:exported="false" />
-        <activity android:name=".StudentList_insertMark" android:exported="false" />
-        <activity android:name=".RegistrarsHome" android:exported="false" />
-        <activity android:name=".ViewMarks" android:exported="false" />
-        <activity android:name=".SubjectsList" android:exported="false" />
-        <activity android:name=".teacherSchedule" android:exported="false" />
-        <activity android:name=".teacher_list" android:exported="false" />
-        <activity android:name=".ScheduleSelector" android:exported="false" />
-        <activity android:name=".AddSubject" android:exported="false" />
-        <activity android:name=".AddStudent" android:exported="false" />
-        <activity android:name=".ViewClassSchedule" android:exported="false" />
-        <activity android:name=".StudentClass_list" android:exported="false" />
-        <activity android:name=".ViewStudent" android:exported="false" />
-        <activity android:name=".ClassList_Activity" android:exported="true">
+        tools:targetApi="31" >
+        <activity
+            android:name=".UploadAsgByTeacher"
+            android:exported="false" />
+        <activity
+            android:name=".Splash"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LogIn" android:exported="false" />
-        <activity android:name=".StudentAssDetails" android:exported="false" />
-        <activity android:name=".allAssignmentPage" android:exported="false" />
-        <activity android:name=".SignUp" android:exported="false" />
-        <activity android:name=".StudentHome" android:exported="false" />
-        <activity android:name=".TeacherHome" android:exported="false" />
+        <activity
+            android:name=".viewMark_andEdit_activity"
+            android:exported="false" />
+        <activity
+            android:name=".markOrStudent_activity"
+            android:exported="false" />
+        <activity
+            android:name=".AddExamActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity_insertMark"
+            android:exported="false" />
+        <activity
+            android:name=".StudentList_insertMark"
+            android:exported="false" />
+        <activity
+            android:name=".ClassList_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewMarks"
+            android:exported="false" />
+        <activity
+            android:name=".SubjectsList"
+            android:exported="false" />
+        <activity
+            android:name=".teacherSchedule"
+            android:exported="false" />
+        <activity
+            android:name=".teacher_list"
+            android:exported="false" />
+        <activity
+            android:name=".ScheduleSelector"
+            android:exported="false" />
+        <activity
+            android:name=".AddSubject"
+            android:exported="false" />
+        <activity
+            android:name=".AddStudent"
+            android:exported="false" />
+        <activity
+            android:name=".ViewClassSchedule"
+            android:exported="false" />
+        <activity
+            android:name=".StudentClass_list"
+            android:exported="false" />
+        <activity
+            android:name=".ViewStudent"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LogIn"
+            android:exported="false" />
+        <activity
+            android:name=".RegistrarsHome"
+            android:exported="false" />
+        <activity
+            android:name=".StudentAssDetails"
+            android:exported="false" />
+        <activity
+            android:name=".allAssignmentPage"
+            android:exported="false" />
+        <activity
+            android:name=".SignUp"
+            android:exported="false" />
+        <activity
+            android:name=".StudentHome"
+            android:exported="false" />
+        <activity
+            android:name=".TeacherHome"
+            android:exported="false" />
     </application>
 
 </manifest>

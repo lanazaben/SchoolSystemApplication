@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/beige">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/AddAsgtoolbar"
+        style="@style/CustomToolbar"
+        app:title="Upload Assignment" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/LabelText"
+                android:text="@string/label_asg_name"
+                android:layout_marginTop="8dp" />
+
+            <EditText
+                android:id="@+id/asg_name"
+                style="@style/FormEditText"
+                android:hint="@string/asg_name"
+                android:drawableStart="@android:drawable/ic_menu_edit"
+                android:padding="12dp" />
+
+            <TextView
+                style="@style/LabelText"
+                android:text="@string/label_asg_description"
+                android:layout_marginTop="16dp" />
+
+            <EditText
+                android:id="@+id/asg_description"
+                android:layout_height="wrap_content"
+                style="@style/FormEditText"
+                android:hint="@string/asg_desc"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:gravity="top"
+                android:padding="12dp" />
+
+            <TextView
+                style="@style/LabelText"
+                android:text="@string/label_asg_deadline"
+                android:layout_marginTop="16dp" />
+
+            <EditText
+                android:id="@+id/asg_deadline"
+                android:layout_height="wrap_content"
+                style="@style/FormEditText"
+                android:hint="@string/asg_deadline"
+                android:inputType="date"
+                android:focusable="false"
+                android:clickable="true"
+                android:padding="12dp" />
+
+            <TextView
+                style="@style/LabelText"
+                android:text="@string/label_asg_upload"
+                android:layout_marginTop="16dp" />
+
+            <EditText
+                android:id="@+id/asg_upl"
+                style="@style/FormEditText"
+                android:hint="@string/browse"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:inputType="none"
+                app:drawableLeftCompat="@drawable/baseline_attach_file_24"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:id="@+id/asg_file_name"
+                style="@style/LabelText"
+                android:text="@string/chosen_files"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp" />
+
+            <Button
+                android:id="@+id/btn_choose_asg"
+                style="@style/PrimaryButton"
+                android:text="@string/asg_upl"
+                android:layout_marginTop="16dp" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="16dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

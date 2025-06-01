@@ -70,4 +70,20 @@
     <string name="enter_full_mark">Enter Full Mark</string>
     <string name="add_mark">Add new mark</string>
     <string name="list_Student">View Student</string>
+    <string name="asg_name">Assignment Name</string>
+    <string name="asg_desc">Description</string>
+    <string name="asg_deadline">Deadline</string>
+    <string name="asg_upl">Upload</string>
+    <string name="label_asg_name">Assignment Name</string>
+    <string name="label_asg_description">Assignment Description</string>
+    <string name="label_asg_deadline">Deadline</string>
+    <string name="label_asg_upload">Select File</string>
+    <string name="title_activity_menu_teacher">Menu_Teacher_activity</string>
+
+    <string-array name="dark_mode_options">
+        <item>On</item>
+        <item>Off</item>
+    </string-array>
+
+
 </resources>

@@ -16,6 +16,7 @@
         android:id="@+id/toolbar"
         style="@style/AssignmentToolbar"
         app:title="ALL Assignment"
+        app:navigationIcon="@drawable/ic_menu"
         />
     <!-- SearchView below the Toolbar -->
     <androidx.appcompat.widget.SearchView

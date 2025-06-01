@@ -1,112 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/beige" >
 
-    <!-- Toolbar -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/CustomToolbar"
-        app:title="Add Student Details"
-        app:navigationIcon="@drawable/profile" />
-
-
-    <!-- Content -->
-    <ScrollView
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/beige" >
 
-        <LinearLayout
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/CustomToolbar"
+            app:title="Add Student Details"
+            app:navigationIcon="@drawable/ic_menu" />
+
+
+        <!-- Content -->
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp"
-            android:gravity="center_horizontal">
+            android:layout_height="match_parent">
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/baseline_arrow_back_24"
-                android:layout_gravity="start"
-                android:layout_marginBottom="50dp"
-                android:onClick="btn_OnClick_back"
-                android:background="@color/beige"/>
-
-            <!-- type exam Card -->
-            <androidx.cardview.widget.CardView
-                style="@style/CardStyle"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center_horizontal">
 
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_arrow_back_24"
+                    android:layout_gravity="start"
+                    android:layout_marginBottom="50dp"
+                    android:onClick="btn_OnClick_back"
+                    android:background="@color/beige"/>
 
-                <LinearLayout
+                <!-- type exam Card -->
+                <androidx.cardview.widget.CardView
+                    style="@style/CardStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <TextView
-                        style="@style/LabelText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/type_exam"
-                        />
-
-                    <EditText
-                        style="@style/FormEditText"
-                        android:id="@+id/editTextTypeExam"
-                        android:hint="@string/enter_type_exam" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Full Mark -->
-            <androidx.cardview.widget.CardView
-                style="@style/CardStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
+                    android:layout_marginBottom="16dp">
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <TextView
-                        style="@style/LabelText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/full_mark" />
-
-                    <EditText
-                        android:id="@+id/editTextFullMark"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:hint="@string/enter_full_mark"
-                        android:padding="10dp"
-                        android:background="@drawable/edittext"
-                        android:drawablePadding="8dp"
-                        android:focusable="true"
-                        android:clickable="true" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="8dp">
 
-            <!-- next Button -->
-            <Button
-                style="@style/PrimaryButton"
-                android:id="@+id/buttonNext"
-                android:text="@string/next"
-                android:layout_marginTop="30dp"
-                android:onClick="btn_OnClick_next" />
+                        <TextView
+                            style="@style/LabelText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/type_exam"
+                            />
 
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+                        <EditText
+                            style="@style/FormEditText"
+                            android:id="@+id/editTextTypeExam"
+                            android:hint="@string/enter_type_exam" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Full Mark -->
+                <androidx.cardview.widget.CardView
+                    style="@style/CardStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            style="@style/LabelText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/full_mark" />
+
+                        <EditText
+                            android:id="@+id/editTextFullMark"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:hint="@string/enter_full_mark"
+                            android:padding="10dp"
+                            android:background="@drawable/edittext"
+                            android:drawablePadding="8dp"
+                            android:focusable="true"
+                            android:clickable="true" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- next Button -->
+                <Button
+                    style="@style/PrimaryButton"
+                    android:id="@+id/buttonNext"
+                    android:text="@string/next"
+                    android:layout_marginTop="30dp"
+                    android:onClick="btn_OnClick_next" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/teacher"
+        android:background="@color/white"
+        app:headerLayout="@layout/nav_header"
+        app:itemTextColor="@color/nav_item_text_color"
+        app:itemBackground="@drawable/nav_item_background" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

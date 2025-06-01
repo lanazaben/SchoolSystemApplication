@@ -13,8 +13,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/CustomToolbar"
-        app:title="Add Student Details"
-        app:navigationIcon="@drawable/profile" />
+        app:title="Add Student Details" />
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"

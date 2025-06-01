@@ -15,7 +15,7 @@
         android:id="@+id/toolbar"
         style="@style/CustomToolbar"
         app:title="Add Subject to schedule"
-        />
+        app:navigationIcon="@drawable/ic_menu" />
 
 
     <LinearLayout
