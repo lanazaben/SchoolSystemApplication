@@ -14,9 +14,9 @@
         android:layout_height="49dp"
         android:background="@color/blue"
         android:theme="?attr/actionBarTheme"
-        app:navigationIcon="@drawable/baseline_arrow_back_24"
         app:title="Class schedule"
         app:titleTextColor="@android:color/white"
+        style="@style/CustomToolbar"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

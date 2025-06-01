@@ -13,10 +13,7 @@
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/AddAsgtoolbar"
-        style="@style/CustomToolbar"
-        app:title="Add Subject to schedule"
-        app:titleTextColor="@android:color/white"
-        android:elevation="4dp" />
+        style="@style/CustomToolbar" />
 
 
     <FrameLayout

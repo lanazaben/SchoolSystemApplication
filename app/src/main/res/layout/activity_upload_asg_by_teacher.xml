@@ -9,8 +9,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/AddAsgtoolbar"
         style="@style/CustomToolbar"
-        app:title="Upload Assignment"
-         />
+        app:title="Upload Assignment" />
 
     <ScrollView
         android:layout_width="match_parent"
