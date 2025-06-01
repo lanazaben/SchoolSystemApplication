@@ -15,7 +15,7 @@
         android:id="@+id/toolbar"
         style="@style/CustomToolbar"
         app:title="Add Student Details"
-        app:navigationIcon="@drawable/baseline_arrow_back_24" />
+        app:navigationIcon="@drawable/ic_menu" />
 
 
     <!-- Content -->
