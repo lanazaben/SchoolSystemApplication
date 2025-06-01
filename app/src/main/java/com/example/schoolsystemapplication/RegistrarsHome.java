@@ -43,14 +43,21 @@ public class RegistrarsHome extends AppCompatActivity {
             if (id == R.id.nav_teacher) {
                 // Handle Teacher item click
                 Toast.makeText(RegistrarsHome.this, "Teacher selected", Toast.LENGTH_SHORT).show();
+            //Lana
+                Intent intent = new Intent(RegistrarsHome.this, teacher_list.class);
+                startActivity(intent);
             } else if (id == R.id.nav_student) {
                 // Handle Student item click
+                Toast.makeText(RegistrarsHome.this, "Student selected", Toast.LENGTH_SHORT).show();
+           //Lana
                 Intent intent = new Intent(RegistrarsHome.this, StudentClass_list.class);
                 startActivity(intent);
-                Toast.makeText(RegistrarsHome.this, "Student selected", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.nav_subject) {
                 // Handle Subject item click
                 Toast.makeText(RegistrarsHome.this, "Subject selected", Toast.LENGTH_SHORT).show();
+            //Lana
+                Intent intent = new Intent(RegistrarsHome.this, AddSubject.class);
+                startActivity(intent);
             }
 
             // Close the drawer after an item is selected

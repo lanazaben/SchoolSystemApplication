@@ -79,6 +79,9 @@
     <string name="label_asg_deadline">Deadline</string>
     <string name="label_asg_upload">Select File</string>
     <string name="title_activity_menu_teacher">Menu_Teacher_activity</string>
+    <string name="schedule">Schedule</string>
+    <string name="assignment">Assignment</string>
+    <string name="marks">Marks</string>
 
     <string-array name="dark_mode_options">
         <item>On</item>

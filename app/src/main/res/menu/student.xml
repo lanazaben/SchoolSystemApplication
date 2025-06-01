@@ -1,16 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/nav_Schadual"
-        android:title="Schadual"/>
+        android:id="@+id/nav_Schedule"
+        android:title="@string/schedule"/>
 
     <item
         android:id="@+id/nav_Assignment"
-        android:title="Assignment" />
+        android:title="@string/assignment" />
 
     <item
         android:id="@+id/nav_Marks"
-        android:title="Marks" />
+        android:title="@string/marks" />
 
 </menu>
     <!-- android:icon="@drawable/schadual" -->
