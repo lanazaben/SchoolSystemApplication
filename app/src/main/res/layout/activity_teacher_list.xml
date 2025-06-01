@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/beige" >
+<LinearLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -13,7 +18,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/CustomToolbar"
-        app:title="Add Student Details" />
+        app:title="Teacher's List" />
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
@@ -27,6 +32,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
+        android:contentDescription="@string/teacher_name"
         tools:listitem="@layout/listitem"/>
-
 </LinearLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/teacher"
+        android:background="@color/white"
+        app:headerLayout="@layout/nav_header"
+        app:itemTextColor="@color/nav_item_text_color"
+        app:itemBackground="@drawable/nav_item_background" />
+</androidx.drawerlayout.widget.DrawerLayout>
