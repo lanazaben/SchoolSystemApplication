@@ -11,12 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class Adapter_recyclerview_className extends RecyclerView.Adapter<Adapter_recyclerview_className.ViewHolder> {
-    Context context;
+    private Context context;
     private String[] className;
+    private String nav;
 
-    public Adapter_recyclerview_className(String[] className, Context context){
+    public Adapter_recyclerview_className(String[] className, Context context, String nav){
         this.context = context;
         this.className = className;
+        this.nav = nav;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class Adapter_recyclerview_className extends RecyclerView.Adapter<Adapter
                 if (optionsRecycler.getVisibility() == View.GONE){
                     String[] subject = {"Arabic", "English" ,"math"};
                     optionsRecycler.setLayoutManager(new LinearLayoutManager(context));
-                    OptionsAdapter_recyclerview adapter = new OptionsAdapter_recyclerview(subject, context);
+                    OptionsAdapter_recyclerview adapter = new OptionsAdapter_recyclerview(subject, context, nav);
                     optionsRecycler.setAdapter(adapter);
                     optionsRecycler.setVisibility(View.VISIBLE);
                 }else {
