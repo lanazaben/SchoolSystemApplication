@@ -97,6 +97,7 @@
         <activity
             android:name=".TeacherHome"
             android:exported="false" />
+
     </application>
 
 </manifest>

@@ -11,12 +11,14 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class OptionsAdapter_recyclerview extends RecyclerView.Adapter<OptionsAdapter_recyclerview.ViewHolder> {
-    Context context;
+    private Context context;
     private String[] subject;
+    private String nav;
 
-    public  OptionsAdapter_recyclerview(String[] subject, Context context){
+    public  OptionsAdapter_recyclerview(String[] subject, Context context, String nav){
         this.context = context;
         this.subject = subject;
+        this.nav = nav;
     }
 
     @Override
@@ -35,8 +37,13 @@ public class OptionsAdapter_recyclerview extends RecyclerView.Adapter<OptionsAda
         cardView.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(context , markOrStudent_activity.class);
-                context.startActivity(intent);
+                if (nav.equals("marks")){
+                    Intent intent = new Intent(context , markOrStudent_activity.class);
+                    context.startActivity(intent);
+                } else {
+                    Intent intent = new Intent(context , UploadAsgByTeacher.class);
+                    context.startActivity(intent);
+                }
             }
         });
     }
