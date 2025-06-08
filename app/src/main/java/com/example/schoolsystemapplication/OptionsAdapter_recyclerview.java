@@ -10,15 +10,21 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.schoolsystemapplication.Data.SchoolSubject;
+
+import java.util.List;
+
 public class OptionsAdapter_recyclerview extends RecyclerView.Adapter<OptionsAdapter_recyclerview.ViewHolder> {
     private Context context;
-    private String[] subject;
+    private List<SchoolSubject> subject;
     private String nav;
+    private String classNum;
 
-    public  OptionsAdapter_recyclerview(String[] subject, Context context, String nav){
+    public  OptionsAdapter_recyclerview(List<SchoolSubject> subject, Context context, String nav, String classNum){
         this.context = context;
         this.subject = subject;
         this.nav = nav;
+        this.classNum = classNum;
     }
 
     @Override
@@ -33,12 +39,13 @@ public class OptionsAdapter_recyclerview extends RecyclerView.Adapter<OptionsAda
     public void onBindViewHolder(OptionsAdapter_recyclerview.ViewHolder holder, int position) {
         CardView cardView = holder.cardView;
         TextView textView = (TextView) cardView.findViewById(R.id.itemTitle);
-        textView.setText(subject[position]);
+        textView.setText(subject.get(position).getName());
         cardView.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 if (nav.equals("marks")){
                     Intent intent = new Intent(context , markOrStudent_activity.class);
+                    intent.putExtra("classNum", classNum);
                     context.startActivity(intent);
                 } else {
                     Intent intent = new Intent(context , UploadAsgByTeacher.class);
@@ -50,7 +57,7 @@ public class OptionsAdapter_recyclerview extends RecyclerView.Adapter<OptionsAda
 
     @Override
     public int getItemCount() {
-        return subject.length;
+        return subject.toArray().length;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

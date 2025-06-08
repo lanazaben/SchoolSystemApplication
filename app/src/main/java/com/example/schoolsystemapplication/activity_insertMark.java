@@ -1,12 +1,15 @@
 package com.example.schoolsystemapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -21,7 +24,25 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.schoolsystemapplication.Data.ScheduleEntry;
+import com.example.schoolsystemapplication.Data.Student;
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 public class activity_insertMark extends AppCompatActivity {
 
@@ -33,6 +54,12 @@ public class activity_insertMark extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private Toolbar toolbar;
+    private static final String BASE_URL = "http://10.0.2.2:80/php_project/get_student_use_gradelLevel.php";
+    private List<Student> students = new ArrayList<>();
+    private Context context = this;
+    private Adapter_insertMark adapter;
+    private String classNum;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,21 +71,22 @@ public class activity_insertMark extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        setContentView(R.layout.activity_insert_mark);
         typeExam = findViewById(R.id.textView_typeExam);
         fullMark = findViewById(R.id.textView_fullMark);
+        progressBar = findViewById(R.id.progressBar);
 
         Intent intent = getIntent();
         exam_Type = intent.getStringExtra("examType");
         full_Mark = intent.getIntExtra("fullMark", 0);
+        classNum = intent.getStringExtra("classNum");
         typeExam.setText(exam_Type + ": ");
         fullMark.setText(" /" + full_Mark);
 
         mainRecyclerView = (RecyclerView) findViewById(R.id.mainRecyclerView);
-        String[] studentName = {"Doaa Assi", "Lana Zaben", "Yara Hamad", "Hiba Awwad"};
         mainRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        Adapter_insertMark adapter = new Adapter_insertMark(studentName, this);
+        adapter = new Adapter_insertMark(students, this);
         mainRecyclerView.setAdapter(adapter);
+        loadStudents();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -115,10 +143,61 @@ public class activity_insertMark extends AppCompatActivity {
         });
     }
 
+    private void loadStudents() {
+        progressBar.setVisibility(View.VISIBLE);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, BASE_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    students.clear();
+                    JSONArray array = new JSONArray(response);
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject object = array.getJSONObject(i);
+                        int id_student = object.getInt("student_id");
+                        String name = object.getString("name");
+                        String email = object.getString("email");
+                        int gradeLevel = object.getInt("grade_level");
+                        int parentNum = object.getInt("parent_phone");
+                        String BirthCertificate = "";//object.getString("birth_certificate");
+                        List<ScheduleEntry> schedule = null;
+                        Student student = new Student(id_student, name, email, gradeLevel, parentNum, BirthCertificate, schedule);
+                        students.add(student);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(context, "JSON Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+                adapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
+//                    Adapter_insertMark adapter = new Adapter_insertMark(students, context);
+//                    mainRecyclerView.setAdapter(adapter);
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(context, "Error: " + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("grade_level", classNum);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+//    Volley.newRequestQueue(activity_insertMark.this).add(stringRequest);
+    }
+
     public void btn_OnClick_back(View view) {
         Intent intent = new Intent(this, AddExamActivity.class);
         intent.putExtra("examType", exam_Type);
         intent.putExtra("fullMark", full_Mark);
+        intent.putExtra("classNum", classNum);
         startActivity(intent);
     }
 
