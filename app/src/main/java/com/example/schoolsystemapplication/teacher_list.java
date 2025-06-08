@@ -3,11 +3,10 @@ package com.example.schoolsystemapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
-import android.view.View;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
@@ -17,8 +16,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.schoolsystemapplication.Data.ScheduleEntry;
+import com.example.schoolsystemapplication.Data.SchoolSubject;
 import com.example.schoolsystemapplication.Data.Teacher;
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,19 +38,34 @@ public class teacher_list extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     private Toolbar toolbar;
     private RecyclerView mainRecycler;
+    private Adapter_teacherList adapter;
+    private List<Teacher> teachers = new ArrayList<>();
+    private SearchView searchView;
+    private static final String BASE_URL = "http://10.0.2.2:80/php_project/get_AllTeacher.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_teacher_list);
-
-        mainRecycler = findViewById(R.id.teacherList);
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+        mainRecycler = findViewById(R.id.teacherList);
+        searchView = findViewById(R.id.searchView);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
         });
 
         toolbar = findViewById(R.id.toolbar);
@@ -67,17 +91,45 @@ public class teacher_list extends AppCompatActivity {
             return true;
         });
 
-        String[] teacherNames = {"Yara Hamad", "Doaa Assi", "Lana Zaben","Hiba Awwad"}; // Example names
-        Adapter_teacherList adapter = new Adapter_teacherList(teacherNames, this, new Adapter_teacherList.OnItemClickListener() {
-            @Override
-            public void onItemClick(String teacherName) {
-                Toast.makeText(teacher_list.this, "Clicked: " + teacherName, Toast.LENGTH_SHORT).show();
-Intent schedule=new Intent(teacher_list.this,teacherSchedule.class);
-            startActivity(schedule);}
-        });
-
+        adapter = new Adapter_teacherList(teachers, this);
         mainRecycler.setLayoutManager(new LinearLayoutManager(this));
         mainRecycler.setAdapter(adapter);
+        loadTeacher();
+    }
+
+    private void loadTeacher() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            teachers.clear();
+                            JSONArray array = new JSONArray(response);
+                            for (int i = 0; i<array.length(); i++){
+                                JSONObject object = array.getJSONObject(i);
+                                int id = object.getInt("teacher_id");
+                                String name = object.getString("name");
+                                String email = object.getString("email");
+                                List<SchoolSubject> subjects = null;
+                                List<ScheduleEntry> schedule = null;
+                                Teacher teacher = new Teacher(id, name, email, subjects, schedule);
+                                teachers.add(teacher);
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            Toast.makeText(teacher_list.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                        adapter.notifyDataSetChanged();
+                        adapter.setTeachers(new ArrayList<>(teachers));
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(teacher_list.this, error.toString(),Toast.LENGTH_LONG).show();
+            }
+        });
+        Volley.newRequestQueue(teacher_list.this).add(stringRequest);
     }
 
     @Override

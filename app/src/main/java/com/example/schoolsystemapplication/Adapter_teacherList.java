@@ -4,25 +4,72 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class Adapter_teacherList extends RecyclerView.Adapter<Adapter_teacherList.ViewHolder> {
+import com.example.schoolsystemapplication.Data.Student;
+import com.example.schoolsystemapplication.Data.Teacher;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Adapter_teacherList extends RecyclerView.Adapter<Adapter_teacherList.ViewHolder> implements Filterable {
 
     public interface OnItemClickListener {
         void onItemClick(String teacherName);
     }
 
     private Context context;
-    private String[] teacherNames;
-    private OnItemClickListener listener;
+    private List<Teacher> teachers;
+    private List<Teacher> fullList;
 
-    public Adapter_teacherList(String[] teacherNames, Context context, OnItemClickListener listener) {
+    public Adapter_teacherList(List<Teacher> teachers, Context context) {
         this.context = context;
-        this.teacherNames = teacherNames;
-        this.listener = listener;
+        this.teachers = teachers;
+        this.fullList = new ArrayList<>(teachers);
+    }
+
+    public void setTeachers(List<Teacher> updatedTeachers) {
+        this.teachers.clear();
+        this.teachers.addAll(updatedTeachers);
+        this.fullList.clear();
+        this.fullList.addAll(updatedTeachers);
+        notifyDataSetChanged();
+    }
+
+    private Filter teacherFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Teacher> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(fullList);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Teacher teacher : fullList) {
+                    if (teacher.getName().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(teacher);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            teachers.clear();
+            teachers.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    @Override
+    public Filter getFilter() {
+        return teacherFilter;
     }
 
     @Override
@@ -34,20 +81,19 @@ public class Adapter_teacherList extends RecyclerView.Adapter<Adapter_teacherLis
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        final Teacher teacher = teachers.get(position);
         CardView cardView = holder.cardView;
         TextView textView = cardView.findViewById(R.id.listName);
-        textView.setText(teacherNames[position]);
+        textView.setText(teacher.getName());
 
         cardView.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onItemClick(teacherNames[position]);
-            }
+            //
         });
     }
 
     @Override
     public int getItemCount() {
-        return teacherNames.length;
+        return teachers.toArray().length;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

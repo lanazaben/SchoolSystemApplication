@@ -1,10 +1,12 @@
 package com.example.schoolsystemapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -19,13 +21,31 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.schoolsystemapplication.Data.ScheduleEntry;
+import com.example.schoolsystemapplication.Data.Student;
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClassList_Activity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private Toolbar toolbar;
+    private RecyclerView mainRecyclerView;
+    private static  final String BASE_URL = "http://10.0.2.2:80/php_project/get_grade_level.php";
+    private List<String> gradeLevels = new ArrayList<>();
+    private Context context = this;
+    private Adapter_recyclerview_className adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +62,12 @@ public class ClassList_Activity extends AppCompatActivity {
         Intent intent = getIntent();
         String nav = intent.getStringExtra("nav");
 
-        RecyclerView mainRecyclerView = (RecyclerView) findViewById(R.id.mainRecyclerView);
-        String[] ClassName = {"First Grade", "Second Grade", "Third Grade", "Fourth Grade", "Fifth Grade"};
+        mainRecyclerView = (RecyclerView) findViewById(R.id.mainRecyclerView);
+//        String[] ClassName = {"First Grade", "Second Grade", "Third Grade", "Fourth Grade", "Fifth Grade"};
+        adapter = new Adapter_recyclerview_className(gradeLevels, this, nav);
         mainRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        Adapter_recyclerview_className adapter = new Adapter_recyclerview_className(ClassName, this, nav);
         mainRecyclerView.setAdapter(adapter);
+        loadClassName();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -101,6 +122,36 @@ public class ClassList_Activity extends AppCompatActivity {
             drawerLayout.closeDrawers();
             return true;
         });
+    }
+
+    private void loadClassName() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            gradeLevels.clear();
+                            JSONArray array = new JSONArray(response);
+                            for (int i = 0; i<array.length(); i++){
+                                JSONObject object = array.getJSONObject(i);
+                                String className = object.getString("grade_level");
+                                gradeLevels.add(className);
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            Toast.makeText(context, "JSON Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                        adapter.notifyDataSetChanged();
+//                    Adapter_insertMark adapter = new Adapter_insertMark(students, context);
+//                    mainRecyclerView.setAdapter(adapter);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error: " + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+        Volley.newRequestQueue(ClassList_Activity.this).add(stringRequest);
     }
 
     @Override

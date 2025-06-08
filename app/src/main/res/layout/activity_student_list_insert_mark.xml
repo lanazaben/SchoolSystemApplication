@@ -34,6 +34,14 @@
             android:id="@+id/searchView"
             style="@style/StyledSearchView" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             style="@style/StudentListRecyclerView"
             android:id="@+id/mainRecyclerView"
