@@ -35,7 +35,7 @@ public class Adapter_teacherList extends RecyclerView.Adapter<Adapter_teacherLis
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         CardView cardView = holder.cardView;
-        TextView textView = cardView.findViewById(R.id.itemTitle);
+        TextView textView = cardView.findViewById(R.id.listName);
         textView.setText(teacherNames[position]);
 
         cardView.setOnClickListener(v -> {

@@ -82,6 +82,7 @@
     <string name="schedule">Schedule</string>
     <string name="assignment">Assignment</string>
     <string name="marks">Marks</string>
+    <string name="eg_grade_1">eg grade 1</string>
 
     <string-array name="dark_mode_options">
         <item>On</item>

@@ -51,6 +51,7 @@
 
                 <EditText
                     android:id="@+id/editTextGrade"
+                    android:text="@string/eg_grade_1"
                     style="@style/FormEditText"
                     android:focusable="false"
                     android:clickable="false"
