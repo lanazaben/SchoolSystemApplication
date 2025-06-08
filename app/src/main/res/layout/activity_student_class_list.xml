@@ -20,6 +20,10 @@
         style="@style/CustomToolbar"
         app:title="School Classes" />
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        style="@style/StyledSearchView" />
+
     <androidx.recyclerview.widget.RecyclerView
         style="@style/StudentListRecyclerView"
         android:id="@+id/parentRecyclerView"

@@ -25,6 +25,7 @@ public class markOrStudent_activity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private Toolbar toolbar;
+    private String classNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,9 @@ public class markOrStudent_activity extends AppCompatActivity {
             return insets;
         });
         setContentView(R.layout.activity_mark_or_student);
+
+        Intent intent = getIntent();
+        classNum = intent.getStringExtra("classNum");
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -95,11 +99,13 @@ public class markOrStudent_activity extends AppCompatActivity {
 
     public void btn_OnClick_addMark(View view) {
         Intent intent = new Intent(this, AddExamActivity.class);
+        intent.putExtra("classNum", classNum);
         startActivity(intent);
     }
 
     public void btn_OnClick_listStudent(View view) {
         Intent intent = new Intent(this, StudentList_insertMark.class);
+        intent.putExtra("classNum", classNum);
         startActivity(intent);
     }
 
