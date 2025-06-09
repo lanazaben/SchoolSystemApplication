@@ -1,15 +1,65 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <!-- Optional: App Info Section -->
+    <item
+        android:id="@+id/header_app_info"
+        android:title="@string/app_info"
+        android:enabled="false"
+        android:icon="@android:color/transparent" />
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_teacher"
+            android:title="@string/teachers"
+            android:icon="@drawable/ic_teacher" />
+
+        <!-- Student Submenu -->
+        <item
+            android:title="@string/students"
+            android:icon="@drawable/ic_student">
+            <menu>
+                <item
+                    android:id="@+id/nav_view_student"
+                    android:title="View Student" />
+                <item
+                    android:id="@+id/nav_add_student"
+                    android:title="Add Student" />
+            </menu>
+        </item>
+
+        <item
+            android:id="@+id/nav_subject"
+            android:title="@string/subjects"
+            android:icon="@drawable/ic_subject" />
+    </group>
 
     <item
-        android:id="@+id/nav_teacher"
-        android:title="Teacher" />
+        android:id="@+id/header_settings"
+        android:title="@string/settings"
+        android:enabled="false"
+        android:icon="@android:color/transparent" />
+
+    <group>
+        <item
+            android:id="@+id/nav_dark_mode"
+            android:title="@string/dark_mode"
+            android:icon="@drawable/ic_dark_mode" />
+    </group>
 
     <item
-        android:id="@+id/nav_student"
-        android:title="Student" />
+        android:id="@+id/header_account"
+        android:title="@string/account"
+        android:enabled="false"
+        android:icon="@android:color/transparent" />
 
-    <item
-        android:id="@+id/nav_subject"
-        android:title="Subject" />
+    <group>
+        <item
+            android:id="@+id/nav_logout"
+            android:title="@string/logout"
+            android:icon="@drawable/ic_logout" />
+    </group>
 
 </menu>

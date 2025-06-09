@@ -77,16 +77,24 @@ public class teacher_list extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.drawer_nav);
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.nav_teacher) {
-                startActivity(new Intent(this, teacher_list.class));
-            } else if (id == R.id.nav_student) {
-                startActivity(new Intent(this, StudentClass_list.class));
-            } else if (id == R.id.nav_subject) {
-                startActivity(new Intent(this, AddSubject.class));
-            }
+            Intent intent = null;
+            if (id == R.id.nav_teacher)
+                intent = new Intent(this, teacher_list.class);
+            else if (id == R.id.nav_view_student)
+                intent = new Intent(this, StudentClass_list.class);
+            else if (id == R.id.nav_add_student) {
+                intent=new Intent(this,AddStudent.class);
+
+            } else if (id == R.id.nav_subject)
+                intent = new Intent(this, AddSubject.class);
+            else if (id == R.id.nav_logout)
+                intent = new Intent(this, LogIn.class);
+            startActivity(intent);
+
+
             drawerLayout.closeDrawers();
             return true;
         });
@@ -95,6 +103,12 @@ public class teacher_list extends AppCompatActivity {
         mainRecycler.setLayoutManager(new LinearLayoutManager(this));
         mainRecycler.setAdapter(adapter);
         loadTeacher();
+        adapter.setOnItemClickListener(teacher -> {
+            Intent intent = new Intent(teacher_list.this, teacherSchedule.class);
+            intent.putExtra("teacher_id", teacher.getId()); // Send full teacher ID
+            startActivity(intent);
+        });
+
     }
 
     private void loadTeacher() {

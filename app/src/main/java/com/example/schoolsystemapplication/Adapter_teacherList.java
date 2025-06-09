@@ -2,7 +2,6 @@ package com.example.schoolsystemapplication;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.schoolsystemapplication.Data.Student;
 import com.example.schoolsystemapplication.Data.Teacher;
 
 import java.util.ArrayList;
@@ -20,17 +18,22 @@ import java.util.List;
 public class Adapter_teacherList extends RecyclerView.Adapter<Adapter_teacherList.ViewHolder> implements Filterable {
 
     public interface OnItemClickListener {
-        void onItemClick(String teacherName);
+        void onItemClick(Teacher teacher);
     }
 
     private Context context;
     private List<Teacher> teachers;
     private List<Teacher> fullList;
+    private OnItemClickListener listener;
 
     public Adapter_teacherList(List<Teacher> teachers, Context context) {
         this.context = context;
         this.teachers = teachers;
         this.fullList = new ArrayList<>(teachers);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     public void setTeachers(List<Teacher> updatedTeachers) {
@@ -41,7 +44,7 @@ public class Adapter_teacherList extends RecyclerView.Adapter<Adapter_teacherLis
         notifyDataSetChanged();
     }
 
-    private Filter teacherFilter = new Filter() {
+    private final Filter teacherFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Teacher> filteredList = new ArrayList<>();
@@ -59,10 +62,11 @@ public class Adapter_teacherList extends RecyclerView.Adapter<Adapter_teacherLis
             results.values = filteredList;
             return results;
         }
+
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             teachers.clear();
-            teachers.addAll((List) results.values);
+            teachers.addAll((List<Teacher>) results.values);
             notifyDataSetChanged();
         }
     };
@@ -87,17 +91,19 @@ public class Adapter_teacherList extends RecyclerView.Adapter<Adapter_teacherLis
         textView.setText(teacher.getName());
 
         cardView.setOnClickListener(v -> {
-            //
+            if (listener != null) {
+                listener.onItemClick(teacher);
+            }
         });
     }
 
     @Override
     public int getItemCount() {
-        return teachers.toArray().length;
+        return teachers.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private CardView cardView;
+        private final CardView cardView;
 
         public ViewHolder(CardView cardView) {
             super(cardView);

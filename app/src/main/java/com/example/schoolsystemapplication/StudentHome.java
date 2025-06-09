@@ -40,15 +40,15 @@ import com.google.android.material.navigation.NavigationView;
             NavigationView navigationView = findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(item -> {
                 int id = item.getItemId();
-                if (id == R.id.nav_Schedule) {
+                if (id == R.id.nav_scheduleStud) {
                     Intent schedule=new Intent (StudentHome.this,StudentSchedule.class);
                     startActivity(schedule);
 
-                } else if (id == R.id.nav_Assignment) {
+                } else if (id == R.id.nav_assignment) {
                     Intent allAssignemnt=new Intent (StudentHome.this,allAssignmentPage.class);
                     startActivity(allAssignemnt);
 
-                } else if (id == R.id.nav_Marks) {
+                } else if (id == R.id.nav_mark) {
                     //opens subjects list of this student, to show marks for this subject alone
                     Intent subjectBeforeMark=new Intent (StudentHome.this, SubjectsList.class);
                     startActivity(subjectBeforeMark);
