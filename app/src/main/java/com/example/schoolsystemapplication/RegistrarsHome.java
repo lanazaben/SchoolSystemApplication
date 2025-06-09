@@ -39,26 +39,20 @@ public class RegistrarsHome extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
+            Intent intent = null;
+            if (id == R.id.nav_teacher)
+                intent = new Intent(this, teacher_list.class);
+            else if (id == R.id.nav_view_student)
+                intent = new Intent(this, StudentClass_list.class);
+            else if (id == R.id.nav_add_student) {
+                intent=new Intent(this,AddStudent.class);
 
-            if (id == R.id.nav_teacher) {
-                // Handle Teacher item click
-                Toast.makeText(RegistrarsHome.this, "Teacher selected", Toast.LENGTH_SHORT).show();
-            //Lana
-                Intent intent = new Intent(RegistrarsHome.this, teacher_list.class);
-                startActivity(intent);
-            } else if (id == R.id.nav_student) {
-                // Handle Student item click
-                Toast.makeText(RegistrarsHome.this, "Student selected", Toast.LENGTH_SHORT).show();
-           //Lana
-                Intent intent = new Intent(RegistrarsHome.this, StudentClass_list.class);
-                startActivity(intent);
-            } else if (id == R.id.nav_subject) {
-                // Handle Subject item click
-                Toast.makeText(RegistrarsHome.this, "Subject selected", Toast.LENGTH_SHORT).show();
-            //Lana
-                Intent intent = new Intent(RegistrarsHome.this, AddSubject.class);
-                startActivity(intent);
-            }
+            } else if (id == R.id.nav_subject)
+                intent = new Intent(this, AddSubject.class);
+            else if (id == R.id.nav_logout)
+                intent = new Intent(this, LogIn.class);
+
+            startActivity(intent);
 
             // Close the drawer after an item is selected
             drawerLayout.closeDrawers();

@@ -1,16 +1,56 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <!-- Optional: App Info Section -->
+    <item
+        android:id="@+id/header_app_info"
+        android:title="App Info"
+        android:enabled="false"
+        android:icon="@android:color/transparent" />
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_assignment"
+            android:title="Assignments"
+            android:icon="@drawable/ic_assignment" />
+
+        <item
+            android:id="@+id/nav_scheduleStud"
+            android:title="Schedule"
+            android:icon="@drawable/ic_schedule" />
+
+        <item
+            android:id="@+id/nav_mark"
+            android:title="Marks"
+            android:icon="@drawable/ic_mark" />
+    </group>
 
     <item
-        android:id="@+id/nav_Schedule"
-        android:title="@string/schedule"/>
+        android:id="@+id/header_settings"
+        android:title="Settings"
+        android:enabled="false"
+        android:icon="@android:color/transparent" />
+
+    <group>
+        <item
+            android:id="@+id/nav_dark_mode"
+            android:title="Dark Mode"
+            android:icon="@drawable/ic_dark_mode" />
+    </group>
 
     <item
-        android:id="@+id/nav_Assignment"
-        android:title="@string/assignment" />
+        android:id="@+id/header_account"
+        android:title="Account"
+        android:enabled="false"
+        android:icon="@android:color/transparent" />
 
-    <item
-        android:id="@+id/nav_Marks"
-        android:title="@string/marks" />
+    <group>
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Logout"
+            android:icon="@drawable/ic_logout" />
+    </group>
 
 </menu>
-    <!-- android:icon="@drawable/schadual" -->
