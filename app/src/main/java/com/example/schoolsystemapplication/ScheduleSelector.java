@@ -1,9 +1,11 @@
 package com.example.schoolsystemapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -12,61 +14,52 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ScheduleSelector extends AppCompatActivity {
 
-    private String subjectName = "Math";         // Replace with real selection
-    private int gradeLevel = 7;                  // Replace with real selection
-    private int teacherId = 5;                   // Replace with real selection
-    private int registrarId = 1;                 // Replace with logged-in registrar
+    private String subjectName;
+    private int gradeLevel;
+    private int teacherId;
 
-    private String[][] timeSlots = {
-            {"sun_1", "Sunday", "8:00 - 8:50"},
-            {"sun_2", "Sunday", "8:50 - 9:35"},
-            {"sun_3", "Sunday", "9:35 - 10:25"},
-            {"sun_4", "Sunday", "10:25 - 11:35"},
-            {"sun_5", "Sunday", "11:35 - 12:20"},
-            {"sun_6", "Sunday", "12:20 - 1:05"},
-            {"sun_7", "Sunday", "1:05 - 1:50"},
-            {"mon_1", "Monday", "8:00 - 8:50"},
-            {"mon_2", "Monday", "8:50 - 9:35"},
-            {"mon_3", "Monday", "9:35 - 10:25"},
-            {"mon_4", "Monday", "10:25 - 11:35"},
-            {"mon_5", "Monday", "11:35 - 12:20"},
-            {"mon_6", "Monday", "12:20 - 1:05"},
-            {"mon_7", "Monday", "1:05 - 1:50"},
-            {"tue_1", "Tuesday", "8:00 - 8:50"},
-            {"tue_2", "Tuesday", "8:50 - 9:35"},
-            {"tue_3", "Tuesday", "9:35 - 10:25"},
-            {"tue_4", "Tuesday", "10:25 - 11:35"},
-            {"tue_5", "Tuesday", "11:35 - 12:20"},
-            {"tue_6", "Tuesday", "12:20 - 1:05"},
-            {"tue_7", "Tuesday", "1:05 - 1:50"},
-            {"wed_1", "Wednesday", "8:00 - 8:50"},
-            {"wed_2", "Wednesday", "8:50 - 9:35"},
-            {"wed_3", "Wednesday", "9:35 - 10:25"},
-            {"wed_4", "Wednesday", "10:25 - 11:35"},
-            {"wed_5", "Wednesday", "11:35 - 12:20"},
-            {"wed_6", "Wednesday", "12:20 - 1:05"},
-            {"wed_7", "Wednesday", "1:05 - 1:50"},
-            {"thu_1", "Thursday", "8:00 - 8:50"},
-            {"thu_2", "Thursday", "8:50 - 9:35"},
-            {"thu_3", "Thursday", "9:35 - 10:25"},
-            {"thu_4", "Thursday", "10:25 - 11:35"},
-            {"thu_5", "Thursday", "11:35 - 12:20"},
-            {"thu_6", "Thursday", "12:20 - 1:05"},
-            {"thu_7", "Thursday", "1:05 - 1:50"}
+    private final String[][] timeSlots = {
+            {"sun_1", "Sunday", "08:00 - 09:00 AM"},
+            {"sun_2", "Sunday", "09:00 - 10:00 AM"},
+            {"sun_3", "Sunday", "10:15 - 11:15 AM"},
+            {"sun_4", "Sunday", "11:30 - 12:30 PM"},
+            {"sun_5", "Sunday", "12:30 - 01:30 PM"},
+            {"sun_6", "Sunday", "01:30 - 02:30 PM"},
+            {"sun_7", "Sunday", "02:30 - 03:30 PM"},
+            {"mon_1", "Monday", "08:00 - 09:00 AM"},
+            {"mon_2", "Monday", "09:00 - 10:00 AM"},
+            {"mon_3", "Monday", "10:15 - 11:15 AM"},
+            {"mon_4", "Monday", "11:30 - 12:30 PM"},
+            {"mon_5", "Monday", "12:30 - 01:30 PM"},
+            {"mon_6", "Monday", "01:30 - 02:30 PM"},
+            {"mon_7", "Monday", "02:30 - 03:30 PM"},
+            {"tue_1", "Tuesday", "08:00 - 09:00 AM"},
+            {"tue_2", "Tuesday", "09:00 - 10:00 AM"},
+            {"tue_3", "Tuesday", "10:15 - 11:15 AM"},
+            {"tue_4", "Tuesday", "11:30 - 12:30 PM"},
+            {"tue_5", "Tuesday", "12:30 - 01:30 PM"},
+            {"tue_6", "Tuesday", "01:30 - 02:30 PM"},
+            {"tue_7", "Tuesday", "02:30 - 03:30 PM"},
+            {"wed_1", "Wednesday", "08:00 - 09:00 AM"},
+            {"wed_2", "Wednesday", "09:00 - 10:00 AM"},
+            {"wed_3", "Wednesday", "10:15 - 11:15 AM"},
+            {"wed_4", "Wednesday", "11:30 - 12:30 PM"},
+            {"wed_5", "Wednesday", "12:30 - 01:30 PM"},
+            {"wed_6", "Wednesday", "01:30 - 02:30 PM"},
+            {"wed_7", "Wednesday", "02:30 - 03:30 PM"},
+            {"thu_1", "Thursday", "08:00 - 09:00 AM"},
+            {"thu_2", "Thursday", "09:00 - 10:00 AM"},
+            {"thu_3", "Thursday", "10:15 - 11:15 AM"},
+            {"thu_4", "Thursday", "11:30 - 12:30 PM"},
+            {"thu_5", "Thursday", "12:30 - 01:30 PM"},
+            {"thu_6", "Thursday", "01:30 - 02:30 PM"},
+            {"thu_7", "Thursday", "02:30 - 03:30 PM"}
     };
 
     @Override
@@ -81,27 +74,34 @@ public class ScheduleSelector extends AppCompatActivity {
             return insets;
         });
 
+        subjectName = getIntent().getStringExtra("subject_name");
+        teacherId = getIntent().getIntExtra("teacher_id", -1);
+        try {
+            gradeLevel = Integer.parseInt(getIntent().getStringExtra("grade_level"));
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Invalid grade level", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+        ImageView backArrow = findViewById(R.id.back_arrow);
+        backArrow.setOnClickListener(view -> finish());
+
         Button buttonAdd = findViewById(R.id.buttonaddsub);
-        buttonAdd.setOnClickListener(view -> sendScheduleToServer());
+        buttonAdd.setOnClickListener(view -> returnSelectedSchedule());
     }
 
-    private void sendScheduleToServer() {
-        String url = "http://10.0.2.2/php_project/schedule_selector.php";
-
+    private void returnSelectedSchedule() {
         JSONArray scheduleArray = new JSONArray();
 
         for (String[] slot : timeSlots) {
-            String checkboxIdStr = slot[0];
-            String day = slot[1];
-            String time = slot[2];
-
-            int resID = getResources().getIdentifier(checkboxIdStr, "id", getPackageName());
+            int resID = getResources().getIdentifier(slot[0], "id", getPackageName());
             CheckBox cb = findViewById(resID);
             if (cb != null && cb.isChecked()) {
-                JSONObject obj = new JSONObject();
                 try {
-                    obj.put("day", day);
-                    obj.put("time", time);
+                    JSONObject obj = new JSONObject();
+                    obj.put("day", slot[1]);
+                    obj.put("time", slot[2]);
                     scheduleArray.put(obj);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -114,22 +114,9 @@ public class ScheduleSelector extends AppCompatActivity {
             return;
         }
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest request = new StringRequest(Request.Method.POST, url,
-                response -> Toast.makeText(this, "Schedule submitted!", Toast.LENGTH_SHORT).show(),
-                error -> Toast.makeText(this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show()) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("subject_name", subjectName);
-                params.put("grade_level", String.valueOf(gradeLevel));
-                params.put("teacher_id", String.valueOf(teacherId));
-                params.put("registrar_id", String.valueOf(registrarId));
-                params.put("schedule", scheduleArray.toString());
-                return params;
-            }
-        };
-
-        queue.add(request);
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("schedule_json", scheduleArray.toString());
+        setResult(RESULT_OK, resultIntent);
+        finish();
     }
 }

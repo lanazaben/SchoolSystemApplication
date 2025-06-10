@@ -1,11 +1,14 @@
 package com.example.schoolsystemapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -16,7 +19,7 @@ public class RegistrarsHome extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private Toolbar toolbar;
-
+    NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,30 +39,52 @@ public class RegistrarsHome extends AppCompatActivity {
         toggle.syncState();
 
         // Setup NavigationView and its item listener
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             Intent intent = null;
-            if (id == R.id.nav_teacher)
+
+            if (id == R.id.nav_teacher) {
                 intent = new Intent(this, teacher_list.class);
-            else if (id == R.id.nav_view_student)
-                intent = new Intent(this, StudentClass_list.class);
-            else if (id == R.id.nav_add_student) {
-                intent=new Intent(this,AddStudent.class);
-
-            } else if (id == R.id.nav_subject)
+                intent.putExtra("user_type", "registrar");
+            } else if (id == R.id.nav_GradeLevel) {
+                intent = new Intent(this, ClassList_Activity.class);
+                intent.putExtra("user_type", "registrar");
+                intent.putExtra("nav", "view_student");
+            }  else if (id == R.id.nav_subject) {
                 intent = new Intent(this, AddSubject.class);
-            else if (id == R.id.nav_logout)
+                intent.putExtra("user_type", "registrar");
+            } else if (id == R.id.nav_logout) {
                 intent = new Intent(this, LogIn.class);
+            } else if (id == R.id.nav_dark_mode) {
+                toggleDark();
+                return true;
+            }
 
-            startActivity(intent);
+            if (intent != null)
+                startActivity(intent);
 
-            // Close the drawer after an item is selected
             drawerLayout.closeDrawers();
             return true;
         });
-    }
 
+    }
+    private void toggleDark() {
+        MenuItem dark = navigationView.getMenu().findItem(R.id.nav_dark_mode);
+        SharedPreferences sp = getSharedPreferences("Mode", MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        int mode = AppCompatDelegate.getDefaultNightMode();
+        if (mode == AppCompatDelegate.MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            dark.setTitle("Dark Mode");
+            dark.setIcon(R.drawable.ic_dark_mode);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            dark.setTitle("Light Mode");
+            dark.setIcon(R.drawable.ic_light_mode);
+        }
+        ed.apply();
+    }
     @Override
     public void onBackPressed() {
         // If the drawer is open, close it; otherwise, exit the activity

@@ -26,8 +26,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.schoolsystemapplication.Data.ScheduleEntry;
-import com.example.schoolsystemapplication.Data.Student;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -42,51 +40,56 @@ public class ClassList_Activity extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     private Toolbar toolbar;
     private RecyclerView mainRecyclerView;
-    private static  final String BASE_URL = "http://10.0.2.2:80/php_project/get_grade_level.php";
+    private static final String BASE_URL = "http://10.0.2.2/php_project/get_grade_level.php";
     private List<String> gradeLevels = new ArrayList<>();
-    private Context context = this;
     private Adapter_recyclerview_className adapter;
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_class_list);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        setContentView(R.layout.activity_class_list);
 
+        // Get intent nav type
         Intent intent = getIntent();
         String nav = intent.getStringExtra("nav");
 
-        mainRecyclerView = (RecyclerView) findViewById(R.id.mainRecyclerView);
-//        String[] ClassName = {"First Grade", "Second Grade", "Third Grade", "Fourth Grade", "Fifth Grade"};
+        // Setup RecyclerView
+        mainRecyclerView = findViewById(R.id.mainRecyclerView);
         adapter = new Adapter_recyclerview_className(gradeLevels, this, nav);
         mainRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mainRecyclerView.setAdapter(adapter);
+
+        // Load grade levels from PHP backend
         loadClassName();
 
+        // Setup Toolbar and Navigation Drawer
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         drawerLayout = findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(this, drawerLayout,
-                toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        // Add the toggle to the drawer
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         SharedPreferences sharedPreferences = getSharedPreferences("Mode", MODE_PRIVATE);
 
-        // Setup NavigationView and its item listener
+        // Setup NavigationView
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
+            Intent intent1 = null;
+
             if (id == R.id.nav_home) {
-                Intent intent1 = new Intent(this, TeacherHome.class);
-                startActivity(intent1);
+                intent1 = new Intent(this, TeacherHome.class);
             } else if (id == R.id.nav_dark_mode) {
                 Menu menu = navigationView.getMenu();
                 MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
@@ -105,18 +108,15 @@ public class ClassList_Activity extends AppCompatActivity {
                 }
                 editor.apply();
             } else if (id == R.id.nav_schedule) {
-                Intent intent1 = new Intent(this, teacherSchedule.class);
-                startActivity(intent1);
-            } else if (id == R.id.nav_assignments) {
-                Intent intent1 = new Intent(this, ClassList_Activity.class);
-                intent1.putExtra("nav", "assignments");
-                startActivity(intent1);
-            } else if (id == R.id.nav_marks) {
-                Intent intent1 = new Intent(this, ClassList_Activity.class);
-                intent1.putExtra("nav", "marks");
-                startActivity(intent1);
+                intent1 = new Intent(this, teacherSchedule.class);
+            } else if (id == R.id.nav_assignments || id == R.id.nav_marks) {
+                intent1 = new Intent(this, ClassList_Activity.class);
+                intent1.putExtra("nav", id == R.id.nav_assignments ? "assignments" : "marks");
             } else if (id == R.id.nav_logout) {
-                Intent intent1 = new Intent(this, LogIn.class);
+                intent1 = new Intent(this, LogIn.class);
+            }
+
+            if (intent1 != null) {
                 startActivity(intent1);
             }
             drawerLayout.closeDrawers();
@@ -126,37 +126,28 @@ public class ClassList_Activity extends AppCompatActivity {
 
     private void loadClassName() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            gradeLevels.clear();
-                            JSONArray array = new JSONArray(response);
-                            for (int i = 0; i<array.length(); i++){
-                                JSONObject object = array.getJSONObject(i);
-                                String className = object.getString("grade_level");
-                                gradeLevels.add(className);
-                            }
-                        }catch (Exception e){
-                            e.printStackTrace();
-                            Toast.makeText(context, "JSON Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                response -> {
+                    try {
+                        gradeLevels.clear();
+                        JSONArray array = new JSONArray(response);
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject object = array.getJSONObject(i);
+                            String className = object.getString("grade_level");
+                            gradeLevels.add(className);
                         }
                         adapter.notifyDataSetChanged();
-//                    Adapter_insertMark adapter = new Adapter_insertMark(students, context);
-//                    mainRecyclerView.setAdapter(adapter);
+                    } catch (Exception e) {
+                        Toast.makeText(context, "Parse error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Error: " + error.toString(), Toast.LENGTH_LONG).show();
-            }
-        });
-        Volley.newRequestQueue(ClassList_Activity.this).add(stringRequest);
+                },
+                error -> Toast.makeText(context, "Volley error: " + error.getMessage(), Toast.LENGTH_LONG).show()
+        );
+
+        Volley.newRequestQueue(this).add(stringRequest);
     }
 
     @Override
     public void onBackPressed() {
-        // If the drawer is open, close it; otherwise, exit the activity
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {

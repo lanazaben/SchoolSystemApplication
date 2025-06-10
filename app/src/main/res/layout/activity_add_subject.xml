@@ -53,9 +53,7 @@
                     android:id="@+id/editTextGrade"
                     android:text="@string/eg_grade_1"
                     style="@style/FormEditText"
-                    android:focusable="false"
-                    android:clickable="false"
-                    android:cursorVisible="false"/>
+                    />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -83,6 +81,36 @@
                     android:padding="10dp"
                     android:background="@drawable/edittext"
                     android:textColor="@color/black"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- New Subject -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    style="@style/LabelText"
+                    android:text="@string/new_subject"
+                    />
+
+                <EditText
+                    android:id="@+id/SubjectOther"
+                    android:text="@string/eg_social_studies"
+                    style="@style/FormEditText"
+                    android:enabled="false"
+                    android:visibility="gone"
+                    />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

@@ -1,9 +1,11 @@
 package com.example.schoolsystemapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -55,7 +58,7 @@ public class StudentClass_list extends AppCompatActivity {
     private Adapter_studentList adapter;
     private List<Student> students = new ArrayList<>();
     private SearchView searchView;
-
+    NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,28 +100,45 @@ public class StudentClass_list extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         // Setup NavigationView and its item listener
-        NavigationView navigationView = findViewById(R.id.nav_view);
+         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             Intent intent = null;
             if (id == R.id.nav_teacher)
                 intent = new Intent(this, teacher_list.class);
-            else if (id == R.id.nav_view_student)
-                intent = new Intent(this, StudentClass_list.class);
-            else if (id == R.id.nav_add_student) {
-                intent=new Intent(this,AddStudent.class);
-
+            else if (id == R.id.nav_GradeLevel) {
+                intent = new Intent(this, ClassList_Activity.class);
+                intent.putExtra("user_type", "registrar");
+                intent.putExtra("nav", "view_student");
             } else if (id == R.id.nav_subject)
                 intent = new Intent(this, AddSubject.class);
             else if (id == R.id.nav_logout)
                 intent = new Intent(this, LogIn.class);
-
+            else if (id == R.id.nav_dark_mode) {
+                toggleDark();
+                return true;
+            }
             // Close the drawer after an item is selected
             drawerLayout.closeDrawers();
             return true;
         });
     }
-
+    private void toggleDark() {
+        MenuItem dark = navigationView.getMenu().findItem(R.id.nav_dark_mode);
+        SharedPreferences sp = getSharedPreferences("Mode", MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        int mode = AppCompatDelegate.getDefaultNightMode();
+        if (mode == AppCompatDelegate.MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            dark.setTitle("Dark Mode");
+            dark.setIcon(R.drawable.ic_dark_mode);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            dark.setTitle("Light Mode");
+            dark.setIcon(R.drawable.ic_light_mode);
+        }
+        ed.apply();
+    }
     private void loadStudent() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL,
