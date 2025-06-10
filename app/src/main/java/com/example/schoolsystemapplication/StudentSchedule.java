@@ -111,6 +111,7 @@ public class StudentSchedule extends AppCompatActivity {
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        SharedPreferences sharedPreferences = getSharedPreferences("Mode", MODE_PRIVATE);
 
         nav.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
@@ -119,15 +120,32 @@ public class StudentSchedule extends AppCompatActivity {
             if (!isRegistrarView) {
                 if (id == R.id.nav_teacher)
                     intent = new Intent(this, teacher_list.class);
-                else if (id == R.id.nav_view_student)
-                    intent = new Intent(this, StudentClass_list.class);
-                else if (id == R.id.nav_add_student) {
-                    intent=new Intent(this,AddStudent.class);
-
+                else if (id == R.id.nav_GradeLevel) {
+                    intent = new Intent(this, ClassList_Activity.class);
+                    intent.putExtra("user_type", "registrar");
+                    intent.putExtra("nav", "view_student");
                 } else if (id == R.id.nav_subject)
                     intent = new Intent(this, AddSubject.class);
                 else if (id == R.id.nav_logout)
                     intent = new Intent(this, LogIn.class);
+                else if (id == R.id.nav_dark_mode) {
+                    Menu menu = nav.getMenu();
+                    MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    int currentNightMode = AppCompatDelegate.getDefaultNightMode();
+                    if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        editor.putString("mode", "night");
+                        item_dark.setTitle("Dark Mode");
+                        item_dark.setIcon(R.drawable.ic_dark_mode);
+                    } else {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        editor.putString("mode", "dark");
+                        item_dark.setTitle("Light Mode");
+                        item_dark.setIcon(R.drawable.ic_light_mode);
+                    }
+                    editor.apply();
+                }
             } else {
                 if (id == R.id.nav_home)
                     intent = new Intent(this, TeacherHome.class);
@@ -140,8 +158,22 @@ public class StudentSchedule extends AppCompatActivity {
                 else if (id == R.id.nav_logout)
                     intent = new Intent(this, LogIn.class);
                 else if (id == R.id.nav_dark_mode) {
-                    toggleDark();
-                    return true;
+                    Menu menu = nav.getMenu();
+                    MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    int currentNightMode = AppCompatDelegate.getDefaultNightMode();
+                    if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        editor.putString("mode", "night");
+                        item_dark.setTitle("Dark Mode");
+                        item_dark.setIcon(R.drawable.ic_dark_mode);
+                    } else {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        editor.putString("mode", "dark");
+                        item_dark.setTitle("Light Mode");
+                        item_dark.setIcon(R.drawable.ic_light_mode);
+                    }
+                    editor.apply();
                 }
             }
 

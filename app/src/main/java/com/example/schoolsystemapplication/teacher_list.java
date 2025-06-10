@@ -1,11 +1,15 @@
 package com.example.schoolsystemapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
@@ -76,6 +80,7 @@ public class teacher_list extends AppCompatActivity {
                 toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        SharedPreferences sharedPreferences = getSharedPreferences("Mode", MODE_PRIVATE);
 
         NavigationView navigationView = findViewById(R.id.drawer_nav);
         navigationView.setNavigationItemSelectedListener(item -> {
@@ -83,15 +88,33 @@ public class teacher_list extends AppCompatActivity {
             Intent intent = null;
             if (id == R.id.nav_teacher)
                 intent = new Intent(this, teacher_list.class);
-            else if (id == R.id.nav_view_student)
-                intent = new Intent(this, StudentClass_list.class);
-            else if (id == R.id.nav_add_student) {
-                intent=new Intent(this,AddStudent.class);
-
+            else if (id == R.id.nav_GradeLevel) {
+                intent = new Intent(this, ClassList_Activity.class);
+                intent.putExtra("user_type", "registrar");
+                intent.putExtra("nav", "view_student");
             } else if (id == R.id.nav_subject)
                 intent = new Intent(this, AddSubject.class);
             else if (id == R.id.nav_logout)
                 intent = new Intent(this, LogIn.class);
+            else if (id == R.id.nav_dark_mode) {
+                Menu menu = navigationView.getMenu();
+                MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                int currentNightMode = AppCompatDelegate.getDefaultNightMode();
+                if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    editor.putString("mode", "night");
+                    item_dark.setTitle("Dark Mode");
+                    item_dark.setIcon(R.drawable.ic_dark_mode);
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    editor.putString("mode", "dark");
+                    item_dark.setTitle("Light Mode");
+                    item_dark.setIcon(R.drawable.ic_light_mode);
+                }
+                editor.apply();
+            }
+
             startActivity(intent);
 
 

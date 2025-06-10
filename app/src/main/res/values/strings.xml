@@ -91,6 +91,10 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="account">Account</string>
     <string name="logout">Logout</string>
+    <string name="new_subject">New Subject</string>
+    <string name="eg_social_studies">eg. Social Studies</string>
+    <string name="grade_level_students">Grade Level Students</string>
+    <string name="view_schedule">View Schedule</string>
 
     <string-array name="dark_mode_options">
         <item>On</item>

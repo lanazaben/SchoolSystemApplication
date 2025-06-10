@@ -18,15 +18,12 @@
 
         <!-- Student Submenu -->
         <item
-            android:title="@string/students"
+            android:title="@string/grade_level_students"
             android:icon="@drawable/ic_student">
             <menu>
                 <item
-                    android:id="@+id/nav_view_student"
-                    android:title="View Student" />
-                <item
-                    android:id="@+id/nav_add_student"
-                    android:title="Add Student" />
+                    android:id="@+id/nav_GradeLevel"
+                    android:title="@string/view_schedule" />
             </menu>
         </item>
 

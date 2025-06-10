@@ -1,6 +1,7 @@
 package com.example.schoolsystemapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,19 +77,26 @@ public class Adapter_studentList extends RecyclerView.Adapter<Adapter_studentLis
     }
 
     @Override
+
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Student student = students.get(position);
         CardView cardView = holder.cardView;
         TextView textView = (TextView) cardView.findViewById(R.id.listName);
-        RecyclerView optionsRecycler = (RecyclerView) cardView.findViewById(R.id.optionsRecycler);
         textView.setText(student.getName());
-        cardView.setOnClickListener( new View.OnClickListener(){
+
+        cardView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                //
+            public void onClick(View v) {
+                // Create intent to open StudentSchedule
+                Intent intent = new Intent(context, StudentSchedule.class);
+                // Pass the chosen student ID
+                intent.putExtra("student_id", student.getId());
+                intent.putExtra("from", "student_list");
+                context.startActivity(intent);
             }
         });
     }
+
 
     @Override
     public int getItemCount() {

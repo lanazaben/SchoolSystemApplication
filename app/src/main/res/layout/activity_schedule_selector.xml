@@ -19,8 +19,16 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/AddAsgtoolbar"
         style="@style/CustomToolbar" />
-
-
+    <ImageView
+        android:id="@+id/back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/baseline_arrow_back_24"
+    android:contentDescription="@string/back"
+    android:clickable="true"
+    android:focusable="true" />
     <FrameLayout
         android:id="@+id/tableFrame"
         android:layout_width="match_parent"
