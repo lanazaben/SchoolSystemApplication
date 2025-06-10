@@ -1,6 +1,7 @@
 package com.example.schoolsystemapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class Adapter_recyclerview_className extends RecyclerView.Adapter<Adapter
     private List<String> className;
     private String nav;
     private static final String BASE_URL = "http://10.0.2.2:80/php_project/get_subjects_use_gradeLevel.php";
+    private Adapter_teacherList.OnItemClickListener listener;
 
     public Adapter_recyclerview_className(List<String> className, Context context, String nav) {
         this.context = context;
@@ -47,7 +49,9 @@ public class Adapter_recyclerview_className extends RecyclerView.Adapter<Adapter
                 .inflate(R.layout.card_item_layout, parent, false);
         return new ViewHolder(v);
     }
-
+    public void setOnItemClickListener(Adapter_teacherList.OnItemClickListener listener) {
+        this.listener = listener;
+    }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         CardView cardView = holder.cardView;
@@ -57,17 +61,23 @@ public class Adapter_recyclerview_className extends RecyclerView.Adapter<Adapter
 
         cardView.setOnClickListener(v -> {
             int adapterPosition = holder.getAdapterPosition();
+            if (adapterPosition == RecyclerView.NO_POSITION) return;
 
-            if (adapterPosition == RecyclerView.NO_POSITION)
+            String gradeLevel = className.get(adapterPosition);
+
+            // Registrar: Go directly to ViewClassSchedule
+            if ("registrar".equals(nav)) {
+                Intent intent = new Intent(context, ViewClassSchedule.class);
+                intent.putExtra("grade_level", gradeLevel);
+                context.startActivity(intent);
                 return;
+            }
 
+            // Teacher: Show subject list
             if (optionsRecycler.getVisibility() == View.VISIBLE) {
                 optionsRecycler.setVisibility(View.GONE);
                 return;
             }
-
-            String gradeLevel = className.get(adapterPosition);
-
             StringRequest stringRequest = new StringRequest(Request.Method.POST, BASE_URL,
                 response -> {
                     List<SchoolSubject> subjects = new ArrayList<>();

@@ -54,11 +54,13 @@ public class StudentClass_list extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     private Toolbar toolbar;
     private RecyclerView mainRecycler;
-    private static final String BASE_URL = "http://10.0.2.2:80/php_project/get_AllStudent.php";
+    private static final String BASE_URL = "http://10.0.2.2:80/php_project/get_student_use_gradelLevel.php";
     private Adapter_studentList adapter;
     private List<Student> students = new ArrayList<>();
     private SearchView searchView;
     NavigationView navigationView;
+    private int gradeLevel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,11 +71,19 @@ public class StudentClass_list extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
         searchView = findViewById(R.id.searchView);
         mainRecycler=(RecyclerView) findViewById(R.id.parentRecyclerView);
         adapter = new Adapter_studentList(students, this);
         mainRecycler.setLayoutManager(new LinearLayoutManager(this));
         mainRecycler.setAdapter(adapter);
+        gradeLevel = getIntent().getIntExtra("grade_level", -1);
+        if (gradeLevel == -1) {
+            Toast.makeText(this, "Missing grade level!", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
         loadStudent();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -108,12 +118,16 @@ public class StudentClass_list extends AppCompatActivity {
                 intent = new Intent(this, teacher_list.class);
             else if (id == R.id.nav_GradeLevel) {
                 intent = new Intent(this, ClassList_Activity.class);
-                intent.putExtra("user_type", "registrar");
+                intent.putExtra("from", "registrar");
                 intent.putExtra("nav", "view_student");
-            } else if (id == R.id.nav_subject)
+                startActivity(intent);
+            } else if (id == R.id.nav_subject) {
                 intent = new Intent(this, AddSubject.class);
-            else if (id == R.id.nav_logout)
+                startActivity(intent);
+            } else if (id == R.id.nav_logout){
                 intent = new Intent(this, LogIn.class);
+                startActivity(intent);
+            }
             else if (id == R.id.nav_dark_mode) {
                 toggleDark();
                 return true;
@@ -140,15 +154,14 @@ public class StudentClass_list extends AppCompatActivity {
         ed.apply();
     }
     private void loadStudent() {
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, BASE_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             students.clear();
                             JSONArray array = new JSONArray(response);
-                            for (int i = 0; i<array.length(); i++){
+                            for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
                                 int id = object.getInt("student_id");
                                 String name = object.getString("name");
@@ -160,19 +173,30 @@ public class StudentClass_list extends AppCompatActivity {
                                 Student student = new Student(id, name, email, gradeLevel, parentNum, BirthCertificate, schedule);
                                 students.add(student);
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
+                            Toast.makeText(StudentClass_list.this, "Parse error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                         adapter.notifyDataSetChanged();
                         adapter.setStudentss(new ArrayList<>(students));
                     }
-                }, new Response.ErrorListener() {
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(StudentClass_list.this, "Volley error: " + error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(StudentClass_list.this, error.toString(),Toast.LENGTH_LONG).show();
+            protected java.util.Map<String, String> getParams() {
+                java.util.Map<String, String> params = new java.util.HashMap<>();
+                params.put("grade_level", String.valueOf(gradeLevel));
+                return params;
             }
-        });
+        };
+
         Volley.newRequestQueue(StudentClass_list.this).add(stringRequest);
     }
+
 
 }
 

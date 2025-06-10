@@ -23,7 +23,7 @@
             <menu>
                 <item
                     android:id="@+id/nav_GradeLevel"
-                    android:title="@string/view_schedule" />
+                    android:title="@string/view_grade_levels" />
             </menu>
         </item>
 
