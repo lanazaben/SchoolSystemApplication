@@ -49,7 +49,7 @@ public class RegistrarsHome extends AppCompatActivity {
                 intent.putExtra("user_type", "registrar");
             } else if (id == R.id.nav_GradeLevel) {
                 intent = new Intent(this, ClassList_Activity.class);
-                intent.putExtra("user_type", "registrar");
+                intent.putExtra("from", "registrar");
                 intent.putExtra("nav", "view_student");
             }  else if (id == R.id.nav_subject) {
                 intent = new Intent(this, AddSubject.class);

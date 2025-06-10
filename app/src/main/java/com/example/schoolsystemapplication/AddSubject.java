@@ -76,9 +76,9 @@ public class AddSubject extends AppCompatActivity {
         fetchSubjects(subjectSpinner);
 
         select.setOnClickListener(v -> {
-            String grade = gradeLevel.getText().toString().trim();
+            String grade1 = gradeLevel.getText().toString().trim();
 
-            if (grade.isEmpty()) {
+            if (grade1.isEmpty()) {
                 Toast.makeText(AddSubject.this, "Please enter a grade level", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -87,12 +87,12 @@ public class AddSubject extends AppCompatActivity {
                 Toast.makeText(AddSubject.this, "Please select a teacher and a subject", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (grade.toLowerCase().startsWith("grade")) {
-                grade = grade.replaceAll("[^0-9]", ""); // keep only digits
+            if (grade1.toLowerCase().startsWith("grade")) {
+                grade1 = grade1.replaceAll("[^0-9]", ""); // keep only digits
             }
 
             Intent intent = new Intent(AddSubject.this, ScheduleSelector.class);
-            intent.putExtra("grade_level", grade);
+            intent.putExtra("grade_level", grade1);
             intent.putExtra("subject_name", selectedSubjectName);
             intent.putExtra("teacher_id", selectedTeacherId);
             startActivityForResult(intent, REQUEST_CODE_SCHEDULE);
@@ -100,6 +100,10 @@ public class AddSubject extends AppCompatActivity {
 
         add.setOnClickListener(v -> {
             String grade = gradeLevel.getText().toString().trim();
+
+            if (grade.toLowerCase().startsWith("grade")) {
+                grade = grade.replaceAll("[^0-9]", ""); // keep only digits
+            }
 
             if (grade.isEmpty()) {
                 Toast.makeText(AddSubject.this, "Please enter a grade level", Toast.LENGTH_SHORT).show();
@@ -215,7 +219,7 @@ public class AddSubject extends AppCompatActivity {
                 SharedPreferences sp = getSharedPreferences("registrar_session", MODE_PRIVATE);
                 int registrarId = sp.getInt("registrar_id", 1); // fallback to 1
 
-                params.put("subject_name", subjectName);
+                params.put("name", subjectName);
                 params.put("grade_level", gradeLevel);
                 params.put("teacher_id", String.valueOf(teacherId));
                 params.put("registrar_id", String.valueOf(registrarId));

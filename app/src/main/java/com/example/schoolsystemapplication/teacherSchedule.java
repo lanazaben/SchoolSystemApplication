@@ -123,7 +123,7 @@ public class teacherSchedule extends AppCompatActivity {
                 else if (id == R.id.nav_GradeLevel) {
                     intent = new Intent(this, ClassList_Activity.class);
                     intent.putExtra("user_type", "registrar");
-                    intent.putExtra("nav", "view_student");    intent=new Intent(this,AddStudent.class);
+                    intent.putExtra("nav", "view_student");
                 } else if (id == R.id.nav_subject)
                     intent = new Intent(this, AddSubject.class);
                 else if (id == R.id.nav_logout)

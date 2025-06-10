@@ -42,10 +42,8 @@ public class AddStudent extends AppCompatActivity {
             Intent intent = null;
             if (id == R.id.nav_teacher)
                 intent = new Intent(this, teacher_list.class);
-            else if (id == R.id.nav_view_student)
-                intent = new Intent(this, StudentClass_list.class);
-            else if (id == R.id.nav_add_student) {
-return true;
+            else if (id == R.id.nav_GradeLevel){
+                intent=new Intent (this,ClassList_Activity.class);
             } else if (id == R.id.nav_subject)
                 intent = new Intent(this, AddSubject.class);
             else if (id == R.id.nav_logout)

@@ -74,7 +74,7 @@ public class ScheduleSelector extends AppCompatActivity {
             return insets;
         });
 
-        subjectName = getIntent().getStringExtra("subject_name");
+        subjectName = getIntent().getStringExtra("name");
         teacherId = getIntent().getIntExtra("teacher_id", -1);
         try {
             gradeLevel = Integer.parseInt(getIntent().getStringExtra("grade_level"));
@@ -83,6 +83,29 @@ public class ScheduleSelector extends AppCompatActivity {
             finish();
             return;
         }
+        String scheduleJson = getIntent().getStringExtra("selected_schedule");
+        if (scheduleJson != null) {
+            try {
+                JSONArray selected = new JSONArray(scheduleJson);
+                for (int i = 0; i < selected.length(); i++) {
+                    JSONObject obj = selected.getJSONObject(i);
+                    String day = obj.getString("day");
+                    String time = obj.getString("time");
+
+                    for (String[] slot : timeSlots) {
+                        if (slot[1].equals(day) && slot[2].equals(time)) {
+                            int resID = getResources().getIdentifier(slot[0], "id", getPackageName());
+                            CheckBox cb = findViewById(resID);
+                            if (cb != null) cb.setChecked(true);
+                        }
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Failed to pre-check schedule", Toast.LENGTH_SHORT).show();
+            }
+        }
+
 
         ImageView backArrow = findViewById(R.id.back_arrow);
         backArrow.setOnClickListener(view -> finish());

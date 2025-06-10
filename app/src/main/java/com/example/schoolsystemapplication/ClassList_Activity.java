@@ -39,11 +39,15 @@ public class ClassList_Activity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private Toolbar toolbar;
+    NavigationView navigationView;
+
     private RecyclerView mainRecyclerView;
     private static final String BASE_URL = "http://10.0.2.2/php_project/get_grade_level.php";
     private List<String> gradeLevels = new ArrayList<>();
     private Adapter_recyclerview_className adapter;
     private Context context = this;
+    private String grade_level = null;
+    private boolean isRegistrarView = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +61,48 @@ public class ClassList_Activity extends AppCompatActivity {
             return insets;
         });
 
-        // Get intent nav type
-        Intent intent = getIntent();
-        String nav = intent.getStringExtra("nav");
+        String from = getIntent().getStringExtra("from");
+        isRegistrarView = "registrar".equals(from);
+        if (!isRegistrarView) {
+            SharedPreferences sp = getSharedPreferences("teacher_session", MODE_PRIVATE);
+            grade_level = sp.getString("grade_level", null);
 
-        // Setup RecyclerView
+            if (grade_level == null && getIntent() != null) {
+                grade_level = getIntent().getStringExtra("grade_level");
+            }
+
+            if (grade_level == null) {
+                Toast.makeText(this, "No grade level provided for teacher view.", Toast.LENGTH_LONG).show();
+                finish();
+                return;
+            }
+        }
+
+
+        navigationView = findViewById(R.id.nav_view);
+        drawerLayout = findViewById(R.id.drawer_layout);
+
+
         mainRecyclerView = findViewById(R.id.mainRecyclerView);
-        adapter = new Adapter_recyclerview_className(gradeLevels, this, nav);
+        adapter = new Adapter_recyclerview_className(gradeLevels, this, from);
         mainRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mainRecyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(grade -> {
+            Intent intent;
+            if (isRegistrarView) {
+                // Registrar: go to ViewClassSchedule and pass selected grade level
+                intent = new Intent(ClassList_Activity.this, ViewClassSchedule.class);
+                intent.putExtra("grade_level", grade_level);
+                intent.putExtra("from", "registrar");
+            } else {
+                // Teacher: go to ViewClassSchedule but gradelevel is already known via SharedPreferences
+                intent = new Intent(ClassList_Activity.this, ViewClassSchedule.class);
+                intent.putExtra("grade_level", grade_level);
+                intent.putExtra("from", "teacher");
+            }
+            startActivity(intent);
+        });
+
 
         // Load grade levels from PHP backend
         loadClassName();
@@ -73,53 +110,96 @@ public class ClassList_Activity extends AppCompatActivity {
         // Setup Toolbar and Navigation Drawer
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setupDrawer();
 
-        drawerLayout = findViewById(R.id.drawer_layout);
+
+    }
+    private void setupDrawer() {
+        // Clear any existing menu (in case of reuse)
+        navigationView.getMenu().clear();
+
+        // Inflate appropriate menu
+        if (isRegistrarView) {
+            navigationView.inflateMenu(R.menu.drawer_menu);
+        } else {
+            navigationView.inflateMenu(R.menu.teacher);
+        }
+
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
         SharedPreferences sharedPreferences = getSharedPreferences("Mode", MODE_PRIVATE);
 
-        // Setup NavigationView
-        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            Intent intent1 = null;
+            Intent intent = null;
 
-            if (id == R.id.nav_home) {
-                intent1 = new Intent(this, TeacherHome.class);
-            } else if (id == R.id.nav_dark_mode) {
-                Menu menu = navigationView.getMenu();
-                MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                int currentNightMode = AppCompatDelegate.getDefaultNightMode();
-                if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    editor.putString("mode", "night");
-                    item_dark.setTitle("Dark Mode");
-                    item_dark.setIcon(R.drawable.ic_dark_mode);
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    editor.putString("mode", "dark");
-                    item_dark.setTitle("Light Mode");
-                    item_dark.setIcon(R.drawable.ic_light_mode);
+            if (!isRegistrarView) {
+                if (id == R.id.nav_teacher)
+                    intent = new Intent(this, teacher_list.class);
+                else if (id == R.id.nav_GradeLevel) {
+                    intent = new Intent(this, ClassList_Activity.class);
+                    intent.putExtra("user_type", "registrar");
+                    intent.putExtra("nav", "view_student");
+                } else if (id == R.id.nav_subject)
+                    intent = new Intent(this, AddSubject.class);
+                else if (id == R.id.nav_logout)
+                    intent = new Intent(this, LogIn.class);
+                else if (id == R.id.nav_dark_mode) {
+                    Menu menu = navigationView.getMenu();
+                    MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    int currentNightMode = AppCompatDelegate.getDefaultNightMode();
+                    if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        editor.putString("mode", "night");
+                        item_dark.setTitle("Dark Mode");
+                        item_dark.setIcon(R.drawable.ic_dark_mode);
+                    } else {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        editor.putString("mode", "dark");
+                        item_dark.setTitle("Light Mode");
+                        item_dark.setIcon(R.drawable.ic_light_mode);
+                    }
+                    editor.apply();
                 }
-                editor.apply();
-            } else if (id == R.id.nav_schedule) {
-                intent1 = new Intent(this, teacherSchedule.class);
-            } else if (id == R.id.nav_assignments || id == R.id.nav_marks) {
-                intent1 = new Intent(this, ClassList_Activity.class);
-                intent1.putExtra("nav", id == R.id.nav_assignments ? "assignments" : "marks");
-            } else if (id == R.id.nav_logout) {
-                intent1 = new Intent(this, LogIn.class);
+            } else {
+                if (id == R.id.nav_home)
+                    intent = new Intent(this, TeacherHome.class);
+                else if (id == R.id.nav_schedule)
+                    intent = new Intent(this, teacherSchedule.class);
+                else if (id == R.id.nav_assignments)
+                    intent = new Intent(this, ClassList_Activity.class).putExtra("nav", "assignments");
+                else if (id == R.id.nav_marks)
+                    intent = new Intent(this, ClassList_Activity.class).putExtra("nav", "marks");
+                else if (id == R.id.nav_logout)
+                    intent = new Intent(this, LogIn.class);
+                else if (id == R.id.nav_dark_mode) {
+                    Menu menu = navigationView.getMenu();
+                    MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    int currentNightMode = AppCompatDelegate.getDefaultNightMode();
+                    if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        editor.putString("mode", "night");
+                        item_dark.setTitle("Dark Mode");
+                        item_dark.setIcon(R.drawable.ic_dark_mode);
+                    } else {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        editor.putString("mode", "dark");
+                        item_dark.setTitle("Light Mode");
+                        item_dark.setIcon(R.drawable.ic_light_mode);
+                    }
+                    editor.apply();
+                }
             }
 
-            if (intent1 != null) {
-                startActivity(intent1);
+            if (intent != null) {
+                startActivity(intent);
+                drawerLayout.closeDrawers();
             }
-            drawerLayout.closeDrawers();
+
             return true;
         });
     }
