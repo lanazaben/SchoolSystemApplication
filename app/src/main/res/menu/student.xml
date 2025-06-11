@@ -2,15 +2,18 @@
 
     <item
         android:id="@+id/nav_Schedule"
-        android:title="@string/schedule"/>
+        android:title="@string/schedule"
+        android:icon="@drawable/ic_schedule"/>
 
     <item
         android:id="@+id/nav_Assignment"
-        android:title="@string/assignment" />
+        android:title="@string/assignment"
+        android:icon="@drawable/ic_assignment"/>
 
     <item
         android:id="@+id/nav_Marks"
-        android:title="@string/marks" />
+        android:title="@string/marks"
+        android:icon="@drawable/ic_mark"/>
 
 </menu>
     <!-- android:icon="@drawable/schadual" -->
