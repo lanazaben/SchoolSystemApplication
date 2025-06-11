@@ -112,14 +112,13 @@ public class ViewClassSchedule extends AppCompatActivity {
 
             if (id == R.id.nav_teacher) {
                 navIntent = new Intent(this, teacher_list.class);
-                navIntent.putExtra("user_type", "registrar");
+                navIntent.putExtra("from", "registrar");
             } else if (id == R.id.nav_GradeLevel) {
                 navIntent = new Intent(this, ClassList_Activity.class);
-                navIntent.putExtra("user_type", "registrar");
+                navIntent.putExtra("from", "registrar");
                 navIntent.putExtra("nav", "view_student");
             } else if (id == R.id.nav_subject) {
                 navIntent = new Intent(this, AddSubject.class);
-                navIntent.putExtra("user_type", "registrar");
             } else if (id == R.id.nav_logout) {
                 navIntent = new Intent(this, LogIn.class);
             } else if (id == R.id.nav_dark_mode) {
@@ -127,7 +126,9 @@ public class ViewClassSchedule extends AppCompatActivity {
                 return true;
             }
 
-            if (navIntent != null) startActivity(navIntent);
+            startActivity(intent);
+
+
             drawerLayout.closeDrawers();
             return true;
         });

@@ -71,6 +71,18 @@ public class teacher_list extends AppCompatActivity {
                 return false;
             }
         });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+//                adapter.filter(newText);
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -90,7 +102,7 @@ public class teacher_list extends AppCompatActivity {
                 intent = new Intent(this, teacher_list.class);
             else if (id == R.id.nav_GradeLevel) {
                 intent = new Intent(this, ClassList_Activity.class);
-                intent.putExtra("user_type", "registrar");
+                intent.putExtra("from", "registrar");
                 intent.putExtra("nav", "view_student");
             } else if (id == R.id.nav_subject)
                 intent = new Intent(this, AddSubject.class);

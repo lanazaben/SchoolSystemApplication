@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -71,20 +72,22 @@ public class teacherSchedule extends AppCompatActivity {
 
         String from = getIntent().getStringExtra("from");
         isRegistrarView = "registrar".equals(from);
+if(!isRegistrarView) {
+    SharedPreferences sp = getSharedPreferences("teacher_session", MODE_PRIVATE);
+    teacherId = sp.getInt("teacher_id", -1);
 
-        SharedPreferences sp = getSharedPreferences("teacher_session", MODE_PRIVATE);
-        teacherId = sp.getInt("teacher_id", -1);
+    if (teacherId == -1 && getIntent() != null) {
+        teacherId = getIntent().getIntExtra("teacher_id", -1);
+    }
 
-        if (teacherId == -1 && getIntent() != null) {
-            teacherId = getIntent().getIntExtra("teacher_id", -1);
-        }
-
-        if (teacherId == -1) {
-            Toast.makeText(this, "No teacher ID provided.", Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
-
+    if (teacherId == -1) {
+        Toast.makeText(this, "No teacher ID provided.", Toast.LENGTH_LONG).show();
+        finish();
+        return;
+    }
+}
+        ImageView backArrow = findViewById(R.id.backArrow);
+        backArrow.setOnClickListener(view -> finish());
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -122,7 +125,7 @@ public class teacherSchedule extends AppCompatActivity {
                     intent = new Intent(this, teacher_list.class);
                 else if (id == R.id.nav_GradeLevel) {
                     intent = new Intent(this, ClassList_Activity.class);
-                    intent.putExtra("user_type", "registrar");
+                    intent.putExtra("from", "registrar");
                     intent.putExtra("nav", "view_student");
                 } else if (id == R.id.nav_subject)
                     intent = new Intent(this, AddSubject.class);

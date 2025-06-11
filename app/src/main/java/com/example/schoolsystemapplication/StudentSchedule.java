@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -42,7 +43,7 @@ public class StudentSchedule extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView nav;
 
-    private int teacherId = -1;
+    private int studentId = -1;
     private boolean isRegistrarView = false;
 
     private static final String[] TIME_KEYS = {
@@ -71,20 +72,26 @@ public class StudentSchedule extends AppCompatActivity {
 
         String from = getIntent().getStringExtra("from");
         isRegistrarView = "registrar".equals(from);
+        studentId = getIntent().getIntExtra("student_id",-1);
 
-        SharedPreferences sp = getSharedPreferences("teacher_session", MODE_PRIVATE);
-        teacherId = sp.getInt("teacher_id", -1);
 
-        if (teacherId == -1 && getIntent() != null) {
-            teacherId = getIntent().getIntExtra("teacher_id", -1);
+        if (!isRegistrarView) {
+           SharedPreferences  sp = getSharedPreferences("teacher_session", MODE_PRIVATE);
+            studentId = sp.getInt("student_id", -1);
+            studentId = getIntent().getIntExtra("student_id",-1);
+
+            if (studentId == -1 && getIntent() != null) {
+                studentId = getIntent().getIntExtra("student_id", -1);
+            }
+
+            if (studentId == -1) {
+                Toast.makeText(this, "No student ID provided.", Toast.LENGTH_LONG).show();
+                finish();
+                return;
+            }
         }
-
-        if (teacherId == -1) {
-            Toast.makeText(this, "No teacher ID provided.", Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
-
+        ImageView backArrow = findViewById(R.id.backArrow);
+        backArrow.setOnClickListener(view -> finish());
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -93,7 +100,7 @@ public class StudentSchedule extends AppCompatActivity {
 
         setupDrawer();
 
-        fetchTeacherSchedule();
+        fetchStudentSchedule();
     }
 
     private void setupDrawer() {
@@ -102,9 +109,9 @@ public class StudentSchedule extends AppCompatActivity {
 
         // Inflate appropriate menu
         if (isRegistrarView) {
-            nav.inflateMenu(R.menu.teacher);
-        } else {
             nav.inflateMenu(R.menu.drawer_menu);
+        } else {
+            nav.inflateMenu(R.menu.student);
         }
 
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
@@ -122,7 +129,7 @@ public class StudentSchedule extends AppCompatActivity {
                     intent = new Intent(this, teacher_list.class);
                 else if (id == R.id.nav_GradeLevel) {
                     intent = new Intent(this, ClassList_Activity.class);
-                    intent.putExtra("user_type", "registrar");
+                    intent.putExtra("from", "registrar");
                     intent.putExtra("nav", "view_student");
                 } else if (id == R.id.nav_subject)
                     intent = new Intent(this, AddSubject.class);
@@ -185,31 +192,14 @@ public class StudentSchedule extends AppCompatActivity {
             return true;
         });
     }
-
-    private void toggleDark() {
-        MenuItem dark = nav.getMenu().findItem(R.id.nav_dark_mode);
-        SharedPreferences sp = getSharedPreferences("Mode", MODE_PRIVATE);
-        SharedPreferences.Editor ed = sp.edit();
-        int mode = AppCompatDelegate.getDefaultNightMode();
-        if (mode == AppCompatDelegate.MODE_NIGHT_YES) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            dark.setTitle("Dark Mode");
-            dark.setIcon(R.drawable.ic_dark_mode);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            dark.setTitle("Light Mode");
-            dark.setIcon(R.drawable.ic_light_mode);
-        }
-        ed.apply();
-    }
-
-    private void fetchTeacherSchedule() {
-        String url = "http://10.0.2.2/php_project/teacherSched.php?teacher_id=" + teacherId;
+    private void fetchStudentSchedule() {
+        String url = "http://10.0.2.2/php_project/student_schedule.php?student_id=" + studentId;
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 this::populateScheduleTable,
                 error -> Toast.makeText(this, "Failed to load schedule", Toast.LENGTH_SHORT).show());
         queue.add(request);
+        Toast.makeText(this, "url: "+ url, Toast.LENGTH_SHORT).show();
     }
 
     private void populateScheduleTable(JSONObject data) {
@@ -244,6 +234,22 @@ public class StudentSchedule extends AppCompatActivity {
         } catch (JSONException e) {
             Toast.makeText(this, "Parse error", Toast.LENGTH_SHORT).show();
         }
+    }
+    private void toggleDark() {
+        MenuItem dark = nav.getMenu().findItem(R.id.nav_dark_mode);
+        SharedPreferences sp = getSharedPreferences("Mode", MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        int mode = AppCompatDelegate.getDefaultNightMode();
+        if (mode == AppCompatDelegate.MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            dark.setTitle("Dark Mode");
+            dark.setIcon(R.drawable.ic_dark_mode);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            dark.setTitle("Light Mode");
+            dark.setIcon(R.drawable.ic_light_mode);
+        }
+        ed.apply();
     }
 
     @Override
