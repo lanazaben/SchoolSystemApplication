@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -14,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.schoolsystemapplication.Data.SchoolSubject;
@@ -29,18 +29,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Adapter_recyclerview_className extends RecyclerView.Adapter<Adapter_recyclerview_className.ViewHolder> {
+public class Adapter_recyclerview_className extends RecyclerView.Adapter<Adapter_recyclerview_className.ViewHolder> implements Filterable {
 
     private Context context;
     private List<String> className;
     private String nav;
     private static final String BASE_URL = "http://10.0.2.2:80/php_project/get_subjects_use_gradeLevel.php";
     private Adapter_teacherList.OnItemClickListener listener;
+    private List<String> fullClassNameList; // for filtering
 
     public Adapter_recyclerview_className(List<String> className, Context context, String nav) {
         this.context = context;
         this.className = className;
         this.nav = nav;
+        this.fullClassNameList = new ArrayList<>(className);
+
     }
 
     @Override
@@ -55,9 +58,8 @@ public class Adapter_recyclerview_className extends RecyclerView.Adapter<Adapter
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         CardView cardView = holder.cardView;
-        TextView textView = cardView.findViewById(R.id.itemTitle);
         RecyclerView optionsRecycler = cardView.findViewById(R.id.optionsRecycler);
-        textView.setText("grade level: " + className.get(position));
+        holder.textView.setText("grade level: " + className.get(position));
 
         cardView.setOnClickListener(v -> {
             int adapterPosition = holder.getAdapterPosition();
@@ -123,12 +125,58 @@ public class Adapter_recyclerview_className extends RecyclerView.Adapter<Adapter
         return className.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private CardView cardView;
 
-        public ViewHolder(CardView cardView) {
-            super(cardView);
-            this.cardView = cardView;
+    public void setClass(List<String> updatedClasses) {
+        this.className.clear();
+        this.className.addAll(updatedClasses);
+        this.fullClassNameList.clear();
+        this.fullClassNameList.addAll(updatedClasses);
+        notifyDataSetChanged();
+    }
+
+    private final Filter classFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<String> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(fullClassNameList);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (String className : fullClassNameList) {
+                    if (className.toLowerCase().contains(filterPattern)) {
+                        filteredList.add(className);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            className.clear();
+            className.addAll((List<String>) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    @Override
+    public Filter getFilter() {
+        return classFilter;
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        CardView cardView;
+        TextView textView;
+        RecyclerView optionsRecycler;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            cardView = (CardView) itemView;
+            textView = itemView.findViewById(R.id.itemTitle);
+            optionsRecycler = itemView.findViewById(R.id.optionsRecycler);
         }
     }
+
 }

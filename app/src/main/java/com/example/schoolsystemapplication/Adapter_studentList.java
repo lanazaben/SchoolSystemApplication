@@ -22,11 +22,13 @@ public class Adapter_studentList extends RecyclerView.Adapter<Adapter_studentLis
     Context context;
     private List<Student> students;
     private List<Student> fullList;
+    private String role; // "registrar" or "teacher"
 
-    public Adapter_studentList(List<Student> students, Context context){
+    public Adapter_studentList(List<Student> students, Context context, String role){
         this.context = context;
         this.students = students;
         this.fullList = new ArrayList<>(students);
+        this.role = role;
     }
 
     public void setStudentss(List<Student> updatedStudentss) {
@@ -77,38 +79,33 @@ public class Adapter_studentList extends RecyclerView.Adapter<Adapter_studentLis
     }
 
     @Override
-
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Student student = students.get(position);
         CardView cardView = holder.cardView;
-        TextView textView = (TextView) cardView.findViewById(R.id.listName);
+        TextView textView = cardView.findViewById(R.id.listName);
         textView.setText(student.getName());
 
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Create intent to open StudentSchedule
                 Intent intent = new Intent(context, StudentSchedule.class);
-                // Pass the chosen student ID
                 intent.putExtra("student_id", student.getId());
-                intent.putExtra("from", "student_list");
+                intent.putExtra("from", role); // Use passed role
                 context.startActivity(intent);
             }
         });
     }
 
-
     @Override
     public int getItemCount() {
-        return students.toArray().length;
+        return students.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private CardView cardView;
         public ViewHolder(CardView cardView){
             super(cardView);
             this.cardView = cardView;
         }
-
     }
 }

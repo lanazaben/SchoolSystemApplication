@@ -36,13 +36,10 @@
 
 </LinearLayout>
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
+        android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:menu="@menu/drawer_menu"
-        android:background="@color/white"
         app:headerLayout="@layout/nav_header"
-        app:itemTextColor="@color/nav_item_text_color"
-        app:itemBackground="@drawable/nav_item_background" />
+        />
 </androidx.drawerlayout.widget.DrawerLayout>
