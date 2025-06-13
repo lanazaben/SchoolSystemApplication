@@ -40,7 +40,6 @@ public class Splash extends AppCompatActivity {
         txt.setAnimation(bottom);
         img.setAnimation(top);
 
-        // ⏳ بعد 5 ثوانٍ، انتقل إلى شاشة تسجيل الدخول
         new Handler().postDelayed(() -> {
             Intent intent = new Intent(Splash.this, LogIn.class);
             startActivity(intent);
