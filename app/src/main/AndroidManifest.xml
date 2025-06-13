@@ -38,9 +38,6 @@
             android:name=".viewMark_andEdit_activity"
             android:exported="false" />
         <activity
-            android:name=".markOrStudent_activity"
-            android:exported="false" />
-        <activity
             android:name=".AddExamActivity"
             android:exported="false" />
         <activity
