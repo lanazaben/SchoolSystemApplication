@@ -12,7 +12,7 @@ public class Student {
     private String BirthCertificate;
     private List<ScheduleEntry> schedule;
 
-
+public Student(){}
     public Student(int id, String name, String email, int gradeLevel,int parentNum,String BirthCer, List<ScheduleEntry> schedule, double score) {
         this.id = id;
         this.name = name;
@@ -77,4 +77,8 @@ public class Student {
     public String getBirthCertificate() {return BirthCertificate;}
 
     public void setBirthCertificate(String birthCertificate) {BirthCertificate = birthCertificate;}
+
+    public void setScore(double score) {
+        this.score = score;
+    }
 }

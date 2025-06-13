@@ -42,6 +42,7 @@ import com.example.schoolsystemapplication.Data.Teacher;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -60,7 +61,7 @@ public class StudentClass_list extends AppCompatActivity {
     private List<Student> students = new ArrayList<>();
     private SearchView searchView;
     private NavigationView navigationView;
-    private String gradeLevel;
+    private String gradeLevel=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +113,8 @@ public class StudentClass_list extends AppCompatActivity {
         toggle.syncState();
         // Setup NavigationView and its item listener
         navigationView = findViewById(R.id.navigation_view);
+        navigationView.inflateMenu(R.menu.drawer_menu);
+
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             Intent intent = null;
@@ -159,6 +162,7 @@ public class StudentClass_list extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.d("RawResponse", response);
                         try {
                             students.clear();
                             JSONArray array = new JSONArray(response);
@@ -166,18 +170,20 @@ public class StudentClass_list extends AppCompatActivity {
                                 JSONObject object = array.getJSONObject(i);
                                 int id = object.getInt("student_id");
                                 String name = object.getString("name");
-                                String email = object.getString("email");
-                                int gradeLevel = object.getInt("grade_level");
-                                int parentNum = object.getInt("parent_phone");
-                                String BirthCertificate = "";
-                                List<ScheduleEntry> schedule = null; //score
+                                int gradelevel = object.getInt("grade_level");
+                                //List<ScheduleEntry> schedule = null; //score
                                 double score = object.getDouble("score");
-                                Student student = new Student(id, name, email, gradeLevel, parentNum, BirthCertificate, schedule, score);
+                                Student student = new Student();
+                                student.setName(name);
+                                student.setId(id);
+                                student.setGradeLevel(gradelevel);
+                                student.setScore(score);
                                 students.add(student);
                             }
-                        } catch (Exception e) {
+                        } catch (RuntimeException | JSONException e) {
                             Toast.makeText(StudentClass_list.this, "Parse error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                         }
+
                         adapter.notifyDataSetChanged();
                         adapter.setStudentss(new ArrayList<>(students));
                     }
@@ -191,7 +197,7 @@ public class StudentClass_list extends AppCompatActivity {
             @Override
             protected java.util.Map<String, String> getParams() {
                 java.util.Map<String, String> params = new java.util.HashMap<>();
-                params.put("grade_level", String.valueOf(gradeLevel));
+                params.put("grade_level", gradeLevel);
                 return params;
             }
         };
