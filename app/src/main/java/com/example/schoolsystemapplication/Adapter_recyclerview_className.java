@@ -2,6 +2,8 @@ package com.example.schoolsystemapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,55 +70,55 @@ public class Adapter_recyclerview_className extends RecyclerView.Adapter<Adapter
             String gradeLevel = className.get(adapterPosition);
 
             // Registrar: Go directly to ViewClassSchedule
-            if ("registrar".equals(nav)) {
+            if ("view_student".equals(nav)) {
                 Intent intent = new Intent(context, ViewClassSchedule.class);
                 intent.putExtra("grade_level", gradeLevel);
                 context.startActivity(intent);
                 return;
-            }
-
-            // Teacher: Show subject list
-            if (optionsRecycler.getVisibility() == View.VISIBLE) {
-                optionsRecycler.setVisibility(View.GONE);
-                return;
-            }
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, BASE_URL,
-                response -> {
-                    List<SchoolSubject> subjects = new ArrayList<>();
-                    try {
-                        JSONArray array = new JSONArray(response);
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject object = array.getJSONObject(i);
-                            int id = object.getInt("subject_id");
-                            String name = object.getString("name");
-                            int grade_level = object.getInt("grade_level");
-                            Teacher teacher = null;
-                            SchoolSubject subject = new SchoolSubject(id, name, grade_level, teacher);
-                            subjects.add(subject);
-                        }
-
-                        optionsRecycler.setLayoutManager(new LinearLayoutManager(context));
-                        OptionsAdapter_recyclerview adapter = new OptionsAdapter_recyclerview(subjects, context, nav, className.get(position));
-                        optionsRecycler.setAdapter(adapter);
-                        optionsRecycler.setVisibility(View.VISIBLE);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                },
-                error -> {
-                    error.printStackTrace();
-                }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("grade_level", gradeLevel);
-                    return params;
+            } else {
+                // Teacher: Show subject list
+                if (optionsRecycler.getVisibility() == View.VISIBLE) {
+                    optionsRecycler.setVisibility(View.GONE);
+                    return;
                 }
-            };
-
-            RequestQueue requestQueue = Volley.newRequestQueue(context);
-            requestQueue.add(stringRequest);
+                SharedPreferences sp = context.getSharedPreferences("teacher_session", context.MODE_PRIVATE);
+                int id_teacher = Integer.parseInt(sp.getString("teacher_id", "0"));
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, BASE_URL,
+                        response -> {
+                            List<SchoolSubject> subjects = new ArrayList<>();
+                            try {
+                                JSONArray array = new JSONArray(response);
+                                for (int i = 0; i < array.length(); i++) {
+                                    JSONObject object = array.getJSONObject(i);
+                                    int id = object.getInt("subject_id");
+                                    String name = object.getString("name");
+                                    int grade_level = object.getInt("grade_level");
+                                    Teacher teacher = null;
+                                    SchoolSubject subject = new SchoolSubject(id, name, grade_level, teacher);
+                                    subjects.add(subject);
+                                }
+                                optionsRecycler.setLayoutManager(new LinearLayoutManager(context));
+                                OptionsAdapter_recyclerview adapter = new OptionsAdapter_recyclerview(subjects, context, nav, className.get(position));
+                                optionsRecycler.setAdapter(adapter);
+                                optionsRecycler.setVisibility(View.VISIBLE);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        },
+                        error -> {
+                            error.printStackTrace();
+                        }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("grade_level", gradeLevel);
+                        params.put("teacher_id", String.valueOf(id_teacher));
+                        return params;
+                    }
+                };
+                RequestQueue requestQueue = Volley.newRequestQueue(context);
+                requestQueue.add(stringRequest);
+            }
         });
     }
 

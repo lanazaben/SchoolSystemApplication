@@ -20,6 +20,7 @@ public class TeacherHome extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private Toolbar toolbar;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class TeacherHome extends AppCompatActivity {
         toggle.syncState();
 
         // Setup NavigationView and its item listener
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
 
         SharedPreferences sharedPreferences = getSharedPreferences("Mode", MODE_PRIVATE);
         String modeNow = sharedPreferences.getString("mode", "night");
@@ -62,22 +63,7 @@ public class TeacherHome extends AppCompatActivity {
                 Intent intent1 = new Intent(this, TeacherHome.class);
                 startActivity(intent1);
             } else if (id == R.id.nav_dark_mode) {
-                Menu menu = navigationView.getMenu();
-                MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                int currentNightMode = AppCompatDelegate.getDefaultNightMode();
-                if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    editor.putString("mode", "night");
-                    item_dark.setTitle("Dark Mode");
-                    item_dark.setIcon(R.drawable.ic_dark_mode);
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    editor.putString("mode", "dark");
-                    item_dark.setTitle("Light Mode");
-                    item_dark.setIcon(R.drawable.ic_light_mode);
-                }
-                editor.apply();
+                toggleDark();
             } else if (id == R.id.nav_schedule) {
                 Intent intent1 = new Intent(this, teacherSchedule.class);
                 startActivity(intent1);
@@ -89,6 +75,10 @@ public class TeacherHome extends AppCompatActivity {
                 Intent intent1 = new Intent(this, ClassList_Activity.class);
                 intent1.putExtra("nav", "marks");
                 startActivity(intent1);
+            } else if (id == R.id.nav_addMarks) {
+                Intent intent1 = new Intent(this, ClassList_Activity.class);
+                intent1.putExtra("nav", "addmarks");
+                startActivity(intent1);
             } else if (id == R.id.nav_logout) {
                 Intent intent1 = new Intent(this, LogIn.class);
                 startActivity(intent1);
@@ -96,7 +86,26 @@ public class TeacherHome extends AppCompatActivity {
             drawerLayout.closeDrawers();
             return true;
         });
+    }
 
+    private void toggleDark() {
+        SharedPreferences sharedPreferences = getSharedPreferences("Mode", MODE_PRIVATE);
+        Menu menu = navigationView.getMenu();
+        MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        int currentNightMode = AppCompatDelegate.getDefaultNightMode();
+        if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            editor.putString("mode", "night");
+            item_dark.setTitle("Dark Mode");
+            item_dark.setIcon(R.drawable.ic_dark_mode);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            editor.putString("mode", "dark");
+            item_dark.setTitle("Light Mode");
+            item_dark.setIcon(R.drawable.ic_light_mode);
+        }
+        editor.apply();
     }
 
     @Override

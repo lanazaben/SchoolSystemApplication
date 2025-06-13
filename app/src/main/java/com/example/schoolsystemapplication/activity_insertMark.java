@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,13 +30,16 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.schoolsystemapplication.Data.ScheduleEntry;
 import com.example.schoolsystemapplication.Data.Student;
+import com.example.schoolsystemapplication.Data.Student_Mark;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -46,11 +50,11 @@ import java.util.Map;
 
 public class activity_insertMark extends AppCompatActivity {
 
-    RecyclerView mainRecyclerView;
-    TextView typeExam;
-    TextView fullMark;
-    String exam_Type;
-    int full_Mark;
+    private RecyclerView mainRecyclerView;
+    private TextView typeExam;
+    private TextView fullMark;
+    private String exam_Type;
+    private double full_Mark;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private Toolbar toolbar;
@@ -60,6 +64,8 @@ public class activity_insertMark extends AppCompatActivity {
     private Adapter_insertMark adapter;
     private String classNum;
     private ProgressBar progressBar;
+    private int subjectNum;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,14 +83,17 @@ public class activity_insertMark extends AppCompatActivity {
 
         Intent intent = getIntent();
         exam_Type = intent.getStringExtra("examType");
-        full_Mark = intent.getIntExtra("fullMark", 0);
+        full_Mark = intent.getDoubleExtra("fullMark", 0);
         classNum = intent.getStringExtra("classNum");
+
+        subjectNum = intent.getIntExtra("subject", 0);
+
         typeExam.setText(exam_Type + ": ");
-        fullMark.setText(" /" + full_Mark);
+        fullMark.setText("_ /" + full_Mark);
 
         mainRecyclerView = (RecyclerView) findViewById(R.id.mainRecyclerView);
         mainRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Adapter_insertMark(students, this);
+        adapter = new Adapter_insertMark(students, this, "mark", full_Mark);
         mainRecyclerView.setAdapter(adapter);
         loadStudents();
 
@@ -97,32 +106,16 @@ public class activity_insertMark extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        SharedPreferences sharedPreferences = getSharedPreferences("Mode", MODE_PRIVATE);
-
         // Setup NavigationView and its item listener
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.nav_home) {
                 Intent intent1 = new Intent(this, TeacherHome.class);
                 startActivity(intent1);
             } else if (id == R.id.nav_dark_mode) {
-                Menu menu = navigationView.getMenu();
-                MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                int currentNightMode = AppCompatDelegate.getDefaultNightMode();
-                if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    editor.putString("mode", "night");
-                    item_dark.setTitle("Dark Mode");
-                    item_dark.setIcon(R.drawable.ic_dark_mode);
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    editor.putString("mode", "dark");
-                    item_dark.setTitle("Light Mode");
-                    item_dark.setIcon(R.drawable.ic_light_mode);
-                }
-                editor.apply();
+                toggleDark();
+                return true;
             } else if (id == R.id.nav_schedule) {
                 Intent intent1 = new Intent(this, teacherSchedule.class);
                 startActivity(intent1);
@@ -133,6 +126,10 @@ public class activity_insertMark extends AppCompatActivity {
             } else if (id == R.id.nav_marks) {
                 Intent intent1 = new Intent(this, ClassList_Activity.class);
                 intent1.putExtra("nav", "marks");
+                startActivity(intent1);
+            } else if (id == R.id.nav_addMarks) {
+                Intent intent1 = new Intent(this, ClassList_Activity.class);
+                intent1.putExtra("nav", "addmarks");
                 startActivity(intent1);
             } else if (id == R.id.nav_logout) {
                 Intent intent1 = new Intent(this, LogIn.class);
@@ -160,7 +157,8 @@ public class activity_insertMark extends AppCompatActivity {
                         int parentNum = object.getInt("parent_phone");
                         String BirthCertificate = "";//object.getString("birth_certificate");
                         List<ScheduleEntry> schedule = null;
-                        Student student = new Student(id_student, name, email, gradeLevel, parentNum, BirthCertificate, schedule);
+                        double score = object.getDouble("score");
+                        Student student = new Student(id_student, name, email, gradeLevel, parentNum, BirthCertificate, schedule, score);
                         students.add(student);
                     }
 
@@ -170,14 +168,12 @@ public class activity_insertMark extends AppCompatActivity {
                 }
                 adapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
-//                    Adapter_insertMark adapter = new Adapter_insertMark(students, context);
-//                    mainRecyclerView.setAdapter(adapter);
             }
         }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                progressBar.setVisibility(View.GONE);
+//                progressBar.setVisibility(View.GONE);
                 Toast.makeText(context, "Error: " + error.toString(), Toast.LENGTH_LONG).show();
             }
         }) {
@@ -185,6 +181,7 @@ public class activity_insertMark extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("grade_level", classNum);
+                params.put("subject_id", subjectNum+"");
                 return params;
             }
         };
@@ -198,7 +195,71 @@ public class activity_insertMark extends AppCompatActivity {
         intent.putExtra("examType", exam_Type);
         intent.putExtra("fullMark", full_Mark);
         intent.putExtra("classNum", classNum);
+        intent.putExtra("subject", subjectNum);
         startActivity(intent);
+    }
+
+    public void btn_OnClick_Save(View view){
+        List<Student_Mark> marksToSend = adapter.getStudentMarks();
+        if (!marksToSend.isEmpty()){
+            JSONArray marksArray = new JSONArray();
+            for (Student_Mark sm : marksToSend) {
+                JSONObject obj = new JSONObject();
+                try {
+                    obj.put("student_id", sm.getStudentId());
+                    obj.put("typeMark", typeExam);
+                    obj.put("mark", sm.getMark());
+                    obj.put("subject_id", subjectNum);
+                    obj.put("maxMark", full_Mark);
+                    marksArray.put(obj);
+                } catch (JSONException e) {
+                }
+            }
+            JSONObject finalData = new JSONObject();
+            try {
+                finalData.put("marks", marksArray);
+                saveData(finalData);
+            } catch (JSONException e) {
+            }
+        }
+    }
+
+    public void saveData(JSONObject finalData){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://10.0.2.2:80/php_project/insert_new_Mark.php";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, finalData,
+                response -> {
+                    Toast.makeText(context, "The tags have been saved successfully" , Toast.LENGTH_LONG).show();
+                    Intent intent5 = new Intent(activity_insertMark.this, StudentList_insertMark.class);
+                    intent5.putExtra("classNum", classNum);
+                    intent5.putExtra("subject", subjectNum);
+                    startActivity(intent5);
+                },
+                error -> {
+                    error.printStackTrace();
+                }) {
+        };
+        queue.add(request);
+    }
+
+    private void toggleDark() {
+        SharedPreferences sharedPreferences = getSharedPreferences("Mode", MODE_PRIVATE);
+        Menu menu = navigationView.getMenu();
+        MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        int currentNightMode = AppCompatDelegate.getDefaultNightMode();
+        if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            editor.putString("mode", "night");
+            item_dark.setTitle("Dark Mode");
+            item_dark.setIcon(R.drawable.ic_dark_mode);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            editor.putString("mode", "dark");
+            item_dark.setTitle("Light Mode");
+            item_dark.setIcon(R.drawable.ic_light_mode);
+        }
+        editor.apply();
     }
 
     @Override

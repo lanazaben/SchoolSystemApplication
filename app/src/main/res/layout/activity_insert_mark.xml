@@ -17,7 +17,8 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            style="@style/CustomToolbar" />
+            style="@style/CustomToolbar"
+            app:title="Add New Mark"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,30 +67,15 @@
             android:layout_weight="1"
             tools:listitem="@layout/card_add_mark" />
 
-        <LinearLayout
+        <Button
+            android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="10dp"
-            android:layout_gravity="center_horizontal" >
+            style="@style/PrimaryButton"
+            android:text="Save"
+            android:layout_margin="5dp"
+            android:onClick="btn_OnClick_Save" />
 
-            <Button
-                android:id="@+id/saveButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/PrimaryButton"
-                android:text="Save"
-                android:layout_margin="5dp" />
-
-            <Button
-                android:id="@+id/saveAndPushButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/PrimaryButton"
-                android:text="Save and Push"
-                android:layout_margin="5dp" />
-
-        </LinearLayout>
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView

@@ -5,36 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/beige" >
-<LinearLayout
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.schoolsystemapplication.StudentClass_list"
-    android:backgroundTint="@color/beige"
-    >
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/CustomToolbar"
-        app:title="School Classes" />
-
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
-        style="@style/StyledSearchView" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        style="@style/StudentListRecyclerView"
-        android:id="@+id/parentRecyclerView"
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:contentDescription="@string/list_of_students_ingrade"
-        tools:listitem="@layout/listitem" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.example.schoolsystemapplication.StudentClass_list"
+        android:backgroundTint="@color/beige"
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/CustomToolbar"
+            app:title="School Classes List" />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            style="@style/StyledSearchView" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_centerInParent="true"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            style="@style/StudentListRecyclerView"
+            android:id="@+id/parentRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/list_of_students_ingrade"
+            tools:listitem="@layout/listitem" />
 
 
-</LinearLayout>
+    </LinearLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"

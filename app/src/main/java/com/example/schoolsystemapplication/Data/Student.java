@@ -8,11 +8,12 @@ public class Student {
     private String email;
     private int gradeLevel;
     private int parentNum;
+    private double score;
     private String BirthCertificate;
     private List<ScheduleEntry> schedule;
 
 
-    public Student(int id, String name, String email, int gradeLevel,int parentNum,String BirthCer, List<ScheduleEntry> schedule) {
+    public Student(int id, String name, String email, int gradeLevel,int parentNum,String BirthCer, List<ScheduleEntry> schedule, double score) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -20,6 +21,11 @@ public class Student {
         this.parentNum=parentNum;
         this.BirthCertificate=BirthCer;
         this.schedule = schedule;
+        this.score = score;
+    }
+
+    public double getScore() {
+        return score;
     }
 
     public int getId() {

@@ -16,9 +16,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            style="@style/CustomToolbar"
-            app:title="Grade Levels"/>
-
+            style="@style/CustomToolbar" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mainRecyclerView"
@@ -35,7 +33,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
-        />
+        app:headerLayout="@layout/nav_header" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

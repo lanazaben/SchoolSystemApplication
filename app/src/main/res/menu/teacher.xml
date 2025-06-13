@@ -14,11 +14,6 @@
             android:id="@+id/nav_home"
             android:title="Home"
             android:icon="@drawable/ic_home" />
-        <item
-            android:id="@+id/nav_dark_mode"
-            android:title="Dark Mode"
-            android:icon="@drawable/ic_dark_mode"
-            android:actionLayout="@layout/switch_dark_mode" />
     </group>
 
     <item
@@ -38,8 +33,25 @@
             android:icon="@drawable/ic_assignment" />
         <item
             android:id="@+id/nav_marks"
-            android:title="Marks"
+            android:title="Viwe Marks"
             android:icon="@drawable/ic_mark" />
+        <item
+            android:id="@+id/nav_addMarks"
+            android:title="Add New Mark"
+            android:icon="@drawable/ic_insert_mark" />
+    </group>
+
+    <item
+        android:id="@+id/header_settings"
+        android:title="@string/settings"
+        android:enabled="false"
+        android:icon="@android:color/transparent" />
+
+    <group>
+        <item
+            android:id="@+id/nav_dark_mode"
+            android:title="@string/dark_mode"
+            android:icon="@drawable/ic_dark_mode" />
     </group>
 
     <item

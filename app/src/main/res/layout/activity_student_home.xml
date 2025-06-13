@@ -17,7 +17,8 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                style="@style/CustomToolbar" />
+                style="@style/CustomToolbar"
+                app:title="Home page"/>
 
         </com.google.android.material.appbar.AppBarLayout>
 

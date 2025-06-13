@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -14,7 +12,6 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
@@ -97,15 +94,18 @@ public class ClassList_Activity extends AppCompatActivity {
                 intent = new Intent(ClassList_Activity.this, ViewClassSchedule.class);
                 intent.putExtra("grade_level", grade_level);
                 intent.putExtra("from", "registrar");
-                startActivity(intent);
-
+            } else {
+                // Teacher: go to ViewClassSchedule but gradelevel is already known via SharedPreferences
+                intent = new Intent(ClassList_Activity.this, ViewClassSchedule.class);
+                intent.putExtra("grade_level", grade_level);
+                intent.putExtra("from", "teacher");
             }
+            startActivity(intent);
         });
 
 
         // Load grade levels from PHP backend
         loadClassName();
-
 
         // Setup Toolbar and Navigation Drawer
         toolbar = findViewById(R.id.toolbar);
@@ -140,11 +140,10 @@ public class ClassList_Activity extends AppCompatActivity {
                     intent = new Intent(this, teacher_list.class);
                 else if (id == R.id.nav_GradeLevel) {
                     intent = new Intent(this, ClassList_Activity.class);
-                    intent.putExtra("from", "registrar");
+                    intent.putExtra("user_type", "registrar");
                     intent.putExtra("nav", "view_student");
-                } else if (id == R.id.nav_subject){
+                } else if (id == R.id.nav_subject)
                     intent = new Intent(this, AddSubject.class);
-               }
                 else if (id == R.id.nav_logout)
                     intent = new Intent(this, LogIn.class);
                 else if (id == R.id.nav_dark_mode) {
@@ -195,8 +194,12 @@ public class ClassList_Activity extends AppCompatActivity {
                     editor.apply();
                 }
             }
-            startActivity(intent);
-            drawerLayout.closeDrawers();
+
+            if (intent != null) {
+                startActivity(intent);
+                drawerLayout.closeDrawers();
+            }
+
             return true;
         });
     }
