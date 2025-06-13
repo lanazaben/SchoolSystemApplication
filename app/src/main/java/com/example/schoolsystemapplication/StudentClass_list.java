@@ -59,7 +59,7 @@ public class StudentClass_list extends AppCompatActivity {
     private List<Student> students = new ArrayList<>();
     private SearchView searchView;
     private NavigationView navigationView;
-    private int gradeLevel;
+    private String gradeLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +78,8 @@ public class StudentClass_list extends AppCompatActivity {
         adapter = new Adapter_studentList(students, this, "registrar");
         mainRecycler.setLayoutManager(new LinearLayoutManager(this));
         mainRecycler.setAdapter(adapter);
-        gradeLevel = getIntent().getIntExtra("grade_level", -1);
-        if (gradeLevel == -1) {
+        gradeLevel = getIntent().getStringExtra("grade_level");
+        if (gradeLevel == null) {
             Toast.makeText(this, "Missing grade level!", Toast.LENGTH_LONG).show();
             finish();
             return;

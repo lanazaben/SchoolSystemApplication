@@ -135,7 +135,7 @@ public class ClassList_Activity extends AppCompatActivity {
                     intent = new Intent(this, teacher_list.class);
                 else if (id == R.id.nav_GradeLevel) {
                     intent = new Intent(this, ClassList_Activity.class);
-                    intent.putExtra("user_type", "registrar");
+                    intent.putExtra("from", "registrar");
                     intent.putExtra("nav", "view_student");
                 } else if (id == R.id.nav_subject)
                     intent = new Intent(this, AddSubject.class);

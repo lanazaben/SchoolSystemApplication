@@ -46,7 +46,7 @@ public class AddSubject extends AppCompatActivity {
     private Button select,add;
     private Spinner teacherSpinner,subjectSpinner;
     private EditText gradeLevel;
-
+    NavigationView navigationView;
     private int selectedTeacherId = -1;
     private String selectedSubjectName = null;
     private static final int REQUEST_CODE_SCHEDULE = 1001;
@@ -140,7 +140,7 @@ public class AddSubject extends AppCompatActivity {
         toggle.syncState();
         SharedPreferences sharedPreferences = getSharedPreferences("Mode", MODE_PRIVATE);
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             Intent intent = null;
@@ -155,22 +155,8 @@ public class AddSubject extends AppCompatActivity {
             else if (id == R.id.nav_logout)
                 intent = new Intent(this, LogIn.class);
             else if (id == R.id.nav_dark_mode) {
-                Menu menu = navigationView.getMenu();
-                MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                int currentNightMode = AppCompatDelegate.getDefaultNightMode();
-                if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    editor.putString("mode", "night");
-                    item_dark.setTitle("Dark Mode");
-                    item_dark.setIcon(R.drawable.ic_dark_mode);
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    editor.putString("mode", "dark");
-                    item_dark.setTitle("Light Mode");
-                    item_dark.setIcon(R.drawable.ic_light_mode);
-                }
-                editor.apply();
+                toggleDark();
+                return true;
             }
             startActivity(intent);
 
@@ -178,6 +164,22 @@ public class AddSubject extends AppCompatActivity {
             drawerLayout.closeDrawers();
             return true;
         });
+    }
+    private void toggleDark() {
+        MenuItem dark = navigationView.getMenu().findItem(R.id.nav_dark_mode);
+        SharedPreferences sp = getSharedPreferences("Mode", MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        int mode = AppCompatDelegate.getDefaultNightMode();
+        if (mode == AppCompatDelegate.MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            dark.setTitle("Dark Mode");
+            dark.setIcon(R.drawable.ic_dark_mode);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            dark.setTitle("Light Mode");
+            dark.setIcon(R.drawable.ic_light_mode);
+        }
+        ed.apply();
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -41,7 +41,7 @@ public class ViewClassSchedule extends AppCompatActivity {
     private NavigationView navigationView;
     private Button btnView, btnAdd, btnEdit;
 
-    private int grade;
+    private String grade;
     private String subjectName;
     private String teacherId ;
     private String currentRegistrarId ;
@@ -55,7 +55,6 @@ public class ViewClassSchedule extends AppCompatActivity {
 
 // Retrieve grade level
         String gradeLevelStr = intent.getStringExtra("grade_level");
-        grade = Integer.parseInt(gradeLevelStr != null ? gradeLevelStr : "0");
 
 // Get teacherId and registrarId if passed
         teacherId = intent.getStringExtra("teacher_id");
@@ -82,13 +81,13 @@ public class ViewClassSchedule extends AppCompatActivity {
         btnEdit = findViewById(R.id.buttonEditSub);
 
 
-        loadScheduleData(grade);
+        loadScheduleData(gradeLevelStr);
 
         btnView.setOnClickListener(v -> {
             Intent intent1 = new Intent(ViewClassSchedule.this, StudentClass_list.class);
             intent1.putExtra("from", "registrar");
             intent1.putExtra("nav", "view_student");
-            intent1.putExtra("grade_level", grade);
+            intent1.putExtra("grade_level", gradeLevelStr);
             startActivity(intent1);
         });
 
@@ -160,7 +159,7 @@ public class ViewClassSchedule extends AppCompatActivity {
         }
     }
 
-    private void loadScheduleData(int gradeLevel) {
+    private void loadScheduleData(String gradeLevel) {
         String url = "http://10.0.2.2:80/php_project/get_schedule.php?grade_level=" + gradeLevel;
         RequestQueue queue = Volley.newRequestQueue(this);
 

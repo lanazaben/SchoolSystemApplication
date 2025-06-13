@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -70,9 +71,10 @@ public class Adapter_recyclerview_className extends RecyclerView.Adapter<Adapter
             String gradeLevel = className.get(adapterPosition);
 
             // Registrar: Go directly to ViewClassSchedule
-            if ("registrar".equals(nav)) {
+            if ("view_student".equals(nav)) {
                 Intent intent = new Intent(context, ViewClassSchedule.class);
                 intent.putExtra("grade_level", gradeLevel);
+                //Toast.makeText(context,"class :"+ gradeLevel, Toast.LENGTH_SHORT);
                 context.startActivity(intent);
                 return;
             } else {
