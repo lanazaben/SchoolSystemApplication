@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -54,7 +55,7 @@ public class StudentClass_list extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     private Toolbar toolbar;
     private RecyclerView mainRecycler;
-    private static final String BASE_URL = "http://10.0.2.2:80/php_project/get_student_use_gradelLevel.php";
+    private static final String BASE_URL = "http://10.0.2.2:80/php_project/get_AllStudent.php";
     private Adapter_studentList adapter;
     private List<Student> students = new ArrayList<>();
     private SearchView searchView;
