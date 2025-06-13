@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -40,6 +41,9 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         setupViews();
+
+        btnLogIn = findViewById(R.id.btnLogin);
+
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,13 +114,66 @@ public class LogIn extends AppCompatActivity {
                         if (success) {
                             Toast.makeText(this, "Login successful: " + message, Toast.LENGTH_LONG).show();
                             String userRole = jsonResponse.optString("user_role", "");
+                            String id_number = jsonResponse.optString("id_number", "");
 
                             Intent intent;
                             switch (userRole) {
                                 case "teacher":
+                                    String url = "http://10.0.2.2:80/php_project/get_Teacher_id.php";
+                                    StringRequest stringRequest1 = new StringRequest(Request.Method.POST, url,
+                                            response1 -> {
+                                                try {
+                                                    JSONObject object = new JSONObject(response1);
+
+                                                    SharedPreferences sp = getSharedPreferences("teacher_session", MODE_PRIVATE);
+                                                    SharedPreferences.Editor editor = sp.edit();
+                                                    editor.putString("teacher_id", object.getInt("teacher_id")+"");
+                                                    editor.apply();
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            },
+                                            error -> {
+                                                error.printStackTrace();
+                                            }) {
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            Map<String, String> params = new HashMap<>();
+                                            params.put("id_number", id_number);
+                                            return params;
+                                        }
+                                    };
+                                    RequestQueue requestQueue = Volley.newRequestQueue(LogIn.this);
+                                    requestQueue.add(stringRequest1);
                                     intent = new Intent(this, TeacherHome.class);
                                     break;
                                 case "student":
+                                    String url2 = "http://10.0.2.2:80/php_project/get_Student_id.php";
+                                    StringRequest stringRequest2 = new StringRequest(Request.Method.POST, url2,
+                                            response2 -> {
+                                                try {
+                                                    JSONObject object = new JSONObject(response2);
+
+                                                    SharedPreferences sp = getSharedPreferences("student_session", MODE_PRIVATE);
+                                                    SharedPreferences.Editor editor = sp.edit();
+                                                    editor.putString("student_id", object.getInt("student_id")+"");
+                                                    editor.apply();
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            },
+                                            error -> {
+                                                error.printStackTrace();
+                                            }) {
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            Map<String, String> params = new HashMap<>();
+                                            params.put("id_number", id_number);
+                                            return params;
+                                        }
+                                    };
+                                    RequestQueue requestQueue2 = Volley.newRequestQueue(LogIn.this);
+                                    requestQueue2.add(stringRequest2);
                                     intent = new Intent(this, StudentHome.class);
                                     break;
                                 case "admin":
