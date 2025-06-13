@@ -50,7 +50,7 @@
         android:id="@+id/header_account"
         android:title="@string/account"
         android:enabled="false"
-        android:icon="@android:color/transparent" />
+        android:icon="@drawable/ic_manage_acc" />
 
     <group>
         <item
@@ -58,5 +58,14 @@
             android:title="@string/logout"
             android:icon="@drawable/ic_logout" />
     </group>
+
+    <group>
+        <item
+            android:id="@+id/nav_addTeacher"
+            android:title="@string/logout"
+            android:icon="@drawable/ic_add_teacher" />
+    </group>
+
+
 
 </menu>

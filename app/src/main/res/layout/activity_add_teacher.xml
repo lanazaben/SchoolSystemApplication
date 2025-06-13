@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/beige" >
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/beige"
+        tools:context="com.example.schoolsystemapplication.AddStudent">
+
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/CustomToolbar"
+            app:title="Add Student Details"
+            app:navigationIcon="@drawable/ic_menu" />
+
+
+        <!-- Content -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center_horizontal">
+
+                <!-- Full Name Card -->
+                <androidx.cardview.widget.CardView
+                    style="@style/CardStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            style="@style/LabelText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/full_name"
+                            />
+
+                        <EditText
+                            style="@style/FormEditText"
+                            android:id="@+id/editTextFullName"
+                            android:hint="@string/enter_full_name" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Date of Birth Card -->
+                <androidx.cardview.widget.CardView
+                    style="@style/CardStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            style="@style/LabelText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/date_of_birth"
+                            />
+
+                        <TextView
+                            android:id="@+id/textViewDOB"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:hint="@string/select_date_of_birth"
+                            android:padding="10dp"
+                            android:background="@drawable/edittext"
+                            android:drawablePadding="8dp"
+                            android:focusable="true"
+                            android:clickable="true"
+                            app:drawableLeftCompat="@drawable/baseline_calendar_today_24" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- ID Number Card -->
+                <androidx.cardview.widget.CardView
+                    style="@style/CardStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            style="@style/LabelText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/id_number"
+                            />
+
+                        <EditText
+                            android:id="@+id/editTextID"
+                            style="@style/FormEditText"
+                            android:hint="@string/enter_id_number"
+                            android:inputType="number" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Email Card -->
+                <androidx.cardview.widget.CardView
+                    style="@style/CardStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            style="@style/LabelText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/email" />
+
+                        <EditText
+                            android:id="@+id/editTextEmail"
+                            style="@style/FormEditText"
+                            android:hint="@string/enter_email"
+                            android:inputType="textEmailAddress" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <!-- Phone Number -->
+                <androidx.cardview.widget.CardView
+                    style="@style/CardStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            style="@style/LabelText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/parent_phone_number"
+                            />
+
+                        <EditText
+                            android:id="@+id/editTextPhone"
+                            style="@style/FormEditText"
+                            android:hint="@string/enter_parent_phone_number"
+                            android:inputType="number"
+                            tools:ignore="TextFields" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Grade Level Card -->
+                <androidx.cardview.widget.CardView
+                    style="@style/CardStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            style="@style/LabelText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/grade_levelAdd"
+                            />
+
+                        <EditText
+                            android:id="@+id/editTextGrade"
+                            style="@style/FormEditText"
+                            android:hint="@string/enter_grade_level" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!--gender cardview-->
+                <androidx.cardview.widget.CardView
+                    style="@style/CardStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            style="@style/LabelText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/gender"
+                            />
+
+                        <EditText
+                            android:id="@+id/gender"
+                            style="@style/FormEditText"
+                            android:hint="@string/enter_gender"
+                            />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Birth Certificate File-->
+                <androidx.cardview.widget.CardView
+                    style="@style/CardStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            style="@style/LabelText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/birth_certificte"
+                            />
+
+                        <EditText
+                            android:id="@+id/BirthCert"
+                            style="@style/FormEditText"
+                            android:hint="@string/browse"
+                            android:inputType="number"
+                            app:drawableLeftCompat="@drawable/baseline_attach_file_24" />
+                        <TextView
+                            style="@style/LabelText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/chosen_files"
+                            android:layout_marginStart="12dp"
+                            />
+                        <TextView
+                            style="@style/LabelText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/filesID"
+                            />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Add Button -->
+                <Button
+                    style="@style/PrimaryButton"
+                    android:id="@+id/buttonAdd"
+                    android:text="@string/add"
+                    android:layout_marginTop="30dp" />
+
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/drawer_menu"
+        android:background="@color/white"
+        app:headerLayout="@layout/nav_header"
+        app:itemTextColor="@color/nav_item_text_color"
+        app:itemBackground="@drawable/nav_item_background" />
+</androidx.drawerlayout.widget.DrawerLayout>
