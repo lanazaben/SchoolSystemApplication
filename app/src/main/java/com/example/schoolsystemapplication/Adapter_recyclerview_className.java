@@ -70,7 +70,7 @@ public class Adapter_recyclerview_className extends RecyclerView.Adapter<Adapter
             String gradeLevel = className.get(adapterPosition);
 
             // Registrar: Go directly to ViewClassSchedule
-            if ("view_student".equals(nav)) {
+            if ("registrar".equals(nav)) {
                 Intent intent = new Intent(context, ViewClassSchedule.class);
                 intent.putExtra("grade_level", gradeLevel);
                 context.startActivity(intent);
