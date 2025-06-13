@@ -84,6 +84,8 @@ public class Adapter_studentList extends RecyclerView.Adapter<Adapter_studentLis
         CardView cardView = holder.cardView;
         TextView textView = cardView.findViewById(R.id.listName);
         textView.setText(student.getName());
+        TextView textView2 = cardView.findViewById(R.id.listquantity);
+        textView2.setText(student.getScore()+"");
 
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
