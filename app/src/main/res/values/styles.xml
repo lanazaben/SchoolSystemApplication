@@ -16,7 +16,6 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="navigationIcon">@drawable/ic_menu</item>
         <item name="theme">?attr/actionBarTheme</item>
-        <item name="title">Add Student Details</item>
     </style>
 
     <style name="AssignmentDetailsToolbar">
