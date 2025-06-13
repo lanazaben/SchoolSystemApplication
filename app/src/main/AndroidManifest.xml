@@ -19,7 +19,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".AddTeacher"
+            android:name=".TeacherHome"
             android:exported="false" />
         <activity
             android:name=".StudentSchedule"
@@ -70,7 +70,7 @@
             android:name=".AddSubject"
             android:exported="false" />
         <activity
-            android:name=".AddStudent"
+            android:name=".AddTeacher"
             android:exported="false" />
         <activity
             android:name=".ViewClassSchedule"
@@ -100,7 +100,7 @@
             android:name=".StudentHome"
             android:exported="false" />
         <activity
-            android:name=".TeacherHome"
+            android:name=".AddStudent"
             android:exported="false" />
     </application>
 

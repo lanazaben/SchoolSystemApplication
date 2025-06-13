@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.DatePickerDialog;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -184,8 +185,13 @@ public class AddStudent extends AppCompatActivity {
                     Toast.makeText(this, "Uploaded Successfully", Toast.LENGTH_LONG).show();
                 },
                 error -> {
+                    if (error.networkResponse != null) {
+                        String body = new String(error.networkResponse.data);
+                        Log.e("VolleyError", body);
+                    }
                     Toast.makeText(this, "Upload Error: " + error.toString(), Toast.LENGTH_LONG).show();
-                });
+                }
+        );
 
 
         Map<String, String> params = new HashMap<>();

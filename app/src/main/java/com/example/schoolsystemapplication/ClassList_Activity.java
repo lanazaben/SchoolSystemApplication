@@ -95,6 +95,11 @@ public class ClassList_Activity extends AppCompatActivity {
                 intent1.putExtra("from", "registrar");
                 startActivity(intent1);
             }
+            if(nav.equals("add_student")){
+              intent1=new Intent(ClassList_Activity.this,AddStudent.class);
+              intent1.putExtra("grade_level",grade_level);
+                intent1.putExtra("from", "registrar");
+            }
         });
 
         if (from.equals("registrar")){

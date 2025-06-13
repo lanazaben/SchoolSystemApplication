@@ -32,6 +32,7 @@ public class LogIn extends AppCompatActivity {
     private CheckBox chk;
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
+    private Button btnLogIn;
     private static final String BASE_URL = "http://10.0.2.2:80/php_project/login.php";
 
     @Override
@@ -39,6 +40,12 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         setupViews();
+        btnLogIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnLoginOnClick(v);
+            }
+        });
         setupSharedPrefs();
         checkPrefs();
     }
