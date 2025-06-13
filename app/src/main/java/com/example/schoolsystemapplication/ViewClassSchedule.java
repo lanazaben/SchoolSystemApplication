@@ -42,7 +42,7 @@ public class ViewClassSchedule extends AppCompatActivity {
     private NavigationView navigationView;
     private Button btnView, btnAdd, btnEdit;
 
-    private int grade;
+    private String gradeLevelStr;
     private String subjectName;
     private String teacherId ;
     private String currentRegistrarId ;
@@ -55,8 +55,7 @@ public class ViewClassSchedule extends AppCompatActivity {
         Intent intent = getIntent();
 
         // Retrieve grade level
-        String gradeLevelStr = intent.getStringExtra("grade_level");
-        grade = Integer.parseInt(gradeLevelStr != null ? gradeLevelStr : "0");
+         gradeLevelStr = intent.getStringExtra("grade_level");
 
         // Get teacherId and registrarId if passed
         teacherId = intent.getStringExtra("teacher_id");
@@ -83,13 +82,13 @@ public class ViewClassSchedule extends AppCompatActivity {
         btnEdit = findViewById(R.id.buttonEditSub);
 
 
-        loadScheduleData(grade);
+        loadScheduleData(gradeLevelStr);
 
         btnView.setOnClickListener(v -> {
             Intent intent1 = new Intent(ViewClassSchedule.this, StudentClass_list.class);
             intent1.putExtra("from", "registrar");
             intent1.putExtra("nav", "view_student");
-            intent1.putExtra("grade_level", grade);
+            intent1.putExtra("grade_level", gradeLevelStr);
             Log.d("btn", "222222");
             startActivity(intent1);
         });
@@ -99,7 +98,7 @@ public class ViewClassSchedule extends AppCompatActivity {
                 Intent intent2 = new Intent(ViewClassSchedule.this, ScheduleSelector.class);
                 intent2.putExtra("subject_name", subjectName);
                 intent2.putExtra("teacher_id", teacherId);
-                intent2.putExtra("grade_level", String.valueOf(grade));
+                intent2.putExtra("grade_level", gradeLevelStr);
                 intent2.putExtra("selected_schedule", currentScheduleJson);
                 startActivityForResult(intent2, 1001);
             } else {
@@ -161,8 +160,8 @@ public class ViewClassSchedule extends AppCompatActivity {
         }
     }
 
-    private void loadScheduleData(int gradeLevel) {
-        String url = "http://10.0.2.2:80/php_project/get_schedule.php?grade_level=" + gradeLevel;
+    private void loadScheduleData(String gradeLevel) {
+        String url = "http://10.0.2.2:80/php_project/get_schedule.php?grade_level=" + gradeLevelStr;
         RequestQueue queue = Volley.newRequestQueue(this);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -258,7 +257,7 @@ public class ViewClassSchedule extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 response -> {
                     Toast.makeText(this, "Schedule updated successfully", Toast.LENGTH_SHORT).show();
-                    loadScheduleData(grade);
+                    loadScheduleData(gradeLevelStr);
                 },
                 error -> {
                     String msg = "Error updating schedule";
@@ -277,7 +276,7 @@ public class ViewClassSchedule extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("name", subjectName);
                 params.put("teacher_id", teacherId);
-                params.put("grade_level", String.valueOf(grade));
+                params.put("grade_level", gradeLevelStr);
                 params.put("registrar_id", currentRegistrarId);
                 params.put("schedule", scheduleJson);
                 return params;
