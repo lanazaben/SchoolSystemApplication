@@ -77,7 +77,8 @@ public class StudentSchedule extends AppCompatActivity {
 
         if (!isRegistrarView) {
            SharedPreferences  sp = getSharedPreferences("teacher_session", MODE_PRIVATE);
-            studentId = sp.getInt("student_id", -1);
+           SharedPreferences spStudent=getSharedPreferences("student_session",MODE_PRIVATE);
+            studentId = spStudent.getInt("student_id", -1);
             studentId = getIntent().getIntExtra("student_id",-1);
 
             if (studentId == -1 && getIntent() != null) {
@@ -156,8 +157,9 @@ public class StudentSchedule extends AppCompatActivity {
             } else {
                 if (id == R.id.nav_home)
                     intent = new Intent(this, TeacherHome.class);
-                else if (id == R.id.nav_schedule)
-                    intent = new Intent(this, teacherSchedule.class);
+                else if (id == R.id.nav_schedule){
+                    intent = new Intent(this, StudentSchedule.class);
+                intent.putExtra("student_id",studentId);}
                 else if (id == R.id.nav_assignments)
                     intent = new Intent(this, ClassList_Activity.class).putExtra("nav", "assignments");
                 else if (id == R.id.nav_marks)

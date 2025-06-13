@@ -28,7 +28,7 @@
             android:name=".UploadAsgByTeacher"
             android:exported="false" />
         <activity
-            android:name=".RegistrarsHome"
+            android:name=".Splash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -85,7 +85,7 @@
             android:name=".LogIn"
             android:exported="false" />
         <activity
-            android:name=".Splash"
+            android:name=".RegistrarsHome"
             android:exported="false" />
         <activity
             android:name=".StudentAssDetails"
