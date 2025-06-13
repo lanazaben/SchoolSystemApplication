@@ -181,7 +181,9 @@ public class AddStudent extends AppCompatActivity {
 
         VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, BASE_URL,
                 response -> {
-                    Toast.makeText(this, "Uploaded Successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Successfully added", Toast.LENGTH_LONG).show();
+
+                    showAccountDialog(id);
                 },
                 error -> {
                     Toast.makeText(this, "Upload Error: " + error.toString(), Toast.LENGTH_LONG).show();
@@ -220,6 +222,21 @@ public class AddStudent extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(multipartRequest);
+    }
+
+    private void showAccountDialog(String idNumber) {
+        android.app.Dialog dialog = new android.app.Dialog(this);
+        dialog.setContentView(R.layout.dialog_account_created);
+
+        TextView usernameText = dialog.findViewById(R.id.dialog_username);
+        TextView passwordText = dialog.findViewById(R.id.dialog_password);
+        Button okButton = dialog.findViewById(R.id.dialog_ok_button);
+
+        usernameText.setText("User name: " + idNumber);
+        passwordText.setText("Password: " + idNumber);
+
+        okButton.setOnClickListener(btn -> dialog.dismiss());
+        dialog.show();
     }
 
 
