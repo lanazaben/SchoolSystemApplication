@@ -26,8 +26,14 @@
             android:name=".UploadAsgByTeacher"
             android:exported="false" />
         <activity
-            android:name=".Splash"
-            android:exported="false" />
+            android:name=".RegistrarsHome"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".viewMark_andEdit_activity"
             android:exported="false" />
@@ -77,14 +83,8 @@
             android:name=".LogIn"
             android:exported="false" />
         <activity
-            android:name=".RegistrarsHome"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".Splash"
+            android:exported="false" />
         <activity
             android:name=".StudentAssDetails"
             android:exported="false" />

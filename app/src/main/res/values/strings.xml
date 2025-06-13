@@ -96,7 +96,6 @@
     <string name="grade_level_students">Grade Level Students</string>
     <string name="view_schedule">View Schedule</string>
     <string name="view_grade_levels">View Grade levels</string>
-    <string name="edit">edit</string>
 
     <string-array name="dark_mode_options">
         <item>On</item>
