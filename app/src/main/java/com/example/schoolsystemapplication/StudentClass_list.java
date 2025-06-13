@@ -5,13 +5,9 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -34,10 +30,8 @@ import androidx.recyclerview.widget.RecyclerView;
 //import com.example.schoolsystemapplication.Data.Teacher;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.schoolsystemapplication.Data.ScheduleEntry;
@@ -47,14 +41,10 @@ import com.example.schoolsystemapplication.Data.Teacher;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.security.auth.Subject;
 
@@ -68,21 +58,8 @@ public class StudentClass_list extends AppCompatActivity {
     private Adapter_studentList adapter;
     private List<Student> students = new ArrayList<>();
     private SearchView searchView;
-    NavigationView navigationView;
+    private NavigationView navigationView;
     private int gradeLevel;
-    private int teacherId = -1;
-    private boolean isRegistrarView = false;
-    private static final String[] TIME_KEYS = {
-            "08:00 - 09:00 AM",
-            "09:00 - 10:00 AM",
-            "10:15 - 11:15 AM",
-            "11:30 - 12:30 PM",
-            "12:30 - 01:30 PM",
-            "01:30 - 02:30 PM",
-            "02:30 - 03:30 PM"
-    };
-
-    private static final String[] DAYS = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,10 +72,10 @@ public class StudentClass_list extends AppCompatActivity {
             return insets;
         });
 
-        String from = getIntent().getStringExtra("from");
+
         searchView = findViewById(R.id.searchView);
         mainRecycler=(RecyclerView) findViewById(R.id.parentRecyclerView);
-        adapter = new Adapter_studentList(students, this,from);
+        adapter = new Adapter_studentList(students, this, "registrar");
         mainRecycler.setLayoutManager(new LinearLayoutManager(this));
         mainRecycler.setAdapter(adapter);
         gradeLevel = getIntent().getIntExtra("grade_level", -1);
@@ -122,127 +99,60 @@ public class StudentClass_list extends AppCompatActivity {
             }
         });
 
-        isRegistrarView = "registrar".equals(from);
-
-        if (!isRegistrarView) {
-            SharedPreferences sp = getSharedPreferences("teacher_session", MODE_PRIVATE);
-            teacherId = sp.getInt("teacher_id", -1);
-
-            if (teacherId == -1 && getIntent() != null) {
-                teacherId = getIntent().getIntExtra("teacher_id", -1);
-            }
-
-            if (teacherId == -1) {
-                Toast.makeText(this, "No teacher ID provided.", Toast.LENGTH_LONG).show();
-                finish();
-                return;
-            }
-        }
-
-
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.navigation_view);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout,
+                toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
-        setupDrawer();}
-
-    private void setupDrawer() {
-        // Clear any existing menu (in case of reuse)
-        navigationView.getMenu().clear();
-
-        // Inflate appropriate menu
-        if (isRegistrarView) {
-            navigationView.inflateMenu(R.menu.drawer_menu);
-        } else {
-            navigationView.inflateMenu(R.menu.teacher);
-        }
-
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        // Add the toggle to the drawer
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        SharedPreferences sharedPreferences = getSharedPreferences("Mode", MODE_PRIVATE);
-
+        // Setup NavigationView and its item listener
+        navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             Intent intent = null;
-
-            if (isRegistrarView) {
-                if (id == R.id.nav_teacher)
-                    intent = new Intent(this, teacher_list.class);
-                else if (id == R.id.nav_GradeLevel) {
-                    intent = new Intent(this, ClassList_Activity.class);
-                    intent.putExtra("from", "registrar");
-                    intent.putExtra("nav", "view_student");
-                } else if (id == R.id.nav_subject)
-                    intent = new Intent(this, AddSubject.class);
-                else if (id == R.id.nav_logout)
-                    intent = new Intent(this, LogIn.class);
-                else if (id == R.id.nav_dark_mode) {
-                    Menu menu = navigationView.getMenu();
-                    MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    int currentNightMode = AppCompatDelegate.getDefaultNightMode();
-                    if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        editor.putString("mode", "night");
-                        item_dark.setTitle("Dark Mode");
-                        item_dark.setIcon(R.drawable.ic_dark_mode);
-                    } else {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        editor.putString("mode", "dark");
-                        item_dark.setTitle("Light Mode");
-                        item_dark.setIcon(R.drawable.ic_light_mode);
-                    }
-                    editor.apply();
-                }
+            if (id == R.id.nav_teacher)
+                intent = new Intent(this, teacher_list.class);
+            else if (id == R.id.nav_GradeLevel) {
+                intent = new Intent(this, ClassList_Activity.class);
+                intent.putExtra("from", "registrar");
+                intent.putExtra("nav", "view_student");
                 startActivity(intent);
-
-
-                drawerLayout.closeDrawers();
+            } else if (id == R.id.nav_subject) {
+                intent = new Intent(this, AddSubject.class);
+                startActivity(intent);
+            } else if (id == R.id.nav_logout){
+                intent = new Intent(this, LogIn.class);
+                startActivity(intent);
+            }
+            else if (id == R.id.nav_dark_mode) {
+                toggleDark();
                 return true;
-            } else {
-                if (id == R.id.nav_home)
-                    intent = new Intent(this, TeacherHome.class);
-                else if (id == R.id.nav_schedule)
-                    intent = new Intent(this, teacherSchedule.class);
-                else if (id == R.id.nav_assignments)
-                    intent = new Intent(this, ClassList_Activity.class).putExtra("nav", "assignments");
-                else if (id == R.id.nav_marks)
-                    intent = new Intent(this, ClassList_Activity.class).putExtra("nav", "marks");
-                else if (id == R.id.nav_logout)
-                    intent = new Intent(this, LogIn.class);
-                else if (id == R.id.nav_dark_mode) {
-                    Menu menu = navigationView.getMenu();
-                    MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    int currentNightMode = AppCompatDelegate.getDefaultNightMode();
-                    if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        editor.putString("mode", "night");
-                        item_dark.setTitle("Dark Mode");
-                        item_dark.setIcon(R.drawable.ic_dark_mode);
-                    } else {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        editor.putString("mode", "dark");
-                        item_dark.setTitle("Light Mode");
-                        item_dark.setIcon(R.drawable.ic_light_mode);
-                    }
-                    editor.apply();
-                }
             }
-
-            if (intent != null) {
-                startActivity(intent);
-                drawerLayout.closeDrawers();
-            }
-
+            // Close the drawer after an item is selected
+            drawerLayout.closeDrawers();
             return true;
         });
     }
-
+    private void toggleDark() {
+        MenuItem dark = navigationView.getMenu().findItem(R.id.nav_dark_mode);
+        SharedPreferences sp = getSharedPreferences("Mode", MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        int mode = AppCompatDelegate.getDefaultNightMode();
+        if (mode == AppCompatDelegate.MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            dark.setTitle("Dark Mode");
+            dark.setIcon(R.drawable.ic_dark_mode);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            dark.setTitle("Light Mode");
+            dark.setIcon(R.drawable.ic_light_mode);
+        }
+        ed.apply();
+    }
     private void loadStudent() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, BASE_URL,
                 new Response.Listener<String>() {
@@ -259,8 +169,9 @@ public class StudentClass_list extends AppCompatActivity {
                                 int gradeLevel = object.getInt("grade_level");
                                 int parentNum = object.getInt("parent_phone");
                                 String BirthCertificate = "";
-                                List<ScheduleEntry> schedule = null;
-                                Student student = new Student(id, name, email, gradeLevel, parentNum, BirthCertificate, schedule);
+                                List<ScheduleEntry> schedule = null; //score
+                                double score = object.getDouble("score");
+                                Student student = new Student(id, name, email, gradeLevel, parentNum, BirthCertificate, schedule, score);
                                 students.add(student);
                             }
                         } catch (Exception e) {

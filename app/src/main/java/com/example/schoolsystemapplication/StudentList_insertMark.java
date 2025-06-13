@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,8 +54,10 @@ public class StudentList_insertMark extends AppCompatActivity {
     private Context context = this;
     private Adapter_insertMark adapter;
     private String classNum;
+    private int subjectNum;
     private ProgressBar progressBar;
     private SearchView searchView;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +74,11 @@ public class StudentList_insertMark extends AppCompatActivity {
 
         Intent intent = getIntent();
         classNum = intent.getStringExtra("classNum");
+        subjectNum = intent.getIntExtra("subject", 0);
 
         mainRecyclerView = (RecyclerView) findViewById(R.id.mainRecyclerView);
-        adapter = new Adapter_insertMark(students, this);
+        adapter = new Adapter_insertMark(students, this, "student", 0);
+        adapter.setSubjectNumAndclassNum(subjectNum, classNum);
         mainRecyclerView.setAdapter(adapter);
         mainRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         loadStudents();
@@ -85,7 +90,6 @@ public class StudentList_insertMark extends AppCompatActivity {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-//                adapter.filter(newText);
                 adapter.getFilter().filter(newText);
                 return false;
             }
@@ -102,30 +106,15 @@ public class StudentList_insertMark extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("Mode", MODE_PRIVATE);
 
         // Setup NavigationView and its item listener
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.nav_home) {
                 Intent intent1 = new Intent(this, TeacherHome.class);
                 startActivity(intent1);
             } else if (id == R.id.nav_dark_mode) {
-                Menu menu = navigationView.getMenu();
-                MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                int currentNightMode = AppCompatDelegate.getDefaultNightMode();
-                if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    editor.putString("mode", "night");
-                    item_dark.setTitle("Dark Mode");
-                    item_dark.setIcon(R.drawable.ic_dark_mode);
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    editor.putString("mode", "dark");
-                    item_dark.setTitle("Light Mode");
-                    item_dark.setIcon(R.drawable.ic_light_mode);
-                }
-                editor.apply();
-//                recreate();
+                toggleDark();
+                return true;
             } else if (id == R.id.nav_schedule) {
                 Intent intent1 = new Intent(this, teacherSchedule.class);
                 startActivity(intent1);
@@ -137,6 +126,10 @@ public class StudentList_insertMark extends AppCompatActivity {
                 Intent intent1 = new Intent(this, ClassList_Activity.class);
                 intent1.putExtra("nav", "marks");
                 startActivity(intent1);
+            } else if (id == R.id.nav_addMarks) {
+                Intent intent1 = new Intent(this, ClassList_Activity.class);
+                intent1.putExtra("nav", "addmarks");
+                startActivity(intent1);
             } else if (id == R.id.nav_logout) {
                 Intent intent1 = new Intent(this, LogIn.class);
                 startActivity(intent1);
@@ -145,6 +138,26 @@ public class StudentList_insertMark extends AppCompatActivity {
             drawerLayout.closeDrawers();
             return true;
         });
+    }
+
+    private void toggleDark() {
+        SharedPreferences sharedPreferences = getSharedPreferences("Mode", MODE_PRIVATE);
+        Menu menu = navigationView.getMenu();
+        MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        int currentNightMode = AppCompatDelegate.getDefaultNightMode();
+        if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            editor.putString("mode", "night");
+            item_dark.setTitle("Dark Mode");
+            item_dark.setIcon(R.drawable.ic_dark_mode);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            editor.putString("mode", "dark");
+            item_dark.setTitle("Light Mode");
+            item_dark.setIcon(R.drawable.ic_light_mode);
+        }
+        editor.apply();
     }
 
     private void loadStudents() {
@@ -162,9 +175,11 @@ public class StudentList_insertMark extends AppCompatActivity {
                         String email = object.getString("email");
                         int gradeLevel = object.getInt("grade_level");
                         int parentNum = object.getInt("parent_phone");
+                        double score = object.getDouble("score");
+                        Log.d("score",score + "");
                         String BirthCertificate = "";//object.getString("birth_certificate");
                         List<ScheduleEntry> schedule = null;
-                        Student student = new Student(id_student, name, email, gradeLevel, parentNum, BirthCertificate, schedule);
+                        Student student = new Student(id_student, name, email, gradeLevel, parentNum, BirthCertificate, schedule, score);
                         students.add(student);
                     }
 
@@ -175,14 +190,11 @@ public class StudentList_insertMark extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 adapter.setStudents(new ArrayList<>(students));
                 progressBar.setVisibility(View.GONE);
-//                    Adapter_insertMark adapter = new Adapter_insertMark(students, context);
-//                    mainRecyclerView.setAdapter(adapter);
             }
         }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError error) {
-                progressBar.setVisibility(View.GONE);
+//                progressBar.setVisibility(View.GONE);
                 Toast.makeText(context, "Error: " + error.toString(), Toast.LENGTH_LONG).show();
             }
         }) {
@@ -190,16 +202,16 @@ public class StudentList_insertMark extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("grade_level", classNum);
+                params.put("subject_id", subjectNum+"");
                 return params;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
-//        Volley.newRequestQueue(StudentList_insertMark.this).add(stringRequest);
     }
 
     public void btn_OnClick_back(View view) {
-        Intent intent = new Intent(this, markOrStudent_activity.class);
+        Intent intent = new Intent(this, ClassList_Activity.class);
         startActivity(intent);
     }
 

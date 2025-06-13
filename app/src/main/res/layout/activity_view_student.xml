@@ -13,7 +13,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/CustomToolbar"
-        app:title="Grade Level Students" />
+        app:title="Students List" />
 
     <!-- SearchView below the Toolbar -->
     <androidx.appcompat.widget.SearchView

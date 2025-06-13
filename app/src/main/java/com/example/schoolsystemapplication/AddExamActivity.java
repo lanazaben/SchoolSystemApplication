@@ -24,16 +24,16 @@ import com.google.android.material.navigation.NavigationView;
 
 public class AddExamActivity extends AppCompatActivity {
 
-    EditText editText_typeExam;
-    EditText editText_fullMark;
-
-    String exam_Type;
-    int full_Mark;
-
+    private EditText editText_typeExam;
+    private EditText editText_fullMark;
+    private String exam_Type;
+    private int full_Mark;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private Toolbar toolbar;
     private String classNum;
+    private int subjectNum;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class AddExamActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         classNum = intent.getStringExtra("classNum");
+        subjectNum = intent.getIntExtra("subject", 0);
         exam_Type = intent.getStringExtra("examType");
         full_Mark = intent.getIntExtra("fullMark", 0);
         if (exam_Type != null) {
@@ -71,29 +72,15 @@ public class AddExamActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("Mode", MODE_PRIVATE);
 
         // Setup NavigationView and its item listener
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.nav_home) {
                 Intent intent1 = new Intent(this, TeacherHome.class);
                 startActivity(intent1);
             } else if (id == R.id.nav_dark_mode) {
-                Menu menu = navigationView.getMenu();
-                MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                int currentNightMode = AppCompatDelegate.getDefaultNightMode();
-                if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    editor.putString("mode", "night");
-                    item_dark.setTitle("Dark Mode");
-                    item_dark.setIcon(R.drawable.ic_dark_mode);
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    editor.putString("mode", "dark");
-                    item_dark.setTitle("Light Mode");
-                    item_dark.setIcon(R.drawable.ic_light_mode);
-                }
-                editor.apply();
+                toggleDark();
+                return true;
             } else if (id == R.id.nav_schedule) {
                 Intent intent1 = new Intent(this, teacherSchedule.class);
                 startActivity(intent1);
@@ -105,6 +92,10 @@ public class AddExamActivity extends AppCompatActivity {
                 Intent intent1 = new Intent(this, ClassList_Activity.class);
                 intent1.putExtra("nav", "marks");
                 startActivity(intent1);
+            } else if (id == R.id.nav_addMarks) {
+                Intent intent1 = new Intent(this, ClassList_Activity.class);
+                intent1.putExtra("nav", "addmarks");
+                startActivity(intent1);
             } else if (id == R.id.nav_logout) {
                 Intent intent1 = new Intent(this, LogIn.class);
                 startActivity(intent1);
@@ -114,9 +105,28 @@ public class AddExamActivity extends AppCompatActivity {
         });
     }
 
+    private void toggleDark() {
+        SharedPreferences sharedPreferences = getSharedPreferences("Mode", MODE_PRIVATE);
+        Menu menu = navigationView.getMenu();
+        MenuItem item_dark = menu.findItem(R.id.nav_dark_mode);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        int currentNightMode = AppCompatDelegate.getDefaultNightMode();
+        if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            editor.putString("mode", "night");
+            item_dark.setTitle("Dark Mode");
+            item_dark.setIcon(R.drawable.ic_dark_mode);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            editor.putString("mode", "dark");
+            item_dark.setTitle("Light Mode");
+            item_dark.setIcon(R.drawable.ic_light_mode);
+        }
+        editor.apply();
+    }
+
     public void btn_OnClick_back(View view) {
-        Intent intent = new Intent(this, markOrStudent_activity.class);
-        intent.putExtra("classNum", classNum);
+        Intent intent = new Intent(this, ClassList_Activity.class);
         startActivity(intent);
     }
 
@@ -124,10 +134,12 @@ public class AddExamActivity extends AppCompatActivity {
         String exam_type = editText_typeExam.getText().toString();
         String maxMark = editText_fullMark.getText().toString();
         if (!exam_type.equals("") && !maxMark.equals("")) {
+            double maxmark = Double.parseDouble(maxMark);
             Intent intent = new Intent(this, activity_insertMark.class);
             intent.putExtra("classNum", classNum);
             intent.putExtra("examType", exam_type);
-            intent.putExtra("fullMark", Integer.parseInt(maxMark));
+            intent.putExtra("subject", subjectNum);
+            intent.putExtra("fullMark", maxmark);
             startActivity(intent);
         }else {
             Toast.makeText(this, "Error: Missing or invalid input. Please check all fields.", Toast.LENGTH_SHORT).show();
