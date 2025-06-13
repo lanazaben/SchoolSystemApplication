@@ -105,6 +105,17 @@ public class ViewClassSchedule extends AppCompatActivity {
                 Toast.makeText(this, "Please select a subject from the table first", Toast.LENGTH_SHORT).show();
             }
         });
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(ViewClassSchedule.this, AddStudent.class);
+                intent1.putExtra("from", "registrar");
+                intent1.putExtra("nav", "add_student");
+                intent1.putExtra("grade_level", gradeLevelStr);
+                Log.d("btn", "222222");
+                startActivity(intent1);
+            }
+        });
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(item -> {

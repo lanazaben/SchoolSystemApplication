@@ -28,6 +28,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
 
     // File data to be sent in the request (e.g., PDF, image, etc.)
     private final Map<String, DataPart> mByteData;
+    String boundary;
 
     // Constructor
     public VolleyMultipartRequest(int method, String url,
@@ -64,10 +65,49 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
 
     // Set content type for multipart request
     @Override
-    public String getBodyContentType() {
-        // Note: This boundary will not work for actual multipart — you need more logic for real boundary
-        return "multipart/form-data;boundary=" + System.currentTimeMillis();
+    public byte[] getBody() throws AuthFailureError {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+         boundary = "apiclient-" + System.currentTimeMillis();
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+
+        try {
+            // Text params
+            for (Map.Entry<String, String> entry : mParams.entrySet()) {
+                bos.write((twoHyphens + boundary + lineEnd).getBytes());
+                bos.write(("Content-Disposition: form-data; name=\"" + entry.getKey() + "\"" + lineEnd).getBytes());
+                bos.write(("Content-Type: text/plain; charset=UTF-8" + lineEnd).getBytes());
+                bos.write(lineEnd.getBytes());
+                bos.write(entry.getValue().getBytes("UTF-8"));
+                bos.write(lineEnd.getBytes());
+            }
+
+            // File params
+            for (Map.Entry<String, DataPart> entry : mByteData.entrySet()) {
+                DataPart dp = entry.getValue();
+                bos.write((twoHyphens + boundary + lineEnd).getBytes());
+                bos.write(("Content-Disposition: form-data; name=\"" + entry.getKey() + "\"; filename=\"" + dp.getFileName() + "\"" + lineEnd).getBytes());
+                bos.write(("Content-Type: application/octet-stream" + lineEnd).getBytes());
+                bos.write(lineEnd.getBytes());
+                bos.write(dp.getContent());
+                bos.write(lineEnd.getBytes());
+            }
+
+            // End boundary
+            bos.write((twoHyphens + boundary + twoHyphens + lineEnd).getBytes());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return bos.toByteArray();
     }
+
+    @Override
+    public String getBodyContentType() {
+        return "multipart/form-data;boundary=" + boundary;
+    }
+
 
     // Parse the network response from server
     @Override
