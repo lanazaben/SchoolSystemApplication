@@ -5,186 +5,186 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/beige" >
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/beige"
-    tools:context="com.example.schoolsystemapplication.ViewClassSchedule">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:background="@color/blue"
-        android:theme="?attr/actionBarTheme"
-        app:title="Class schedule"
-        app:titleTextColor="@android:color/white"
-        style="@style/CustomToolbar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/beige"
+        tools:context="com.example.schoolsystemapplication.ViewClassSchedule">
 
-    <FrameLayout
-        android:id="@+id/tableFrame"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/table_border"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <ScrollView
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:layout_height="49dp"
+            android:background="@color/blue"
+            android:theme="?attr/actionBarTheme"
+            app:title="Class schedule"
+            app:titleTextColor="@android:color/white"
+            style="@style/CustomToolbar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-            <TableLayout
-                android:id="@+id/tableLayout"
+        <FrameLayout
+            android:id="@+id/tableFrame"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/table_border"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:stretchColumns="1"
-                android:padding="8dp">
+                android:padding="16dp">
 
-                <TableRow>
-                    <TextView
-                        android:background="@drawable/cell_border"
-                        android:padding="8dp"
-                        android:text="@string/day_time"
-                        android:gravity="center" />
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_8_00" />
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_8_50" />
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_9_35" />
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_10_25" />
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_11_35" />
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_12_20" />
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_1_05" />
-                </TableRow>
+                <TableLayout
+                    android:id="@+id/tableLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="1"
+                    android:padding="8dp">
 
-                <TableRow>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/sunday" android:gravity="center"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                </TableRow>
+                    <TableRow>
+                        <TextView
+                            android:background="@drawable/cell_border"
+                            android:padding="8dp"
+                            android:text="@string/day_time"
+                            android:gravity="center" />
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_8_00" />
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_8_50" />
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_9_35" />
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_10_25" />
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_11_35" />
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_12_20" />
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/_1_05" />
+                    </TableRow>
 
-                <TableRow>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/monday" android:gravity="center"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                </TableRow>
+                    <TableRow>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/sunday" android:gravity="center"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                    </TableRow>
 
-                <TableRow>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/tuesday" android:gravity="center"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                </TableRow>
+                    <TableRow>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/monday" android:gravity="center"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                    </TableRow>
 
-                <TableRow>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/wednesday" android:gravity="center"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                </TableRow>
+                    <TableRow>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/tuesday" android:gravity="center"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                    </TableRow>
 
-                <TableRow>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/thursday" android:gravity="center"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                    <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
-                </TableRow>
+                    <TableRow>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/wednesday" android:gravity="center"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                    </TableRow>
 
-            </TableLayout>
-        </ScrollView>
-    </FrameLayout>
+                    <TableRow>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp" android:text="@string/thursday" android:gravity="center"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                        <TextView android:background="@drawable/cell_border" android:padding="8dp"/>
+                    </TableRow>
 
-    <Button
-        android:id="@+id/buttonAddStudent"
-        android:layout_width="136dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/blue"
-        android:text="@string/addStudent"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tableFrame" />
+                </TableLayout>
+            </ScrollView>
+        </FrameLayout>
 
-    <Button
-        android:id="@+id/buttonEditSub"
-        android:layout_width="140dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:backgroundTint="@color/blue"
-        android:text="@string/editSubject"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tableFrame" />
+        <Button
+            android:id="@+id/buttonAddStudent"
+            android:layout_width="136dp"
+            android:layout_height="58dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/blue"
+            android:text="@string/addStudent"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tableFrame" />
 
-    <Button
-        android:id="@+id/buttonViewStu"
-        android:layout_width="136dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="240dp"
-        android:backgroundTint="@color/blue"
-        android:text="@string/viewStudent"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tableFrame"
-        app:layout_constraintVertical_bias="0.724" />
+        <Button
+            android:id="@+id/buttonEditSub"
+            android:layout_width="140dp"
+            android:layout_height="58dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="@color/blue"
+            android:text="@string/editSubject"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tableFrame" />
 
-    <Button
-        android:id="@+id/buttonaddSubject"
-        android:layout_width="136dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:backgroundTint="@color/blue"
-        android:text="@string/addStudent"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tableFrame"
-        app:layout_constraintVertical_bias="0.724" />
+        <Button
+            android:id="@+id/buttonViewStu"
+            android:layout_width="136dp"
+            android:layout_height="58dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="240dp"
+            android:backgroundTint="@color/blue"
+            android:text="@string/viewStudent"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tableFrame"
+            app:layout_constraintVertical_bias="0.724" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-<com.google.android.material.navigation.NavigationView
-android:id="@+id/nav_view"
-android:layout_width="wrap_content"
-android:layout_height="match_parent"
-android:layout_gravity="start"
-app:menu="@menu/drawer_menu"
-android:background="@color/white"
-app:headerLayout="@layout/nav_header"
-app:itemTextColor="@color/nav_item_text_color"
-app:itemBackground="@drawable/nav_item_background" />
+        <Button
+            android:id="@+id/buttonaddSubject"
+            android:layout_width="136dp"
+            android:layout_height="58dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="@color/blue"
+            android:text="@string/addStudent"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tableFrame"
+            app:layout_constraintVertical_bias="0.724" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/drawer_menu"
+        android:background="@color/white"
+        app:headerLayout="@layout/nav_header"
+        app:itemTextColor="@color/nav_item_text_color"
+        app:itemBackground="@drawable/nav_item_background" />
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -74,7 +74,8 @@ public class teacherSchedule extends AppCompatActivity {
         isRegistrarView = "registrar".equals(from);
 if(!isRegistrarView) {
     SharedPreferences sp = getSharedPreferences("teacher_session", MODE_PRIVATE);
-    teacherId = sp.getInt("teacher_id", -1);
+    String teacher = sp.getString("teacher_id", "-1");
+    teacherId=Integer.parseInt(teacher);
 
     if (teacherId == -1 && getIntent() != null) {
         teacherId = getIntent().getIntExtra("teacher_id", -1);

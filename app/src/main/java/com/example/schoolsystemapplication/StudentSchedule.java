@@ -1,8 +1,10 @@
 package com.example.schoolsystemapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,13 +78,10 @@ public class StudentSchedule extends AppCompatActivity {
 
 
         if (!isRegistrarView) {
-           SharedPreferences  sp = getSharedPreferences("teacher_session", MODE_PRIVATE);
-            studentId = sp.getInt("student_id", -1);
+            SharedPreferences sp = getSharedPreferences("student_session",MODE_PRIVATE);
+             studentId = Integer.parseInt(sp.getString("student_id", "0"));
             studentId = getIntent().getIntExtra("student_id",-1);
 
-            if (studentId == -1 && getIntent() != null) {
-                studentId = getIntent().getIntExtra("student_id", -1);
-            }
 
             if (studentId == -1) {
                 Toast.makeText(this, "No student ID provided.", Toast.LENGTH_LONG).show();

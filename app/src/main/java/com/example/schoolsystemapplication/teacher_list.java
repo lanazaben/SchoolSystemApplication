@@ -125,6 +125,7 @@ public class teacher_list extends AppCompatActivity {
                     item_dark.setIcon(R.drawable.ic_light_mode);
                 }
                 editor.apply();
+                return true;
             }
 
             startActivity(intent);

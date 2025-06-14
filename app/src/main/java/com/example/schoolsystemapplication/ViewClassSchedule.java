@@ -3,6 +3,7 @@ package com.example.schoolsystemapplication;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -41,7 +42,7 @@ public class ViewClassSchedule extends AppCompatActivity {
     private NavigationView navigationView;
     private Button btnView, btnAdd, btnEdit;
 
-    private int grade;
+    private String gradeLevelStr;
     private String subjectName;
     private String teacherId ;
     private String currentRegistrarId ;
@@ -53,11 +54,10 @@ public class ViewClassSchedule extends AppCompatActivity {
         setContentView(R.layout.activity_view_class_schedule);
         Intent intent = getIntent();
 
-// Retrieve grade level
-        String gradeLevelStr = intent.getStringExtra("grade_level");
-        grade = Integer.parseInt(gradeLevelStr != null ? gradeLevelStr : "0");
+        // Retrieve grade level
+         gradeLevelStr = intent.getStringExtra("grade_level");
 
-// Get teacherId and registrarId if passed
+        // Get teacherId and registrarId if passed
         teacherId = intent.getStringExtra("teacher_id");
         if (teacherId == null) {
             teacherId = "1"; // fallback or handle accordingly
@@ -82,13 +82,14 @@ public class ViewClassSchedule extends AppCompatActivity {
         btnEdit = findViewById(R.id.buttonEditSub);
 
 
-        loadScheduleData(grade);
+        loadScheduleData(gradeLevelStr);
 
         btnView.setOnClickListener(v -> {
             Intent intent1 = new Intent(ViewClassSchedule.this, StudentClass_list.class);
             intent1.putExtra("from", "registrar");
             intent1.putExtra("nav", "view_student");
-            intent1.putExtra("grade_level", grade);
+            intent1.putExtra("grade_level", gradeLevelStr);
+            Log.d("btn", "222222");
             startActivity(intent1);
         });
 
@@ -97,11 +98,22 @@ public class ViewClassSchedule extends AppCompatActivity {
                 Intent intent2 = new Intent(ViewClassSchedule.this, ScheduleSelector.class);
                 intent2.putExtra("subject_name", subjectName);
                 intent2.putExtra("teacher_id", teacherId);
-                intent2.putExtra("grade_level", String.valueOf(grade));
+                intent2.putExtra("grade_level", gradeLevelStr);
                 intent2.putExtra("selected_schedule", currentScheduleJson);
                 startActivityForResult(intent2, 1001);
             } else {
                 Toast.makeText(this, "Please select a subject from the table first", Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(ViewClassSchedule.this, AddStudent.class);
+                intent1.putExtra("from", "registrar");
+                intent1.putExtra("nav", "add_student");
+                intent1.putExtra("grade_level", gradeLevelStr);
+                Log.d("btn", "222222");
+                startActivity(intent1);
             }
         });
 
@@ -127,7 +139,6 @@ public class ViewClassSchedule extends AppCompatActivity {
             }
 
             startActivity(intent);
-
 
             drawerLayout.closeDrawers();
             return true;
@@ -160,8 +171,8 @@ public class ViewClassSchedule extends AppCompatActivity {
         }
     }
 
-    private void loadScheduleData(int gradeLevel) {
-        String url = "http://10.0.2.2:80/php_project/get_schedule.php?grade_level=" + gradeLevel;
+    private void loadScheduleData(String gradeLevel) {
+        String url = "http://10.0.2.2:80/php_project/get_schedule.php?grade_level=" + gradeLevelStr;
         RequestQueue queue = Volley.newRequestQueue(this);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -257,7 +268,7 @@ public class ViewClassSchedule extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 response -> {
                     Toast.makeText(this, "Schedule updated successfully", Toast.LENGTH_SHORT).show();
-                    loadScheduleData(grade);
+                    loadScheduleData(gradeLevelStr);
                 },
                 error -> {
                     String msg = "Error updating schedule";
@@ -276,7 +287,7 @@ public class ViewClassSchedule extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("name", subjectName);
                 params.put("teacher_id", teacherId);
-                params.put("grade_level", String.valueOf(grade));
+                params.put("grade_level", gradeLevelStr);
                 params.put("registrar_id", currentRegistrarId);
                 params.put("schedule", scheduleJson);
                 return params;

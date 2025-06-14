@@ -5,307 +5,310 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/beige" >
-<LinearLayout
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/main"
-    android:background="@color/beige"
-    android:orientation="vertical"
-    tools:context="com.example.schoolsystemapplication.ScheduleSelector">
-
-
-    <!-- Toolbar -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/AddAsgtoolbar"
-        style="@style/CustomToolbar" />
-    <ImageView
-        android:id="@+id/back_arrow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/baseline_arrow_back_24"
-    android:contentDescription="@string/back"
-    android:clickable="true"
-    android:focusable="true" />
-    <FrameLayout
-        android:id="@+id/tableFrame"
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/table_border">
+        android:layout_height="match_parent"
+        android:id="@+id/main"
+        android:background="@color/beige"
+        android:orientation="vertical"
+        tools:context="com.example.schoolsystemapplication.ScheduleSelector">
 
 
-        <ScrollView
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/AddAsgtoolbar"
+            style="@style/CustomToolbar"
+            app:title="Schedule Selector"/>
+
+        <ImageView
+            android:id="@+id/back_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/baseline_arrow_back_24"
+            android:contentDescription="@string/back"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <FrameLayout
+            android:id="@+id/tableFrame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:layout_margin="16dp"
+            android:background="@drawable/table_border">
 
 
-            <TableLayout
-                android:id="@+id/table_schedule"
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:stretchColumns="*">
+                android:padding="16dp">
 
-                <!-- Header Row -->
-                <TableRow>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/cell_border"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="@string/day_time" />
+                <TableLayout
+                    android:id="@+id/table_schedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="*">
 
-                    <TextView
-                        android:background="@drawable/cell_border"
-                        android:padding="8dp"
-                        android:text="8:00" />
+                    <!-- Header Row -->
+                    <TableRow>
 
-                    <TextView
-                        android:background="@drawable/cell_border"
-                        android:padding="8dp"
-                        android:text="8:50" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/cell_border"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="@string/day_time" />
 
-                    <TextView
-                        android:background="@drawable/cell_border"
-                        android:padding="8dp"
-                        android:text="9:35" />
+                        <TextView
+                            android:background="@drawable/cell_border"
+                            android:padding="8dp"
+                            android:text="8:00" />
 
-                    <TextView
-                        android:background="@drawable/cell_border"
-                        android:padding="8dp"
-                        android:text="10:25" />
+                        <TextView
+                            android:background="@drawable/cell_border"
+                            android:padding="8dp"
+                            android:text="8:50" />
 
-                    <TextView
-                        android:background="@drawable/cell_border"
-                        android:padding="8dp"
-                        android:text="11:35" />
+                        <TextView
+                            android:background="@drawable/cell_border"
+                            android:padding="8dp"
+                            android:text="9:35" />
 
-                    <TextView
-                        android:background="@drawable/cell_border"
-                        android:padding="8dp"
-                        android:text="12:20" />
+                        <TextView
+                            android:background="@drawable/cell_border"
+                            android:padding="8dp"
+                            android:text="10:25" />
 
-                    <TextView
-                        android:background="@drawable/cell_border"
-                        android:padding="8dp"
-                        android:text="1:05" />
-                </TableRow>
+                        <TextView
+                            android:background="@drawable/cell_border"
+                            android:padding="8dp"
+                            android:text="11:35" />
 
-                <!-- Days Rows -->
-                <TableRow>
+                        <TextView
+                            android:background="@drawable/cell_border"
+                            android:padding="8dp"
+                            android:text="12:20" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/cell_border"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="@string/sunday" />
+                        <TextView
+                            android:background="@drawable/cell_border"
+                            android:padding="8dp"
+                            android:text="1:05" />
+                    </TableRow>
 
-                    <CheckBox
-                        android:id="@+id/sun_1"
-                        android:background="@drawable/cell_border" />
+                    <!-- Days Rows -->
+                    <TableRow>
 
-                    <CheckBox
-                        android:id="@+id/sun_2"
-                        android:background="@drawable/cell_border" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/cell_border"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="@string/sunday" />
 
-                    <CheckBox
-                        android:id="@+id/sun_3"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/sun_1"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/sun_4"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/sun_2"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/sun_5"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/sun_3"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/sun_6"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/sun_4"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/sun_7"
-                        android:background="@drawable/cell_border" />
-                </TableRow>
+                        <CheckBox
+                            android:id="@+id/sun_5"
+                            android:background="@drawable/cell_border" />
 
-                <TableRow>
+                        <CheckBox
+                            android:id="@+id/sun_6"
+                            android:background="@drawable/cell_border" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/cell_border"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="@string/monday" />
+                        <CheckBox
+                            android:id="@+id/sun_7"
+                            android:background="@drawable/cell_border" />
+                    </TableRow>
 
-                    <CheckBox
-                        android:id="@+id/mon_1"
-                        android:background="@drawable/cell_border" />
+                    <TableRow>
 
-                    <CheckBox
-                        android:id="@+id/mon_2"
-                        android:background="@drawable/cell_border" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/cell_border"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="@string/monday" />
 
-                    <CheckBox
-                        android:id="@+id/mon_3"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/mon_1"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/mon_4"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/mon_2"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/mon_5"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/mon_3"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/mon_6"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/mon_4"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/mon_7"
-                        android:background="@drawable/cell_border" />
-                </TableRow>
+                        <CheckBox
+                            android:id="@+id/mon_5"
+                            android:background="@drawable/cell_border" />
 
-                <TableRow>
+                        <CheckBox
+                            android:id="@+id/mon_6"
+                            android:background="@drawable/cell_border" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/cell_border"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="@string/tuesday" />
+                        <CheckBox
+                            android:id="@+id/mon_7"
+                            android:background="@drawable/cell_border" />
+                    </TableRow>
 
-                    <CheckBox
-                        android:id="@+id/tue_1"
-                        android:background="@drawable/cell_border" />
+                    <TableRow>
 
-                    <CheckBox
-                        android:id="@+id/tue_2"
-                        android:background="@drawable/cell_border" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/cell_border"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="@string/tuesday" />
 
-                    <CheckBox
-                        android:id="@+id/tue_3"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/tue_1"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/tue_4"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/tue_2"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/tue_5"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/tue_3"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/tue_6"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/tue_4"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/tue_7"
-                        android:background="@drawable/cell_border" />
-                </TableRow>
+                        <CheckBox
+                            android:id="@+id/tue_5"
+                            android:background="@drawable/cell_border" />
 
-                <TableRow>
+                        <CheckBox
+                            android:id="@+id/tue_6"
+                            android:background="@drawable/cell_border" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/cell_border"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="@string/wednesday" />
+                        <CheckBox
+                            android:id="@+id/tue_7"
+                            android:background="@drawable/cell_border" />
+                    </TableRow>
 
-                    <CheckBox
-                        android:id="@+id/wed_1"
-                        android:background="@drawable/cell_border" />
+                    <TableRow>
 
-                    <CheckBox
-                        android:id="@+id/wed_2"
-                        android:background="@drawable/cell_border" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/cell_border"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="@string/wednesday" />
 
-                    <CheckBox
-                        android:id="@+id/wed_3"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/wed_1"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/wed_4"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/wed_2"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/wed_5"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/wed_3"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/wed_6"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/wed_4"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/wed_7"
-                        android:background="@drawable/cell_border" />
-                </TableRow>
+                        <CheckBox
+                            android:id="@+id/wed_5"
+                            android:background="@drawable/cell_border" />
 
-                <TableRow>
+                        <CheckBox
+                            android:id="@+id/wed_6"
+                            android:background="@drawable/cell_border" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/cell_border"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="@string/thursday" />
+                        <CheckBox
+                            android:id="@+id/wed_7"
+                            android:background="@drawable/cell_border" />
+                    </TableRow>
 
-                    <CheckBox
-                        android:id="@+id/thu_1"
-                        android:background="@drawable/cell_border" />
+                    <TableRow>
 
-                    <CheckBox
-                        android:id="@+id/thu_2"
-                        android:background="@drawable/cell_border" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/cell_border"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="@string/thursday" />
 
-                    <CheckBox
-                        android:id="@+id/thu_3"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/thu_1"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/thu_4"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/thu_2"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/thu_5"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/thu_3"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/thu_6"
-                        android:background="@drawable/cell_border" />
+                        <CheckBox
+                            android:id="@+id/thu_4"
+                            android:background="@drawable/cell_border" />
 
-                    <CheckBox
-                        android:id="@+id/thu_7"
-                        android:background="@drawable/cell_border" />
-                </TableRow>
-            </TableLayout>
-        </ScrollView>
-    </FrameLayout>
+                        <CheckBox
+                            android:id="@+id/thu_5"
+                            android:background="@drawable/cell_border" />
 
-    <Button
-        android:id="@+id/buttonaddsub"
-        android:layout_width="136dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="16dp"
-        android:layout_gravity="center"
-        android:backgroundTint="@color/blue"
-        android:text="@string/add"
-        android:textColor="@android:color/white"/>
+                        <CheckBox
+                            android:id="@+id/thu_6"
+                            android:background="@drawable/cell_border" />
 
-</LinearLayout>
+                        <CheckBox
+                            android:id="@+id/thu_7"
+                            android:background="@drawable/cell_border" />
+                    </TableRow>
+                </TableLayout>
+            </ScrollView>
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/buttonaddsub"
+            android:layout_width="136dp"
+            android:layout_height="58dp"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/blue"
+            android:text="@string/add"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"

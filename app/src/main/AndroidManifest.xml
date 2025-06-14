@@ -4,6 +4,7 @@
     package="com.example.schoolsystemapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -17,26 +18,8 @@
         android:theme="@style/Theme.SchoolSystemApplication"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
-        <activity
-            android:name=".SendAssignmentActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".StudentHome"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
         <activity
             android:name=".TeacherHome"
-            android:exported="false" />
-
-        <activity
-            android:name=".allAssignmentPage"
             android:exported="false" />
         <activity
             android:name=".StudentSchedule"
@@ -46,12 +29,9 @@
             android:exported="false" />
         <activity
             android:name=".RegistrarsHome"
-            android:exported="true" />
-        <activity
-            android:name=".viewMark_andEdit_activity"
             android:exported="false" />
         <activity
-            android:name=".markOrStudent_activity"
+            android:name=".viewMark_andEdit_activity"
             android:exported="false" />
         <activity
             android:name=".AddExamActivity"
@@ -84,7 +64,7 @@
             android:name=".AddSubject"
             android:exported="false" />
         <activity
-            android:name=".AddStudent"
+            android:name=".AddTeacher"
             android:exported="false" />
         <activity
             android:name=".ViewClassSchedule"
@@ -100,14 +80,28 @@
             android:exported="false" />
         <activity
             android:name=".Splash"
-            android:exported="false" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".StudentAssDetails"
             android:exported="false" />
         <activity
+            android:name=".allAssignmentPage"
+            android:exported="false" />
+        <activity
             android:name=".SignUp"
             android:exported="false" />
-
+        <activity
+            android:name=".StudentHome"
+            android:exported="false" />
+        <activity
+            android:name=".AddStudent"
+            android:exported="false" />
     </application>
 
 </manifest>

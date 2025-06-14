@@ -1,5 +1,6 @@
 package com.example.schoolsystemapplication;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -78,12 +79,15 @@ public class Adapter_studentList extends RecyclerView.Adapter<Adapter_studentLis
         return new ViewHolder(v);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Student student = students.get(position);
         CardView cardView = holder.cardView;
         TextView textView = cardView.findViewById(R.id.listName);
         textView.setText(student.getName());
+        TextView textView2 = cardView.findViewById(R.id.listquantity);
+        textView2.setText(student.getScore()+"");
 
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override

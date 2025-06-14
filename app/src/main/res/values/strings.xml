@@ -95,6 +95,10 @@
     <string name="grade_level_students">Grade Level Students</string>
     <string name="view_schedule">View Schedule</string>
     <string name="view_grade_levels">View Grade levels</string>
+    <string name="edit">Edit</string>
+    <string name="enter_gender">Enter gender</string>
+    <string name="gender">Gender</string>
+
 
     <string name="submit_assignment_title">Submit Assignment</string>
     <string name="select_assignment_label">Select Assignment:</string>
