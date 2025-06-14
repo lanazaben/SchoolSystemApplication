@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -124,20 +123,13 @@ public class LogIn extends AppCompatActivity {
                                     StringRequest stringRequest1 = new StringRequest(Request.Method.POST, url,
                                             response1 -> {
                                                 try {
-                                                    Log.e("TEACHER_RESPONSE", response1); // Optional for debug
-
                                                     JSONObject object = new JSONObject(response1);
 
                                                     SharedPreferences sp = getSharedPreferences("teacher_session", MODE_PRIVATE);
                                                     SharedPreferences.Editor editor = sp.edit();
-                                                    editor.putString("teacher_id", object.getInt("teacher_id") + "");
-                                                    editor.putString("id_number",id_number);
+                                                    editor.putString("teacher_id", object.getInt("teacher_id")+"");
+                                                    editor.putString("id_number", id_number);
                                                     editor.apply();
-
-                                                    Intent intent1 = new Intent(LogIn.this, TeacherHome.class);
-                                                    startActivity(intent1);
-                                                    finish();
-
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
@@ -152,31 +144,22 @@ public class LogIn extends AppCompatActivity {
                                             return params;
                                         }
                                     };
-
                                     RequestQueue requestQueue = Volley.newRequestQueue(LogIn.this);
                                     requestQueue.add(stringRequest1);
+                                    intent = new Intent(this, TeacherHome.class);
                                     break;
-
                                 case "student":
                                     String url2 = "http://10.0.2.2:80/php_project/get_Student_id.php";
                                     StringRequest stringRequest2 = new StringRequest(Request.Method.POST, url2,
                                             response2 -> {
                                                 try {
-                                                    Log.e("LOGIN_RESPONSE", response); // before parsing JSONObject
-
                                                     JSONObject object = new JSONObject(response2);
 
                                                     SharedPreferences sp = getSharedPreferences("student_session", MODE_PRIVATE);
                                                     SharedPreferences.Editor editor = sp.edit();
-                                                    editor.putString("student_id", object.getInt("student_id") + "");
-                                                    editor.putString("id_number",id_number);
+                                                    editor.putString("student_id", object.getInt("student_id")+"");
+                                                    editor.putString("id_number", id_number);
                                                     editor.apply();
-
-                                                    // ✅ Now safe to move to StudentHome
-                                                    Intent intent1 = new Intent(LogIn.this, StudentHome.class);
-                                                    startActivity(intent1);
-                                                    finish();
-
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
@@ -191,28 +174,23 @@ public class LogIn extends AppCompatActivity {
                                             return params;
                                         }
                                     };
-
                                     RequestQueue requestQueue2 = Volley.newRequestQueue(LogIn.this);
                                     requestQueue2.add(stringRequest2);
+                                    intent = new Intent(this, StudentHome.class);
                                     break;
-
                                 case "admin":
                                     SharedPreferences sp = getSharedPreferences("registrar_session", MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sp.edit();
-                                    editor.putString("id_number",id_number);
-
-
+                                    editor.putString("id_number", id_number);
+                                    editor.apply();
                                     intent = new Intent(this, RegistrarsHome.class);
-                                    startActivity(intent);
-                                    finish(); // Close login activity
                                     break;
                                 default:
                                     intent = new Intent(this, LogIn.class);
-                                    startActivity(intent);
-                                    finish(); // Close login activity
                                     break;
                             }
-
+                            startActivity(intent);
+                            finish(); // Close login activity
 
                         } else {
                             Toast.makeText(this, "Login failed: " + message, Toast.LENGTH_LONG).show();
