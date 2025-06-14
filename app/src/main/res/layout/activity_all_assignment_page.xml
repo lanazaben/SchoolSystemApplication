@@ -30,7 +30,7 @@
 
         <!-- RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/Recyclerview"
+            android:id="@+id/recyclerAssignments"
             style="@style/StudentListRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,3 +39,12 @@
     </ScrollView>
 
 </LinearLayout>
+
+
+
+
+
+
+
+
+

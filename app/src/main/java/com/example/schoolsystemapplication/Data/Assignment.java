@@ -10,17 +10,23 @@ public class Assignment {
     private Teacher teacher;
     private String title;
     private String description;
-    private Date dueDate;
+    private CharSequence dueDate;
 
     public Assignment(){}
 
-    public Assignment(int assignmentId, int gradeLevel, CharSequence subject, Teacher teacher, String title, String description, Date dueDate) {
+    public Assignment(int assignmentId, int gradeLevel, CharSequence subject, Teacher teacher, String title, String description, CharSequence dueDate) {
         this.assignmentId = assignmentId;
         this.gradeLevel = gradeLevel;
         this.subject = subject;
         this.teacher = teacher;
         this.title = title;
         this.description = description;
+        this.dueDate = dueDate;
+    }
+
+    public Assignment(String title, String subject, String dueDate) {
+        this.title = title;
+        this.subject = subject;
         this.dueDate = dueDate;
     }
 
@@ -77,11 +83,11 @@ public class Assignment {
         this.description = description;
     }
 
-    public Date getDueDate() {
+    public CharSequence getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(CharSequence dueDate) {
         this.dueDate = dueDate;
     }
 }

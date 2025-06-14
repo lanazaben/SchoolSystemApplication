@@ -15,51 +15,42 @@ import com.example.schoolsystemapplication.Data.Assignment;
 
 import java.util.List;
 
-public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.AssignmentViewHolder> {
-    private List<Assignment> assignmentList;
-    private Context context;
+    public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.AssignmentViewHolder> {
+        List<Assignment> assignmentList;
 
+        public AssignmentAdapter(List<Assignment> assignmentList) {
+            this.assignmentList = assignmentList;
+        }
 
-    public AssignmentAdapter(List<Assignment> assignmentList, Context context) {
-        this.assignmentList = assignmentList;
-        this.context = context;
-    }
+        @NonNull
+        @Override
+        public AssignmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.asslist, parent, false);
+            return new AssignmentViewHolder(view);
+        }
 
-    @NonNull
-    @Override
-    public AssignmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.asslist, parent, false);
-        return new AssignmentViewHolder(view);
-    }
+        @Override
+        public void onBindViewHolder(@NonNull AssignmentViewHolder holder, int position) {
+            Assignment item = assignmentList.get(position);
+            holder.tvTitle.setText(item.getTitle());
+            holder.tvSubject.setText(item.getSubject());
+            holder.tvDueDate.setText(item.getDueDate());
+        }
 
-    @Override
-    public void onBindViewHolder(@NonNull AssignmentViewHolder holder, int position) {
-        Assignment item = assignmentList.get(position);
+        @Override
+        public int getItemCount() {
+            return assignmentList.size();
+        }
 
-        holder.textView1.setText(item.getSubject());
-        holder.textView2.setText(item.getTitle());
+        static class AssignmentViewHolder extends RecyclerView.ViewHolder {
+            TextView tvTitle, tvSubject, tvDueDate;
 
-        Log.d("ADAPTER_DEBUG", "Title to send: " + item.getTitle());
-
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, StudentAssDetails.class);
-            intent.putExtra("title", item.getTitle());
-            context.startActivity(intent);
-        });
-    }
-
-    @Override
-    public int getItemCount() {
-        return assignmentList.size();
-    }
-
-    static class AssignmentViewHolder extends RecyclerView.ViewHolder {
-        TextView textView1, textView2;
-
-        public AssignmentViewHolder(@NonNull View itemView) {
-            super(itemView);
-            textView1 = itemView.findViewById(R.id.textView1); // Subject
-            textView2 = itemView.findViewById(R.id.textView2); // Title
+            public AssignmentViewHolder(@NonNull View itemView) {
+                super(itemView);
+                tvTitle = itemView.findViewById(R.id.tvTitle);
+                tvSubject = itemView.findViewById(R.id.tvSubject);
+                tvDueDate = itemView.findViewById(R.id.tvDueDate);
+            }
         }
     }
-}
+

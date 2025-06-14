@@ -1,148 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/beige"
-    tools:context="com.example.schoolsystemapplication.AddStudent">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/AssignmentDetailsToolbar"
-        app:title="Assignment Details" />
-
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/beige"
+        tools:context=".AddStudent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp"
-            android:gravity="center_horizontal">
+            android:layout_margin="24dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="@color/beige"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="12dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/edittext">
+                android:padding="24dp">
 
+                <!-- العنوان -->
                 <TextView
-                    style="@style/LabelText"
-                    android:text="ID" />
-                <EditText
-                    android:id="@+id/editTextId"
-                    style="@style/FormEditText"
-                    android:hint="Enter ID"
-                    android:inputType="number" />
-            </LinearLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:gravity="center"
+                    android:text="@string/submit_assignment"
+                    android:textColor="@color/beige"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/edittext">
-
+                <!-- التسمية -->
                 <TextView
-                    style="@style/LabelText"
-                    android:text="Subject" />
-                <EditText
-                    android:id="@+id/editTextSubject"
-                    style="@style/FormEditText"
-                    android:hint="Enter Subject" />
-            </LinearLayout>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/select_assignment"
+                    android:textColor="@color/beige"
+                    android:textSize="16sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/edittext">
-
-                <TextView
-                    style="@style/LabelText"
-                    android:text="Teacher" />
-                <EditText
-                    android:id="@+id/editTextTeacher"
-                    style="@style/FormEditText"
-                    android:hint="Enter Teacher Name" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/edittext">
-
-                <TextView
-                    style="@style/LabelText"
-                    android:text="Title" />
-                <EditText
-                    android:id="@+id/editTextTitle"
-                    style="@style/FormEditText"
-                    android:hint="Enter Title" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/edittext">
-
-                <TextView
-                    style="@style/LabelText"
-                    android:text="Description" />
-                <EditText
-                    android:id="@+id/editTextDescription"
-                    style="@style/FormEditText"
-                    android:hint="Enter Description"
-                    android:minLines="3"
-                    android:gravity="top"
-                    android:inputType="textMultiLine" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/edittext">
-
-                <TextView
-                    style="@style/LabelText"
-                    android:text="Due Date" />
-                <TextView
-                    android:id="@+id/textViewDueDate"
+                <!-- السبنر -->
+                <Spinner
+                    android:id="@+id/spinnerAssignments"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:hint="Select Due Date"
-                    android:padding="10dp"
-                    android:background="@drawable/edittext"
-                    android:drawablePadding="8dp"
-                    android:focusable="true"
-                    android:clickable="true" />
-            </LinearLayout>
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/spinner_background"
+                    android:backgroundTint="@color/beige"
+                    android:padding="12dp" />
 
-            <Button
-                style="@style/PrimaryButton"
-                android:id="@+id/buttonSubmit"
-                android:text="Submit"
-                android:layout_marginTop="30dp" />
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+                <!-- زر اختيار ملف -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnChooseFile"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="12dp"
+                    android:backgroundTint="@color/beige"
+                    android:text="@string/choose_file"
+                    android:textColor="@color/white"
+                    app:cornerRadius="16dp"
+                    app:iconPadding="12dp" />
+
+                <!-- اسم الملف -->
+                <TextView
+                    android:id="@+id/tvSelectedFile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/no_file_selected2"
+                    android:textColor="@color/beige"
+                    android:textSize="14sp" />
+
+                <!-- زر الإرسال -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSubmit"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:backgroundTint="@color/beige"
+                    android:text="@string/submit"
+                    android:textColor="@color/white"
+                    app:cornerRadius="16dp"
+                    app:iconPadding="12dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>

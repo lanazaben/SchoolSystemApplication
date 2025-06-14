@@ -49,7 +49,6 @@
     <string name="min">Min</string>
     <string name="grade">Grade</string>
     <string name="date">Date</string>
-    <string name="back">Back</string>
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
     <string name="title_activity_registrars_home_page">RegistrarsHomePage</string>
@@ -96,6 +95,38 @@
     <string name="grade_level_students">Grade Level Students</string>
     <string name="view_schedule">View Schedule</string>
     <string name="view_grade_levels">View Grade levels</string>
+
+    <string name="submit_assignment_title">Submit Assignment</string>
+    <string name="select_assignment_label">Select Assignment:</string>
+    <string name="choose_file_button">Choose File</string>
+    <string name="no_file_selected">No file selected</string>
+    <string name="submit_button_text">Submit Assignment</string>
+    <string name="file_ready_to_upload">File ready to upload!</string>
+    <string name="please_select_file">Please select a file first.</string>
+    <string name="teacher_panel">👨‍🏫 Teacher Panel</string>
+    <string name="publish_grades">📝 Publish Grades</string>
+    <string name="assignments">📚 Assignments</string>
+    <string name="school_login">🔐 School Login</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="login">Login</string>
+    <string name="submit_assignment">📘 Submit Assignment</string>
+    <string name="select_assignment">Select Assignment:</string>
+    <string name="choose_file">📎 Choose File</string>
+    <string name="no_file_selected2">No file selected</string>
+    <string name="submit">🚀 Submit</string>
+    <string name="back">Back</string>
+    <string name="schedule_icon">Schedule Icon</string>
+    <string name="grades_icon">Grades Icon</string>
+    <string name="assignment_icon">Assignment Icon</string>
+    <string name="submit_assignments">Submit Assignments</string>
+    <string name="welcome_teacher">Welcome, Teacher</string>
+    <string name="login2">Login</string>
+    <string name="password2">Password</string>
+    <string name="login3">Login</string>
+    <string name="welcome_student">Welcome, Student</string>
+    <string name="view_grades">View Grades</string>
+    <string name="view_assignments">View Assignments</string>
 
     <string-array name="dark_mode_options">
         <item>On</item>
