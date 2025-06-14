@@ -8,32 +8,19 @@ import com.android.volley.toolbox.HttpHeaderParser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Custom Volley request class for uploading files and parameters using multipart/form-data
- */
 public class VolleyMultipartRequest extends Request<NetworkResponse> {
-
-    // Listener for successful response
     private final Response.Listener<NetworkResponse> mListener;
-
-    // Listener for error response
     private final Response.ErrorListener mErrorListener;
-
-    // Text parameters to be sent in the request
     private final Map<String, String> mParams;
-
-    // File data to be sent in the request (e.g., PDF, image, etc.)
     private final Map<String, DataPart> mByteData;
-    String boundary;
+    private String boundary;
 
-    // Constructor
     public VolleyMultipartRequest(int method, String url,
-                                  Response.Listener<NetworkResponse> listener,
-                                  Response.ErrorListener errorListener) {
+                                Response.Listener<NetworkResponse> listener,
+                                Response.ErrorListener errorListener) {
         super(method, url, errorListener);
         this.mListener = listener;
         this.mErrorListener = errorListener;
@@ -41,33 +28,28 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
         this.mByteData = new HashMap<>();
     }
 
-    // Add text parameters to the request
     public void setParams(Map<String, String> params) {
         mParams.putAll(params);
     }
 
-    // Add file data with key (e.g., "birth_certificate") and file content
     public void addFile(String key, DataPart dataPart) {
         mByteData.put(key, dataPart);
     }
 
-    // You can override this to add custom headers if needed
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
         return super.getHeaders();
     }
 
-    // Return text parameters
     @Override
     protected Map<String, String> getParams() {
         return mParams;
     }
 
-    // Set content type for multipart request
     @Override
     public byte[] getBody() throws AuthFailureError {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-         boundary = "apiclient-" + System.currentTimeMillis();
+        boundary = "apiclient-" + System.currentTimeMillis();
         String lineEnd = "\r\n";
         String twoHyphens = "--";
 
@@ -93,13 +75,10 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
                 bos.write(lineEnd.getBytes());
             }
 
-            // End boundary
             bos.write((twoHyphens + boundary + twoHyphens + lineEnd).getBytes());
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return bos.toByteArray();
     }
 
@@ -108,43 +87,34 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
         return "multipart/form-data;boundary=" + boundary;
     }
 
-
-    // Parse the network response from server
     @Override
     protected Response<NetworkResponse> parseNetworkResponse(NetworkResponse response) {
         return Response.success(response, HttpHeaderParser.parseCacheHeaders(response));
     }
 
-    // Deliver the response to the success listener
     @Override
     protected void deliverResponse(NetworkResponse response) {
         mListener.onResponse(response);
     }
 
-    // Deliver error to the error listener
     @Override
     public void deliverError(com.android.volley.VolleyError error) {
         mErrorListener.onErrorResponse(error);
     }
 
-    /**
-     * Inner class to hold file data to send
-     */
     public static class DataPart {
-        private final String fileName; // e.g., "birth_12345.pdf"
-        private final byte[] content;  // file content as byte[]
+        private final String fileName;
+        private final byte[] content;
 
         public DataPart(String name, byte[] data) {
             this.fileName = name;
             this.content = data;
         }
 
-        // Get file name
         public String getFileName() {
             return fileName;
         }
 
-        // Get raw file content
         public byte[] getContent() {
             return content;
         }

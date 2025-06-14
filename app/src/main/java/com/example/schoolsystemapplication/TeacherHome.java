@@ -113,7 +113,7 @@ public class TeacherHome extends AppCompatActivity {
                 Intent intent1 = new Intent(this, teacherSchedule.class);
                 startActivity(intent1);
             } else if (id == R.id.nav_assignments) {
-                Intent intent1 = new Intent(this, ClassList_Activity.class);
+                Intent intent1 = new Intent(this, SendAssignmentActivity.class);
                 intent1.putExtra("nav", "assignments");
                 startActivity(intent1);
             } else if (id == R.id.nav_marks) {

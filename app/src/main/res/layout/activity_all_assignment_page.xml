@@ -10,35 +10,31 @@
     android:background="@color/beige"
     tools:context=".allAssignmentPage">
 
-
     <!-- Toolbar at the top -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/AssignmentToolbar"
         app:title="ALL Assignment"
-        app:navigationIcon="@drawable/ic_menu"
-        />
-    <!-- SearchView below the Toolbar -->
+        app:navigationIcon="@drawable/ic_menu" />
+
+    <!--
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
-        style="@style/StyledSearchView"
-        />
+        style="@style/StyledSearchView" />
+    -->
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- RecyclerView below SearchView -->
+        <!-- RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listview"
+            android:id="@+id/recyclerAssignments"
             style="@style/StudentListRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:contentDescription="@string/ALLAssignment"
             tools:listitem="@layout/asslist" />
     </ScrollView>
+
 </LinearLayout>
-
-
-
-
-
