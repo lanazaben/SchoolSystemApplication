@@ -52,7 +52,7 @@ public class StudentHome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teacher_home);
+        setContentView(R.layout.activity_student_home);
 
         quranVerseText = findViewById(R.id.quranVerseText);
         quranSurahText = findViewById(R.id.quranSurahText);
@@ -102,31 +102,35 @@ public class StudentHome extends AppCompatActivity {
             item_dark.setIcon(R.drawable.ic_light_mode);
         }
 
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+
+        // ActionBarDrawerToggle allows us to link the Toolbar with the Drawer
+        toggle = new ActionBarDrawerToggle(this, drawerLayout,
+                toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        // Add the toggle to the drawer
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.nav_home) {
-                Intent intent1 = new Intent(this, TeacherHome.class);
-                startActivity(intent1);
-            } else if (id == R.id.nav_dark_mode) {
-                toggleDark();
-            } else if (id == R.id.nav_schedule) {
-                Intent intent1 = new Intent(this, teacherSchedule.class);
-                startActivity(intent1);
-            } else if (id == R.id.nav_assignments) {
-                Intent intent1 = new Intent(this, ClassList_Activity.class);
-                intent1.putExtra("nav", "assignments");
-                startActivity(intent1);
-            } else if (id == R.id.nav_marks) {
-                Intent intent1 = new Intent(this, ClassList_Activity.class);
-                intent1.putExtra("nav", "marks");
-                startActivity(intent1);
-            } else if (id == R.id.nav_addMarks) {
-                Intent intent1 = new Intent(this, ClassList_Activity.class);
-                intent1.putExtra("nav", "addmarks");
-                startActivity(intent1);
-            } else if (id == R.id.nav_logout) {
-                Intent intent1 = new Intent(this, LogIn.class);
-                startActivity(intent1);
+            if (id == R.id.nav_scheduleStud) {
+                Intent schedule=new Intent (StudentHome.this,StudentSchedule.class);
+                startActivity(schedule);
+
+            } else if (id == R.id.nav_assignment) {
+                Intent allAssignemnt=new Intent (StudentHome.this,allAssignmentPage.class);
+                startActivity(allAssignemnt);
+
+            } else if (id == R.id.nav_mark) {
+                //opens subjects list of this student, to show marks for this subject alone
+                Intent subjectBeforeMark=new Intent (StudentHome.this, SubjectsList.class);
+                startActivity(subjectBeforeMark);
+
             }
             drawerLayout.closeDrawers();
             return true;

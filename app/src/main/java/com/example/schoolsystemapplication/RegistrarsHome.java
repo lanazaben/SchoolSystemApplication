@@ -52,7 +52,7 @@ public class RegistrarsHome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teacher_home);
+        setContentView(R.layout.activity_registrars_home);
 
         quranVerseText = findViewById(R.id.quranVerseText);
         quranSurahText = findViewById(R.id.quranSurahText);
@@ -102,32 +102,45 @@ public class RegistrarsHome extends AppCompatActivity {
             item_dark.setIcon(R.drawable.ic_light_mode);
         }
 
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+
+        // ActionBarDrawerToggle allows us to link the Toolbar with the Drawer
+        toggle = new ActionBarDrawerToggle(this, drawerLayout,
+                toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        // Add the toggle to the drawer
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        // Setup NavigationView and its item listener
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.nav_home) {
-                Intent intent1 = new Intent(this, TeacherHome.class);
-                startActivity(intent1);
+            Intent intent = null;
+
+            if (id == R.id.nav_teacher) {
+                intent = new Intent(this, teacher_list.class);
+                intent.putExtra("user_type", "registrar");
+            } else if (id == R.id.nav_GradeLevel) {
+                intent = new Intent(this, ClassList_Activity.class);
+                intent.putExtra("from", "registrar");
+                intent.putExtra("nav", "view_student");
+            }  else if (id == R.id.nav_subject) {
+                intent = new Intent(this, AddSubject.class);
+                intent.putExtra("user_type", "registrar");
+            } else if (id == R.id.nav_logout) {
+                intent = new Intent(this, LogIn.class);
             } else if (id == R.id.nav_dark_mode) {
                 toggleDark();
-            } else if (id == R.id.nav_schedule) {
-                Intent intent1 = new Intent(this, teacherSchedule.class);
-                startActivity(intent1);
-            } else if (id == R.id.nav_assignments) {
-                Intent intent1 = new Intent(this, ClassList_Activity.class);
-                intent1.putExtra("nav", "assignments");
-                startActivity(intent1);
-            } else if (id == R.id.nav_marks) {
-                Intent intent1 = new Intent(this, ClassList_Activity.class);
-                intent1.putExtra("nav", "marks");
-                startActivity(intent1);
-            } else if (id == R.id.nav_addMarks) {
-                Intent intent1 = new Intent(this, ClassList_Activity.class);
-                intent1.putExtra("nav", "addmarks");
-                startActivity(intent1);
-            } else if (id == R.id.nav_logout) {
-                Intent intent1 = new Intent(this, LogIn.class);
-                startActivity(intent1);
+                return true;
             }
+
+            if (intent != null)
+                startActivity(intent);
+
             drawerLayout.closeDrawers();
             return true;
         });
